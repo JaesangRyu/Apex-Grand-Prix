@@ -137,7 +137,7 @@ input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(18,214,200,.18)}
 .mmode{display:flex;flex-direction:column;gap:7px;padding:12px;border:1.5px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);text-align:left;color:var(--text);font:inherit}
 .mmode b{font:900 15px var(--font);color:#fff}.mmode small{color:var(--muted);font:700 11px var(--font)}.mmode input{margin:0;padding:8px 10px;font-size:14px}.mmode input.codein{font-size:20px}.mmode .btn{flex:0 0 auto;min-width:0;padding:9px 12px;font-size:14px}
 .mmode.quick{cursor:pointer;justify-content:center;align-items:flex-start;background:linear-gradient(150deg,rgba(225,6,0,.35),rgba(225,6,0,.08));border-color:rgba(255,80,60,.55)}.mmode.quick b{font-size:20px}.mmode.quick:disabled{opacity:.45;cursor:default}
-.mmode .seg.sm button{padding:7px 4px;font-size:12px}.mchk{display:flex;align-items:center;gap:6px;font:700 12px var(--font);color:var(--text);cursor:pointer;margin:0}.mchk input{width:auto;margin:0}
+.mmode .seg.sm button{padding:7px 4px;font-size:12px}.mchk{display:flex;align-items:center;gap:6px;font:700 12px var(--font);color:var(--text);cursor:pointer;margin:0}.mchk input{width:auto;margin:0}.mchk.off{opacity:.4}.mgrid.duo{grid-template-columns:repeat(2,1fr)}.mgrid.duo .mshot{height:120px}.mgrid.quad{grid-template-columns:repeat(2,1fr)}
 .mrooms{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow:auto}
 .mroom{display:grid;grid-template-columns:1fr 120px 70px 74px;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03)}.mroom.busy{opacity:.6}
 .mrn b{display:block;color:#fff;font:900 14px var(--font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mrn small{color:var(--muted);font:700 11px var(--font)}
@@ -1348,7 +1348,7 @@ const I18N_SRC = {
 "방에 들어왔어요! 차를 고르고 READY 를 눌러 주세요.": ["You're in! Pick a car and press READY.", "ルームに入りました！マシンを選んで READY を押してください。", "已进入房间！选择赛车并按 READY。"],
 "이미 레이스 중인 방이에요.": ["That room is already racing.", "このルームはすでにレース中です。", "该房间正在比赛中。"],
 "게임 버전이 달라요. 새로고침해서 최신 버전으로 맞춰 주세요.": ["Game versions differ. Refresh to get the latest version.", "ゲームのバージョンが違います。再読み込みして最新版にしてください。", "游戏版本不同，请刷新以更新到最新版本。"],
-"방이 가득 찼어요 (최대 8명).": ["The room is full (max 8).", "ルームが満員です (最大8人)。", "房间已满 (最多8人)。"],
+"방이 가득 찼어요.": ["The room is full.", "ルームが満員です。", "房间已满。"],
 "호스트와 연결이 끊겼어요.": ["Lost connection to the host.", "ホストとの接続が切れました。", "与房主的连接已断开。"],
 "호스트 연결 끊김": ["Host disconnected", "ホスト切断", "房主断开"],
 "레이스는 혼자 끝까지 달릴 수 있어요": ["You can still finish the race", "レースは最後まで走れます", "你仍可以跑完比赛"],
@@ -1406,6 +1406,11 @@ const I18N_SRC = {
 "사람끼리만 달려요": ["Players only", "プレイヤーのみ", "仅玩家"],
 "▲ = 내 차보다 좋음": ["▲ = better than your car", "▲ = 自分のマシンより上", "▲ = 优于你的赛车"],
 "새로고침": ["Refresh", "更新", "刷新"],
+"고스트": ["Ghost", "ゴースト", "幽灵"],
+"충돌": ["Collision", "衝突あり", "碰撞"],
+"명": [" players", "人", "人"],
+"1:1 대전 — 사람끼리만 달려요": ["1:1 duel — players only", "1:1対戦 — プレイヤーのみ", "1:1对战 — 仅玩家"],
+"님이 들어왔어요.": [" joined.", "さんが参加しました。", " 已加入。"],
 "🤖 AI 난이도": ["🤖 AI difficulty", "🤖 AI難易度", "🤖 AI 难度"],
 "쉬움": ["Easy", "イージー", "简单"],
 "어려움": ["Hard", "ハード", "困难"],
@@ -2379,7 +2384,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '7.0.0';
+const GAME_VERSION = '7.2.0';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -5382,7 +5387,16 @@ const MAX_LAP_SECONDS = 300;
 const HALL_VISIBLE_COUNT = 10;
 const INSTAGRAM_ID_PATTERN = /^[A-Za-z0-9._]{1,30}$/;
 
-let currentRaceToken = null;   // 온라인 서버가 발급한 레이스 토큰
+let currentRaceToken = null;   // 온라인 서버가 발급한 레이스 토큰 (Apps Script) 또는 출발 기록 번호 (Firebase)
+
+/* 7.1: 온라인 명예의 전당 서버 — Firebase Realtime Database (config.json 의 firebaseDatabaseURL) 우선, 없으면 Apps Script (leaderboardUrl)
+   Firebase 위변조 방지 (server/firebase-database-rules.json 규칙이 서버에서 검사)
+   - 레이스 시작: hall/starts/<번호> 에 서버 시각을 기록 (덮어쓰기 불가)
+   - 등록: 기록 + used/<번호> 를 한 번에 저장 → 규칙이 "출발 기록이 있고, 처음 쓰는 번호이고, 출발 후 실제로 흐른 시간 ≥ 기록 시간" 과
+     랩 수 · 랩 시간 범위 · 합계 · 이름 길이를 확인. 하나라도 어긋나면 서버가 거절해요. */
+const hallBackend = () => (MP_REGISTRY_URL ? 'firebase' : ONLINE_LEADERBOARD_URL ? 'appsscript' : '');
+const fbHallUrl = (path, query = '') => `${MP_REGISTRY_URL}/apexgp/hall/${path}.json${query}`;
+const hallOnline = () => !!hallBackend();
 
 /** 문자열 해시 (cyrb53) → 16진수 */
 function hashText(text, seed = 0) {
@@ -5444,6 +5458,14 @@ function topRecords(list, mode, environmentFilter = 'ALL') {
 /** 레이스 시작 시 온라인 토큰 요청 (설정된 경우만) */
 async function requestRaceToken() {
   currentRaceToken = null;
+  if (hallBackend() === 'firebase') {
+    const nonce = Array.from(crypto.getRandomValues(new Uint8Array(12)), (b) => b.toString(16).padStart(2, '0')).join('');
+    try {
+      const res = await fetch(fbHallUrl('starts/' + nonce), { method: 'PUT', body: JSON.stringify({ at: { '.sv': 'timestamp' } }) });
+      if (res.ok) currentRaceToken = nonce;
+    } catch (e) { /* 오프라인이면 기기 기록만 */ }
+    return;
+  }
   if (!ONLINE_LEADERBOARD_URL) return;
   try {
     const response = await fetch(ONLINE_LEADERBOARD_URL + '?op=token', { cache: 'no-store' });
@@ -5455,7 +5477,20 @@ async function requestRaceToken() {
 /** Top 10 불러오기. source: 'online' | 'local' | 'offline' */
 async function fetchHallOfFame(mode, environmentFilter = 'ALL') {
   const local = loadLocalRecords();
-  if (!ONLINE_LEADERBOARD_URL) return { records: topRecords(local, mode, environmentFilter), source: 'local', volatile: !localPersisted };
+  if (!hallOnline()) return { records: topRecords(local, mode, environmentFilter), source: 'local', volatile: !localPersisted };
+  if (hallBackend() === 'firebase') {
+    try {   // 빠른 순 300개를 받아 이 코스 · 이름마다 최고 기록 하나 → Top 10
+      const res = await fetch(fbHallUrl('records/' + mode, '?orderBy=%22totalTime%22&limitToFirst=300'), { cache: 'no-store' });
+      if (!res.ok) throw new Error('http ' + res.status);
+      const data = (await res.json()) || {}, best = {}, track = replayTrackKey();
+      for (const r of Object.values(data)) {
+        if (!r || r.track !== track || !isPlausibleRecord(r) || (environmentFilter !== 'ALL' && r.environment !== environmentFilter)) continue;
+        const key = String(r.name).toLowerCase();
+        if (!best[key] || r.totalTime < best[key].totalTime) best[key] = r;
+      }
+      return { records: topRecords(Object.values(best), mode, environmentFilter), source: 'online' };
+    } catch (e) { return { records: topRecords(local, mode, environmentFilter), source: 'offline', volatile: !localPersisted }; }
+  }
   try {
     const response = await fetch(`${ONLINE_LEADERBOARD_URL}?op=top&mode=${mode}&env=${environmentFilter}&track=${encodeURIComponent(replayTrackKey())}`, { cache: 'no-store' });
     const online = await response.json();
@@ -5475,7 +5510,18 @@ async function submitHallRecord(record) {
   local.push(record);
   const saved = saveLocalRecords(local.sort((a, b) => a.totalTime - b.totalTime));
   let onlineOk = false, onlineError = '';
-  if (ONLINE_LEADERBOARD_URL && currentRaceToken) {
+  if (hallBackend() === 'firebase' && currentRaceToken) {
+    const clean = { id: record.id, mode: record.mode, name: record.name, instagram: record.instagram || '', totalTime: +(+record.totalTime).toFixed(3), bestLap: +(+record.bestLap).toFixed(3),
+      laps: record.laps.map((x) => +(+x).toFixed(3)), environment: record.environment, timeOfDay: record.timeOfDay, weatherLevel: +record.weatherLevel || 0, date: record.date,
+      opponent: record.opponent || '', car: record.car || '', track: replayTrackKey(), version: GAME_VERSION, token: currentRaceToken, submittedAt: { '.sv': 'timestamp' } };
+    try {
+      const body = { [`records/${record.mode}/${record.id}`]: clean, [`used/${currentRaceToken}`]: record.id };
+      const res = await fetch(`${MP_REGISTRY_URL}/apexgp/hall.json`, { method: 'PATCH', body: JSON.stringify(body) });
+      onlineOk = res.ok; if (!onlineOk) onlineError = res.status === 401 || res.status === 403 ? 'rejected' : 'http ' + res.status;
+    } catch (e) { onlineOk = false; onlineError = 'network'; }
+    currentRaceToken = null;
+  } else if (hallBackend() === 'firebase') onlineError = 'no token';
+  else if (ONLINE_LEADERBOARD_URL && currentRaceToken) {
     try {
       // text/plain 으로 보내면 Apps Script 에서 CORS 사전요청 없이 받을 수 있음
       const response = await fetch(ONLINE_LEADERBOARD_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ token: currentRaceToken, record }) });
@@ -6225,8 +6271,8 @@ const mpRegistry = {
       .sort((a, b) => (a.state === 'lobby' ? 0 : 1) - (b.state === 'lobby' ? 0 : 1) || b.players - a.players);
   },
   async publish(room) {
-    const entry = { code: room.code, name: room.name, host: room.slots[0] ? room.slots[0].name : '', players: room.slots.length, max: MP_MAX_PLAYERS,
-      aiFill: !!room.aiFill, state: mp.status === 'racing' ? 'racing' : 'lobby', protocol: MP_PROTOCOL, version: GAME_VERSION, track: TRACK_DISPLAY_NAME };
+    const entry = { code: room.code, name: room.name, host: room.slots[0] ? room.slots[0].name : '', players: room.slots.length,
+      aiFill: !!room.aiFill, ghost: !!room.ghost, max: room.max || MP_MAX_PLAYERS, state: mp.status === 'racing' ? 'racing' : 'lobby', protocol: MP_PROTOCOL, version: GAME_VERSION, track: TRACK_DISPLAY_NAME };
     if (USE_LOCAL_TRANSPORT) {
       let rooms = {}; try { rooms = JSON.parse(localStorage.getItem('apexgp-local-rooms') || '{}'); } catch (e) { /* 무시 */ }
       rooms[room.code] = { ...entry, updatedAt: Date.now() }; localStorage.setItem('apexgp-local-rooms', JSON.stringify(rooms)); return;
@@ -6272,11 +6318,12 @@ function mpCloseTransport(later = false) {
 function mpNewId() { return Math.random().toString(36).slice(2, 10); }
 
 /** 방 만들기 */
-async function mpHost({ name, isPublic = true, aiFill = true } = {}) {
+async function mpHost({ name, isPublic = true, aiFill = true, max = MP_MAX_PLAYERS, ghost = false } = {}) {
+  max = clamp(Math.round(max) || MP_MAX_PLAYERS, 2, MP_MAX_PLAYERS); if (max === 2) aiFill = false;   // 7.2: 2인 방 = 1:1 대전
   mpLeave(true);
   Object.assign(mp, { role: 'host', code: generateRoomCode(), isPublic, myId: mpNewId(), me: { ready: false }, countdown: 0 });
   mp.name = (name || `${settings.playerName || 'PLAYER'}의 방`).slice(0, 24);
-  mp.room = { code: mp.code, name: mp.name, aiFill, slots: [mpMySlot(true)] };
+  mp.room = { code: mp.code, name: mp.name, aiFill, max, ghost, slots: [mpMySlot(true)] };
   mpSetStatus('connecting', '방을 여는 중…');
   if (USE_LOCAL_TRANSPORT) { mpOpenLocal(); mpSetStatus('lobby', '방이 열렸어요. 다른 플레이어를 기다리는 중…'); mpPublish(); return; }
   try { await loadPeerJs(); } catch (e) { mpSetStatus('error', '멀티플레이 모듈을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'); return; }
@@ -6285,7 +6332,7 @@ async function mpHost({ name, isPublic = true, aiFill = true } = {}) {
   peer.on('open', () => { mpSetStatus('lobby', '방이 열렸어요. 다른 플레이어를 기다리는 중…'); mpPublish(); });
   peer.on('connection', (conn) => {
     conn.on('open', () => {
-      if (mp.room.slots.length >= MP_MAX_PLAYERS || mp.status === 'racing') { conn.send({ type: 'reject', reason: mp.status === 'racing' ? 'racing' : 'full' }); setTimeout(() => conn.close(), 300); return; }
+      if (mp.room.slots.length >= (mp.room.max || MP_MAX_PLAYERS) || mp.status === 'racing') { conn.send({ type: 'reject', reason: mp.status === 'racing' ? 'racing' : 'full' }); setTimeout(() => conn.close(), 300); return; }
       const id = conn.peer; mp.conns.set(id, conn); mp.lastHeard.set(id, nowSeconds());
     });
     conn.on('data', (data) => mpOnMessage(conn.peer, data));
@@ -6293,7 +6340,7 @@ async function mpHost({ name, isPublic = true, aiFill = true } = {}) {
     conn.on('error', () => mpOnPeerGone(conn.peer));
   });
   peer.on('disconnected', () => { if (mp.peer === peer) try { peer.reconnect(); } catch (e) { /* 무시 */ } });
-  peer.on('error', (error) => { if (error.type === 'unavailable-id') { mpHost({ name: mp.name, isPublic, aiFill }); return; } if (mp.status === 'connecting') mpSetStatus('error', describePeerError(error)); });
+  peer.on('error', (error) => { if (error.type === 'unavailable-id') { mpHost({ name: mp.name, isPublic, aiFill, max, ghost }); return; } if (mp.status === 'connecting') mpSetStatus('error', describePeerError(error)); });
 }
 /** 코드로 참가 */
 async function mpJoin(code) {
@@ -6337,7 +6384,7 @@ function mpOpenLocal() {
     if (!forMe) return;
     const from = mp.role === 'host' ? p.from : 'host';
     if (mp.role === 'host' && !mp.conns.has(from)) {
-      if (mp.room.slots.length >= MP_MAX_PLAYERS || mp.status === 'racing') { mp.local.postMessage({ from: mp.myId, to: from, kind: 'data', payload: { type: 'reject', reason: mp.status === 'racing' ? 'racing' : 'full' } }); return; }
+      if (mp.room.slots.length >= (mp.room.max || MP_MAX_PLAYERS) || mp.status === 'racing') { mp.local.postMessage({ from: mp.myId, to: from, kind: 'data', payload: { type: 'reject', reason: mp.status === 'racing' ? 'racing' : 'full' } }); return; }
       mp.conns.set(from, { open: true, close() {} });
     }
     mpOnMessage(from, p.payload);
@@ -6397,6 +6444,7 @@ function mpOnMessage(from, msg) {
         if (msg.protocol !== MP_PROTOCOL) { mpSendTo(from, { type: 'reject', reason: 'version' }); return; }
         const slot = { id: from, name: String(msg.name || 'PLAYER').slice(0, 16), car: CAR_DESIGNS[msg.car] ? msg.car : 'aero', ready: !!msg.ready, streak: Math.max(0, +msg.streak || 0), host: false };
         const i = mp.room.slots.findIndex((s) => s.id === from); if (i >= 0) mp.room.slots[i] = slot; else mp.room.slots.push(slot);
+        mp.statusText = `${slot.name} 님이 들어왔어요.`;
         mpSendTo(from, { type: 'welcome', id: from, room: mp.room }); mpSendRoom(); mpPublish(); sfx.duelJoined();
         break;
       }
@@ -6410,7 +6458,7 @@ function mpOnMessage(from, msg) {
   } else {
     switch (msg.type) {
       case 'welcome': mp.myId = msg.id || mp.myId; mp.room = msg.room; mpSetStatus('lobby', '방에 들어왔어요! 차를 고르고 READY 를 눌러 주세요.'); sfx.duelJoined(); if (mp.onJoined) mp.onJoined(); break;
-      case 'reject': { const why = msg.reason === 'racing' ? '이미 레이스 중인 방이에요.' : msg.reason === 'version' ? '게임 버전이 달라요. 새로고침해서 최신 버전으로 맞춰 주세요.' : '방이 가득 찼어요 (최대 8명).'; if (mp.onRejected) mp.onRejected(why); break; }
+      case 'reject': { const why = msg.reason === 'racing' ? '이미 레이스 중인 방이에요.' : msg.reason === 'version' ? '게임 버전이 달라요. 새로고침해서 최신 버전으로 맞춰 주세요.' : '방이 가득 찼어요.'; if (mp.onRejected) mp.onRejected(why); break; }
       case 'room': mp.room = msg.room; mp.countdown = +msg.countdown || 0; mpRefreshUI(); break;
       case 'start': mpBeginRace(msg); break;
       case 'state': mpOnState(msg); break;
@@ -6447,11 +6495,11 @@ function mpHostStart() {
   if (!mpCanStart()) return;
   if (!environmentLocked) randomizeEnvironment();
   const humans = mp.room.slots.map((s) => ({ id: s.id, kind: 'human', name: s.name, car: s.car, streak: s.streak }));
-  const ai = mp.room.aiFill ? [1, 2, 3, 4, 5, 6, 7].slice(0, MP_MAX_PLAYERS - humans.length).map((k) => ({ id: 'ai' + k, kind: 'ai', team: k, name: TEAMS[k].driver, car: AI_DESIGN_BY_TEAM[k] })) : [];
+  const ai = mp.room.aiFill ? [1, 2, 3, 4, 5, 6, 7].slice(0, (mp.room.max || MP_MAX_PLAYERS) - humans.length).map((k) => ({ id: 'ai' + k, kind: 'ai', team: k, name: TEAMS[k].driver, car: AI_DESIGN_BY_TEAM[k] })) : [];
   const roster = [...humans, ...ai];
   for (let i = roster.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [roster[i], roster[j]] = [roster[j], roster[i]]; }   // 그리드는 무작위
   roster.forEach((r, i) => { r.grid = i; });
-  const config = { type: 'start', roster, environment, timeOfDay, weatherLevel, lightsOutAt: 5.6 + Math.random() * 1.1, aiDifficulty: settings.difficulty || 'normal' };
+  const config = { type: 'start', roster, environment, timeOfDay, weatherLevel, lightsOutAt: 5.6 + Math.random() * 1.1, aiDifficulty: settings.difficulty || 'normal', ghost: !!mp.room.ghost };
   mpBroadcast(config); mpBeginRace(config);
 }
 function mpBeginRace(cfg) {
@@ -6459,7 +6507,7 @@ function mpBeginRace(cfg) {
   if (TIMES_OF_DAY[cfg.timeOfDay]) timeOfDay = cfg.timeOfDay;
   if (WEATHER_LEVELS[cfg.weatherLevel]) weatherLevel = cfg.weatherLevel;
   environmentPreRolled = true;
-  mp.roster = cfg.roster || []; mp.aiDifficulty = cfg.aiDifficulty || 'normal';
+  mp.roster = cfg.roster || []; mp.aiDifficulty = cfg.aiDifficulty || 'normal'; mp.ghost = !!cfg.ghost;
   mp.buffers = new Map(); mp.results = new Map(); mp.sendTimer = 0; mp.countdown = 0; mp.me.ready = false;
   mp.status = 'racing'; mp.statusText = ''; mpPublish();
   closeOverlay();
@@ -6478,6 +6526,8 @@ function mpBuildField() {
     const human = r.kind === 'human', D = CAR_DESIGNS[r.car] || CAR_DESIGNS.aero;
     car.mpId = r.id; car.mpHuman = human; car.mpStreak = r.streak || 0;
     car.remote = car !== player && (human || mp.role !== 'host');
+    car.mpGhost = car !== player && human && mp.ghost;   // 7.2: 고스트 방 — 다른 사람 차는 반투명 · 충돌 없음 (AI 와는 부딪혀요)
+    if (car.mpGhost) car.ghostTime = 1e9;
     car.isAI = !human && mp.role === 'host';
     car.trait = human ? null : AI_TRAITS[r.team] || AI_TRAITS[1];
     car.skill = human ? 1 : AI_SKILL[r.team] || 0.96;
@@ -6498,7 +6548,8 @@ function mpApplyDesigns() {
     if (car === player || !car.mpDesign) continue;
     car.designId = car.mpDesign; car.designStats = car.mpHuman ? CAR_DESIGNS[car.mpDesign].stats : NEUTRAL_DESIGN_STATS;
     if (car.model3d && car.model3d.designId !== car.designId) { disposeCarModel(car.model3d); car.model3d = null; }
-    if (!car.model3d && W3.renderer) car.model3d = makeCarModel(car.designId, liveryFor(car), false);
+    if (car.model3d && !!car.model3d.ghostLook !== !!car.mpGhost) { disposeCarModel(car.model3d); car.model3d = null; }
+    if (!car.model3d && W3.renderer) { car.model3d = makeCarModel(car.designId, liveryFor(car), !!car.mpGhost); car.model3d.ghostLook = !!car.mpGhost; }
   }
 }
 /** 솔로로 돌아갈 때 AI 차 원래대로 */
@@ -6506,7 +6557,8 @@ function mpRestoreCars() {
   for (const car of allCars) {
     if (car.mpId == null && !car.remote) continue;
     car.team = TEAMS[car.id]; car.trait = AI_TRAITS[car.id] || null; car.skill = car.id ? AI_SKILL[car.id] : 1;
-    car.mpId = null; car.mpHuman = false; car.remote = false; car.mpDesign = null; car.mpLeft = false;
+    car.mpId = null; car.mpHuman = false; car.remote = false; car.mpDesign = null; car.mpLeft = false; car.mpGhost = false; car.ghostTime = 0;
+    if (car.model3d && car.model3d.ghostLook) { disposeCarModel(car.model3d); car.model3d = null; }
   }
 }
 
@@ -6583,6 +6635,11 @@ function mpOnLocalFinished() {
   mpBroadcast({ type: 'finish', id: mp.myId, totalTime: raceTime, bestLap: player.bestLapTime });
   const humans = [...mp.cars.values()].filter((c) => c.mpHuman).length, order = raceOrder(), pos = order.indexOf(player) + 1, s = mpStats();
   s.races++; if (pos === 1 && humans >= 2) { s.wins++; s.streak++; } else if (humans >= 2) s.streak = 0;
+  // 7.2: 사람 2명 · AI 없는 레이스(= 1:1 대전)에서 이기면 1:1 대전 명예의 전당에 등록할 수 있어요
+  const rivals = [...mp.cars.values()].filter((c) => c !== player);
+  if (humans === 2 && rivals.length === 1 && pos === 1 && finishResult) {
+    Object.assign(finishResult, { noRecord: false, formShown: false, recordMode: 'duel', opponent: rivals[0].team.driver });
+  }
   mpSaveStats(s);
   if (pos === 1 && humans >= 2 && s.streak >= 2) showMessage(`🔥 ${s.streak}연승!`, '#ffd400', 2.4);
 }
@@ -7870,7 +7927,7 @@ function garageConfirm() {
   const next = garage.next; garage.next = null;
   menuStage = 'main'; menuStageTimer = 0;
   if (next === 'solo') { initAudio(); startRace({ type: 'solo' }); return; }
-  if (next === 'duel') { openDuelLobby(); return; }
+  if (next === 'duel') { openMultiMenu(); return; }   // 7.2: 1:1 대전은 멀티플레이로 통합
   showMessage(CAR_DESIGNS[settings.carDesign].name, '#ffffff', 1.4, '이 차로 레이스에 나가요');
 }
 function garageBack() { sfx.menuBack(); garage.next = null; menuStage = 'main'; menuStageTimer = 0; }
@@ -10207,8 +10264,7 @@ function drawMessages() {
 const MENU_ITEMS = [
   { id: 'solo', label: 'SOLO RACE', ko: '솔로 레이스', desc: 'AI 7대와 겨루는 3랩 그랑프리 · 차고에서 차를 고른 뒤 출발', action: () => { initAudio(); openGarage('solo'); } },
   { id: 'garage', label: 'GARAGE', ko: '차량 선택', get desc() { return `지금 차량: ${CAR_DESIGNS[selectedDesignId()].name} · 5종 중 선택`; }, action: () => openGarage() },
-  { id: 'duel', label: '1:1 DUEL', ko: '1:1 대전', desc: '초대 코드로 친구와 1:1 · 고스트 또는 충돌 · 차고에서 차를 고른 뒤 입장', action: () => openGarage('duel') },
-  { id: 'multi', label: 'MULTIPLAYER', ko: '멀티플레이', desc: '최대 8명 · 빠른 대전 · 방 목록 · 코드로 참가', action: () => { initAudio(); openMultiMenu(); } },
+  { id: 'multi', label: 'MULTIPLAYER', ko: '멀티플레이', desc: '1:1 대전부터 8명까지 · 빠른 대전 · 방 목록 · 코드로 참가', action: () => { initAudio(); openMultiMenu(); } },
   { id: 'hall', label: 'HALL OF FAME', ko: '명예의 전당', desc: '역대 우승 기록 Top 10', action: () => openHallOfFame('solo') },
   { id: 'controls', label: 'CONTROLS', ko: '조작법', desc: '키보드 · 터치 조작 안내', action: () => openControlsHelp() },
   { id: 'options', label: 'OPTIONS', ko: '설정', desc: '소리 볼륨 · 조작 배치 · 화면 · 그래픽', action: () => openSettings() },
@@ -10653,10 +10709,11 @@ function openWinnerForm() {
   const r = finishResult;
   if (!r) return;
   r.formShown = true;
-  const duelNote = r.raceType === 'duel' ? `<div class="stat"><span>상대</span><b style="font-size:15px;color:#ff7ad9">${escapeHtml(duel.opponentName || 'RIVAL')}</b></div>` : '';
-  openOverlay('winner', `<div class="hd"><h2>🏆 ${r.raceType === 'duel' ? '1:1 대전 승리' : 'P1 WINNER'} — 명예의 전당 등록</h2><button class="x" data-close>닫기</button></div><div class="bd">
+  const recMode = r.recordMode || r.raceType, opponentName = r.opponent || duel.opponentName || 'RIVAL';   // 7.2: 멀티 1:1 승리도 1:1 대전 기록
+  const duelNote = recMode === 'duel' ? `<div class="stat"><span>상대</span><b style="font-size:15px;color:#ff7ad9">${escapeHtml(opponentName)}</b></div>` : '';
+  openOverlay('winner', `<div class="hd"><h2>🏆 ${recMode === 'duel' ? '1:1 대전 승리' : 'P1 WINNER'} — 명예의 전당 등록</h2><button class="x" data-close>닫기</button></div><div class="bd">
     <p class="big">우승 축하합니다!</p>
-    <p class="sub">이름과 인스타그램 ID를 남기면 ${r.raceType === 'duel' ? '1:1 대전' : '솔로'} 명예의 전당(Top 10)에 기록돼요. ID를 누르면 다른 사람이 인스타그램을 방문할 수 있어요.</p>
+    <p class="sub">이름과 인스타그램 ID를 남기면 ${recMode === 'duel' ? '1:1 대전' : '솔로'} 명예의 전당(Top 10)에 기록돼요. ID를 누르면 다른 사람이 인스타그램을 방문할 수 있어요.</p>
     <div class="stats"><div class="stat"><span>총 기록</span><b>${formatTime(r.totalTime, true)}</b></div><div class="stat"><span>베스트 랩</span><b style="color:#c58cff">${formatTime(r.bestLap)}</b></div>
     <div class="stat"><span>컨디션</span><b style="font-size:15px">${escapeHtml(conditionsLabel(r.environment, r.timeOfDay, r.weatherLevel))}</b></div>${duelNote}</div>
     <label for="winName">이름 (닉네임)</label><input id="winName" maxlength="16" placeholder="예: SpeedRacer" value="${escapeHtml(settings.playerName)}" autocomplete="nickname">
@@ -10665,7 +10722,7 @@ function openWinnerForm() {
     <div class="row"><button class="btn" id="winSubmit">기록 등록</button><button class="btn ghost" id="winSkip">건너뛰고 명예의 전당 보기</button></div></div>`);
   const nameInput = byId('winName'), instaInput = byId('winInsta'), errorBox = byId('winError');
   setTimeout(() => { try { nameInput.focus(); } catch (e) { /* 일부 모바일은 포커스 거부 */ } }, 50);
-  byId('winSkip').onclick = () => { sfx.uiClick(false); openHallOfFame(r.raceType); };
+  byId('winSkip').onclick = () => { sfx.uiClick(false); openHallOfFame(recMode); };
   const submit = async () => {
     const name = nameInput.value.trim(), instagram = instaInput.value.trim().replace(/^@+/, '');
     if (!name) { errorBox.textContent = '이름을 입력해 주세요.'; nameInput.focus(); return; }
@@ -10674,18 +10731,18 @@ function openWinnerForm() {
     byId('winSubmit').disabled = true;
     try {
       const record = {
-        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), mode: r.raceType, name: settings.playerName, instagram,
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), mode: recMode, name: settings.playerName, instagram,
         totalTime: +r.totalTime.toFixed(3), bestLap: +r.bestLap.toFixed(3), laps: r.laps.map((x) => +x.toFixed(3)),
         environment: r.environment, timeOfDay: r.timeOfDay, weatherLevel: r.weatherLevel, date: new Date().toISOString().slice(0, 10), version: GAME_VERSION, track: replayTrackKey(),
-        opponent: r.raceType === 'duel' ? (duel.opponentName || 'RIVAL').slice(0, 16) : '',
+        opponent: recMode === 'duel' ? opponentName.slice(0, 16) : '',
         car: player.designId || 'aero',
       };
       const result = await submitHallRecord(record);
       if (!result.ok) { errorBox.textContent = '기록 검증에 실패했어요' + (result.reason ? ` — ${result.reason}` : '') + '.'; byId('winSubmit').disabled = false; return; }
       r.recordId = record.id; sfx.boostStocked();
-      if (ONLINE_LEADERBOARD_URL && !result.onlineOk) showMessage(tr('hall.onlineFail'), '#ffb43c', 3, result.onlineError || '');
+      if (hallOnline() && !result.onlineOk) showMessage(tr('hall.onlineFail'), '#ffb43c', 3, result.onlineError || '');
       await saveReplayForRecord(record, r.replayRaceId);   // 리플레이도 함께 보관 (실패해도 기록은 유지)
-      openHallOfFame(r.raceType, record.id);
+      openHallOfFame(recMode, record.id);
     } catch (e) {
       errorBox.textContent = '등록 중 오류가 났어요: ' + String((e && e.message) || e).slice(0, 80);
       byId('winSubmit').disabled = false;
@@ -11069,7 +11126,7 @@ function renderTutorial() {
 /* =====================================================================
    18c_multi_ui.js — 6.9 멀티플레이 화면 (모드 선택 · 방 목록 · 8인 대기실)
    ===================================================================== */
-const mpDraft = { name: '', code: '', roomName: '', isPublic: true, aiFill: true, view: 'car' };
+const mpDraft = { name: '', code: '', roomName: '', isPublic: true, aiFill: true, view: 'car', max: 8, ghost: false };
 let mpListTimer = null, mpRoomsCache = null, mpRoomsError = '';
 
 /* ---------- 코스 미리보기 (트랙 모양을 그린 작은 그림) ---------- */
@@ -11124,7 +11181,7 @@ function renderMultiMenu() {
   const rooms = mpRoomsCache || [];
   const list = !reg ? `<div class="mnotice">🛠 ${L('방 목록 서버가 아직 연결되지 않았어요')} <small>${L('config.json 에 firebaseDatabaseURL 을 넣으면 빠른 대전 · 방 목록이 켜져요 (docs/MULTIPLAYER.md). 지금은 방 만들기 · 코드 참가만 돼요.')}</small></div>`
     : rooms.length ? rooms.map((r) => `<div class="mroom${r.state !== 'lobby' ? ' busy' : ''}">
-        <div class="mrn"><b data-raw>${escapeHtml(r.name || r.code)}</b><small><span data-raw>👑 ${escapeHtml(r.host || '')}</span> · ${escapeHtml(r.track || TRACK_DISPLAY_NAME)}${r.aiFill ? ' · 🤖 AI' : ''}</small></div>
+        <div class="mrn"><b data-raw>${escapeHtml(r.name || r.code)}</b><small><span data-raw>👑 ${escapeHtml(r.host || '')}</span> · ${(r.max || 8) === 2 ? '⚔ 1:1' : escapeHtml(r.track || TRACK_DISPLAY_NAME)}${r.ghost ? ' · 👻 ' + L('고스트') : ''}${r.aiFill ? ' · 🤖 AI' : ''}</small></div>
         <div class="mrp"><span class="mbar"><i style="width:${(r.players / (r.max || 8)) * 100}%"></i></span><b>${r.players}/${r.max || 8}</b></div>
         <span class="mstate ${r.state}">${r.state === 'lobby' ? L('대기 중') : L('레이스 중')}</span>
         <button class="btn sm" data-joinroom="${escapeHtml(r.code)}" ${r.state !== 'lobby' || r.players >= (r.max || 8) || busy ? 'disabled' : ''}>${L('참가')}</button></div>`).join('')
@@ -11137,7 +11194,9 @@ function renderMultiMenu() {
       <div class="mmode"><b>➕ ${L('방 만들기')}</b>
         <input id="mpRoomName" maxlength="24" placeholder="${L('방 이름 (비우면 내 이름의 방)')}" value="${escapeHtml(mpDraft.roomName)}">
         <div class="seg sm">${[[true, '🌐 ' + L('공개')], [false, '🔒 ' + L('비공개')]].map(([v, l]) => `<button class="${mpDraft.isPublic === v ? 'on' : ''}" data-mppublic="${v}">${l}</button>`).join('')}</div>
-        <label class="mchk"><input type="checkbox" id="mpAiFill" ${mpDraft.aiFill ? 'checked' : ''}> ${L('빈 자리는 AI 로 채우기')}</label>
+        <div class="seg sm">${[[2, '⚔ 1:1'], [4, '4' + L('명')], [8, '8' + L('명')]].map(([v, l]) => `<button class="${mpDraft.max === v ? 'on' : ''}" data-mpmax="${v}">${l}</button>`).join('')}</div>
+        <div class="seg sm">${[[false, '⚔ ' + L('충돌')], [true, '👻 ' + L('고스트')]].map(([v, l]) => `<button class="${mpDraft.ghost === v ? 'on' : ''}" data-mpghost="${v}">${l}</button>`).join('')}</div>
+        <label class="mchk${mpDraft.max === 2 ? ' off' : ''}"><input type="checkbox" id="mpAiFill" ${mpDraft.aiFill && mpDraft.max !== 2 ? 'checked' : ''} ${mpDraft.max === 2 ? 'disabled' : ''}> ${L('빈 자리는 AI 로 채우기')}</label>
         <button class="btn" id="mpCreate" ${busy ? 'disabled' : ''}>${L('방 만들기')}</button></div>
       <div class="mmode"><b>🔑 ${L('코드로 참가')}</b><small>${L('친구에게 받은 6자리 코드')}</small>
         <input id="mpCode" class="codein" maxlength="6" placeholder="ABC123" value="${escapeHtml(mpDraft.code)}" autocapitalize="characters" autocomplete="off" spellcheck="false">
@@ -11154,10 +11213,12 @@ function renderMultiMenu() {
   const needName = () => { const n = nameIn.value.trim(); if (!n) { mp.status = 'error'; mp.statusText = '이름을 먼저 입력해 주세요.'; renderMultiMenu(); return false; } settings.playerName = n.slice(0, 16); saveSettings(); return true; };
   const on = (id, fn) => { const el = byId(id); if (el) el.onclick = () => { sfx.uiClick(true); initAudio(); fn(); }; };
   on('mpQuick', () => { if (needName()) mpQuickMatch().then(() => mpRefreshUI()); });
-  on('mpCreate', () => { if (needName()) mpHost({ name: mpDraft.roomName.trim(), isPublic: mpDraft.isPublic, aiFill: byId('mpAiFill').checked }).then(() => mpRefreshUI()); });
+  on('mpCreate', () => { if (needName()) mpHost({ name: mpDraft.roomName.trim(), isPublic: mpDraft.isPublic, aiFill: byId('mpAiFill').checked, max: mpDraft.max, ghost: mpDraft.ghost }).then(() => mpRefreshUI()); });
   on('mpJoinCode', () => { if (needName()) mpJoin(codeIn.value).then(() => mpRefreshUI()); });
   on('mpRefresh', () => { mpRoomsCache = null; renderMultiMenu(); mpLoadRooms(); });
   byId('mpAiFill').onchange = (e) => { mpDraft.aiFill = e.target.checked; };
+  overlayCard.querySelectorAll('[data-mpmax]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); mpDraft.max = +b.dataset.mpmax; renderMultiMenu(); }; });
+  overlayCard.querySelectorAll('[data-mpghost]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); mpDraft.ghost = b.dataset.mpghost === 'true'; renderMultiMenu(); }; });
   overlayCard.querySelectorAll('[data-mppublic]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); mpDraft.isPublic = b.dataset.mppublic === 'true'; renderMultiMenu(); }; });
   overlayCard.querySelectorAll('[data-joinroom]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); if (needName()) mpJoin(b.dataset.joinroom).then(() => mpRefreshUI()); }; });
   overlayCard.querySelectorAll('[data-close]').forEach((b) => { b.onclick = () => { sfx.uiClick(false); clearInterval(mpListTimer); if (mp.status === 'connecting' || mp.status === 'error' || mp.status === 'closed') mpLeave(true); closeOverlay(); }; });
@@ -11171,7 +11232,8 @@ function renderMultiLobby() {
   const host = mp.role === 'host', humans = R.slots, mine = humans.find((s) => s.id === mp.myId) || {}, myCar = selectedDesignId();
   const aiTeams = [1, 2, 3, 4, 5, 6, 7];
   const slots = [];
-  for (let i = 0; i < MP_MAX_PLAYERS; i++) {
+  const MAX = R.max || MP_MAX_PLAYERS;
+  for (let i = 0; i < MAX; i++) {
     const h = humans[i];
     if (h) slots.push({ kind: 'human', ...h, me: h.id === mp.myId });
     else if (R.aiFill) { const k = aiTeams[i - humans.length]; slots.push({ kind: 'ai', name: TEAMS[k].driver, car: AI_DESIGN_BY_TEAM[k] }); }
@@ -11195,15 +11257,15 @@ function renderMultiLobby() {
     <div class="mltop">
       <div class="codebox"><small>${tr('lobby.code')}</small><div class="code">${escapeHtml(R.code)}</div></div>
       <div class="lacts"><button class="btn ghost sm" id="mlCopy">📋 ${tr('lobby.copy')}</button><button class="btn ghost sm" id="mlShare">🔗 ${tr('lobby.share')}</button></div>
-      <span class="mlcount">${humans.length}/${MP_MAX_PLAYERS} · ${mp.role === 'guest' ? `${L('핑')} ${mp.pingMs}ms` : mp.isPublic ? '🌐 ' + L('공개') : '🔒 ' + L('비공개')}</span>
+      <span class="mlcount">${MAX === 2 ? '⚔ 1:1 · ' : ''}${R.ghost ? '👻 ' + L('고스트') + ' · ' : ''}${humans.length}/${MAX} · ${mp.role === 'guest' ? `${L('핑')} ${mp.pingMs}ms` : mp.isPublic ? '🌐 ' + L('공개') : '🔒 ' + L('비공개')}</span>
     </div>
     ${mp.statusText ? `<p class="sub ok" style="font-weight:800;margin:4px 0">${escapeHtml(mp.statusText)}</p>` : ''}
     <div class="mlmain">
       <div class="mcourse"><img src="${trackPreviewURL()}" alt=""><div><b>${TRACK_DISPLAY_NAME}</b><small>${lenKm} km · ${RACE_LAPS} ${L('랩')} · ${L('날씨 · 시간대 랜덤')}</small><small><span class="drsdot"></span> DRS · ⬜ ${L('출발선')}</small></div>
-        <div class="mopts">${host ? `<label class="mchk"><input type="checkbox" id="mlAiFill" ${R.aiFill ? 'checked' : ''}> 🤖 ${L('빈 자리 AI 채우기')}</label>` : `<small>${R.aiFill ? '🤖 ' + L('빈 자리는 AI 가 달려요') : L('사람끼리만 달려요')}</small>`}
-        <small>${L('AI 난이도')}: ${L({ easy: '쉬움', normal: '보통', hard: '어려움', pro: '프로' }[host ? settings.difficulty || 'normal' : mp.room.aiDifficulty || 'normal'] || '보통')}</small></div></div>
+        <div class="mopts">${MAX === 2 ? `<small>⚔ ${L('1:1 대전 — 사람끼리만 달려요')}</small>` : host ? `<label class="mchk"><input type="checkbox" id="mlAiFill" ${R.aiFill ? 'checked' : ''}> 🤖 ${L('빈 자리 AI 채우기')}</label>` : `<small>${R.aiFill ? '🤖 ' + L('빈 자리는 AI 가 달려요') : L('사람끼리만 달려요')}</small>`}
+        ${MAX === 2 ? '' : `<small>${L('AI 난이도')}: ${L({ easy: '쉬움', normal: '보통', hard: '어려움', pro: '프로' }[host ? settings.difficulty || 'normal' : mp.room.aiDifficulty || 'normal'] || '보통')}</small>`}</div></div>
       <div class="mgridwrap"><div class="mviewtabs"><button class="tab sm${stats ? '' : ' on'}" data-mview="car">🚗 ${L('차량')}</button><button class="tab sm${stats ? ' on' : ''}" data-mview="stats">📊 ${L('성능 비교')}</button>${stats ? `<small>${L('▲ = 내 차보다 좋음')}</small>` : ''}</div>
-        <div class="mgrid">${slots.map(slotHtml).join('')}</div></div>
+        <div class="mgrid${MAX === 2 ? ' duo' : MAX === 4 ? ' quad' : ''}">${slots.map(slotHtml).join('')}</div></div>
     </div>
     <div class="sect">${tr('lobby.myCar')}</div>
     <div class="carpick">${CAR_DESIGN_ORDER.map((id) => { const D = CAR_DESIGNS[id]; return `<button class="cp${myCar === id ? ' on' : ''}" data-mcar="${id}" style="--c:${D.uiColor}">${mpCarImg(id)}<span>${escapeHtml(D.name)}</span></button>`; }).join('')}</div>
@@ -11344,7 +11406,7 @@ function handleGlobalKeys() {
   if (pressed('KeyB')) toggleMusic();
   if (pressed('KeyO')) { openRaceSettings(); return; }
   if (pressed('KeyH') && (gameMode === 'menu' || gameMode === 'finish')) { openHallOfFame(finishResult ? finishResult.raceType : 'solo'); return; }
-  if (pressed('KeyV') && gameMode === 'menu') { openDuelLobby(); return; }
+  if (pressed('KeyV') && gameMode === 'menu') { openMultiMenu(); return; }
   if (gameMode === 'menu') {
     if (menuStage === 'garage') {
       if (pressed('ArrowLeft') || pressed('KeyA')) garageStep(-1);
@@ -11533,7 +11595,7 @@ async function bootGame() {
   menuStage = 'title';
   fadeAlpha = 0;
   if (URL_PARAMS.get('dev') === '1') devMode = true;
-  if (URL_PARAMS.get('join')) setTimeout(() => openDuelLobby(URL_PARAMS.get('join')), 400);
+  if (URL_PARAMS.get('join')) setTimeout(() => { mpDraft.code = normalizeRoomCode(URL_PARAMS.get('join')); openMultiMenu(); }, 400);   // 7.2: 예전 1:1 초대 링크도 멀티플레이로
   if (URL_PARAMS.get('mp')) setTimeout(() => { mpDraft.code = normalizeRoomCode(URL_PARAMS.get('mp')); openMultiMenu(); }, 400);   // 6.9: 멀티 초대 링크
   document.getElementById('boot').remove();
   showIntro();   // 6.0: 검은 화면 · 이어폰 안내 → 누르면 소리 시작
