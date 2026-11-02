@@ -1,5 +1,5 @@
 {
   "leaderboardUrl": "",
-  "firebaseDatabaseURL": "",
+  "firebaseDatabaseURL": "https://apex-grand-prix-403dd-default-rtdb.firebaseio.com/",
   "iceServers": []
 }
