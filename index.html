@@ -213,7 +213,7 @@ function translateDom(root) {
 /* ===== 00_strings.js ===== */
 /* 00_strings.js — 화면 문장 (한국어 · English · 日本語 · 简体中文) */
 addStrings({
-  'msg.boostHint': ['끝나기 직전 {key} 한 번 더 = 스퍼트', 'Press {key} again right before it ends = SPURT', '終わる直前にもう一度 {key} = スパート', '结束前一刻再按 {key} = 冲刺'],
+  'msg.boostHint': ['끝나기 직전 {key} 한 번 더 = 임계점 부스트', 'Press {key} again right before it ends = LIMIT BREAK', '終わる直前にもう一度 {key} = 限界突破', '结束前一刻再按 {key} = 临界点加速'],
   'msg.tooEarly': ['너무 일찍!', 'TOO EARLY!', '早すぎ!', '太早了!'],
   'msg.tooEarlySub': ['부스트가 꺼졌어요', 'Boost lost', 'ブースト消失', '加速已失效'],
   'hud.push': ['⚡ 지금 {key}!', '⚡ PRESS {key}!', '⚡ 今 {key}!', '⚡ 现在按 {key}!'],
@@ -294,13 +294,13 @@ addStrings({
   'tut.steerTouch.title': ['조향: 왼쪽 화면을 누르고 밀기', 'Steering: hold & slide on the left', 'ステア: 左側を押してスライド', '转向: 按住左侧滑动'],
   'tut.steerTouch.points': ['화면 왼쪽 아무 곳이나 누른 채 <b>좌우로 밀면</b> 그만큼 꺾여요|처음 누른 자리가 가운데예요. 손가락을 떼면 똑바로 가요|가속은 자동이에요 (설정에서 끌 수 있어요)', 'Hold anywhere on the left half and <b>slide left/right</b> to steer|Where you first touch is the centre. Lift to go straight|Gas is automatic (you can turn it off in Settings)', '画面の左側どこでも押したまま<b>左右にスライド</b>すると曲がります|最初に触れた位置が中央。指を離すと直進|アクセルは自動 (設定でオフにできます)', '按住屏幕左半边任意位置并<b>左右滑动</b>即可转向|第一次按下的位置为中心，松开手指即直行|自动加速 (可在设置中关闭)'],
   'tut.buttonsTouch.title': ['오른쪽 버튼', 'Right-hand buttons', '右側のボタン', '右侧按钮'],
-  'tut.buttonsTouch.points': ['<b>DRIFT</b> (가장 큰 버튼): 누르는 동안 드리프트|<b>BRAKE</b>: 급한 코너 앞에서 살짝 눌러 속도를 줄여요|<b>⚡ BOOST</b>: 부스트 켜기 · 스퍼트 (점 = 남은 부스트 개수)', '<b>DRIFT</b> (largest): drift while held|<b>BRAKE</b>: tap before tight corners to slow down|<b>⚡ BOOST</b>: boost and spurt (dots = boosts stored)', '<b>DRIFT</b> (一番大きい): 押している間ドリフト|<b>BRAKE</b>: きついコーナーの手前で軽く押して減速|<b>⚡ BOOST</b>: ブースト・スパート (点 = 残りの数)', '<b>DRIFT</b> (最大按钮): 按住即漂移|<b>BRAKE</b>: 急弯前轻按减速|<b>⚡ BOOST</b>: 加速与冲刺 (圆点 = 剩余次数)'],
+  'tut.buttonsTouch.points': ['<b>DRIFT</b> (가장 큰 버튼): 누르는 동안 드리프트|<b>BRAKE</b>: 급한 코너 앞에서 살짝 눌러 속도를 줄여요|<b>⚡ BOOST</b>: 부스트 켜기 · 임계점 부스트 (점 = 남은 부스트 개수)', '<b>DRIFT</b> (largest): drift while held|<b>BRAKE</b>: tap before tight corners to slow down|<b>⚡ BOOST</b>: boost and LIMIT BREAK (dots = boosts stored)', '<b>DRIFT</b> (一番大きい): 押している間ドリフト|<b>BRAKE</b>: きついコーナーの手前で軽く押して減速|<b>⚡ BOOST</b>: ブースト・限界突破 (点 = 残りの数)', '<b>DRIFT</b> (最大按钮): 按住即漂移|<b>BRAKE</b>: 急弯前轻按减速|<b>⚡ BOOST</b>: 加速与临界点加速 (圆点 = 剩余次数)'],
   'tut.drift.title': ['드리프트 요령', 'How to drift', 'ドリフトのコツ', '漂移技巧'],
   'tut.drift.points': ['코너에 들어가면서 <b>조향 + 드리프트</b>를 같이 눌러요|드리프트를 <b>0.5초 이상</b> 유지하고 놓으면 <b>미니 터보</b> (계기판 DRIFT 시간이 주황 → 파랑)|<b>코너에서</b> 드리프트할수록 부스트 게이지가 빨리 차요. 직선 드리프트는 거의 안 차요', 'Hold <b>steer + drift</b> as you enter a corner|Hold the drift for <b>0.5s+</b> and release for a <b>mini turbo</b> (DRIFT timer turns orange → blue)|Drifting <b>through corners</b> fills the boost gauge fast. Drifting on straights barely fills it', 'コーナー進入で<b>ステア + ドリフト</b>を同時に|<b>0.5秒以上</b>続けて離すと<b>ミニターボ</b> (DRIFT 表示が橙 → 青)|<b>コーナーで</b>ドリフトするほどブーストゲージが早くたまります。直線ではほぼたまりません', '入弯时同时按住<b>转向 + 漂移</b>|保持<b>0.5秒以上</b>后松开可获得<b>小涡轮</b> (DRIFT 计时由橙变蓝)|在<b>弯道</b>中漂移能快速充满加速槽，直道漂移几乎不充能'],
   'tut.boost.title': ['부스트 모으기 · 쓰기', 'Charging & using boost', 'ブーストをためて使う', '积攒与使用加速'],
   'tut.boost.points': ['계기판 아래 <b>노란 게이지</b>가 차면 ⚡ 1개 (최대 2개)|앞차 바로 뒤에 붙어 달려도(슬립스트림) 조금씩 차요|<b>{boost}</b>를 누르면 3.4초 부스트. 계기판이 붉게 바뀌고 <b>BOOSTER</b> 원형 게이지가 줄어들어요', 'Fill the <b>yellow gauge</b> under the dashboard to earn ⚡ (max 2)|Following right behind a car (slipstream) also fills it a little|Press <b>{boost}</b> for a 3.4s boost. The dash turns red and the <b>BOOSTER</b> ring counts down', 'ダッシュボード下の<b>黄色いゲージ</b>が満タンで ⚡ 1つ (最大2)|前の車の真後ろ (スリップストリーム) でも少したまります|<b>{boost}</b> で3.4秒ブースト。メーターが赤くなり<b>BOOSTER</b>リングが減っていきます', '仪表盘下方<b>黄色槽</b>充满可获得 ⚡ (最多 2 个)|紧跟前车 (尾流) 也会慢慢充能|按 <b>{boost}</b> 发动 3.4 秒加速，仪表变红，<b>BOOSTER</b> 圆环开始倒计时'],
-  'tut.spurt.title': ['부스트 스퍼트 (타이밍!)', 'Boost SPURT (timing!)', 'ブーストスパート (タイミング!)', '加速冲刺 (把握时机!)'],
-  'tut.spurt.points': ['링 끝의 <b>노란 LIMIT 구간</b>(마지막 1.2초)에 들어가면 링이 깜빡여요|그때 <b>{boost}</b>를 한 번 더 → <b>3초 스퍼트</b>, 훨씬 빨라져요|너무 <b>일찍</b> 누르면 남은 부스트가 사라져요. 안 누르면 그냥 끝나요', 'When the ring reaches the <b>yellow LIMIT zone</b> (last 1.2s) it flashes|Press <b>{boost}</b> again then → <b>3s SPURT</b>, much faster|Press too <b>early</b> and the rest of the boost is lost. Do nothing and it just ends', 'リング終端の<b>黄色い LIMIT 区間</b> (残り1.2秒) で点滅します|その時もう一度 <b>{boost}</b> → <b>3秒スパート</b>で一気に加速|<b>早すぎる</b>と残りのブーストが消えます。押さなければそのまま終了', '圆环进入末端<b>黄色 LIMIT 区</b> (最后 1.2 秒) 时会闪烁|此时再按一次 <b>{boost}</b> → <b>3 秒冲刺</b>，速度大增|按<b>太早</b>会失去剩余加速；不按则正常结束'],
+  'tut.spurt.title': ['엔진 임계점 부스트 (타이밍!)', 'LIMIT BREAK boost (timing!)', '限界突破ブースト (タイミング!)', '临界点加速 (把握时机!)'],
+  'tut.spurt.points': ['링 끝의 <b>노란 LIMIT 구간</b>(마지막 1.2초)에 들어가면 링이 깜빡여요|그때 <b>{boost}</b>를 한 번 더 → <b>3초 임계점 부스트</b>, 훨씬 빨라져요|너무 <b>일찍</b> 누르면 남은 부스트가 사라져요. 안 누르면 그냥 끝나요', 'When the ring reaches the <b>yellow LIMIT zone</b> (last 1.2s) it flashes|Press <b>{boost}</b> again then → <b>3s LIMIT BREAK</b>, much faster|Press too <b>early</b> and the rest of the boost is lost. Do nothing and it just ends', 'リング終端の<b>黄色い LIMIT 区間</b> (残り1.2秒) で点滅します|その時もう一度 <b>{boost}</b> → <b>3秒限界突破</b>で一気に加速|<b>早すぎる</b>と残りのブーストが消えます。押さなければそのまま終了', '圆环进入末端<b>黄色 LIMIT 区</b> (最后 1.2 秒) 时会闪烁|此时再按一次 <b>{boost}</b> → <b>3 秒临界点加速</b>，速度大增|按<b>太早</b>会失去剩余加速；不按则正常结束'],
   'tut.hud.title': ['레이스 화면 보기', 'Reading the race screen', 'レース画面の見方', '比赛画面说明'],
   'tut.hud.points': ['왼쪽 위: <b>랩</b> · <b>순위</b> · 순위표|오른쪽 위: 미니맵 (초록 = DRS 구간) · <b>⚙</b> 설정·일시정지|흰색·하늘색 연석 = 부스트 추천 구간 (긴 직선)', 'Top left: <b>lap</b> · <b>position</b> · standings|Top right: minimap (green = DRS zones) · <b>⚙</b> settings & pause|White/sky-blue kerbs = recommended boost zones (long straights)', '左上: <b>周回</b> · <b>順位</b> · 順位表|右上: ミニマップ (緑 = DRS 区間) · <b>⚙</b> 設定・一時停止|白と水色の縁石 = ブースト推奨区間 (長い直線)', '左上: <b>圈数</b> · <b>名次</b> · 排名|右上: 小地图 (绿色 = DRS 区) · <b>⚙</b> 设置与暂停|白蓝路肩 = 推荐加速区 (长直道)'],
 });
@@ -308,6 +308,7 @@ addStrings({
   'ui.ok': ['확인', 'OK', 'OK', '确定'],
   'ctl.change': ['조작 설정 바꾸기', 'Change controls', '操作設定を変更', '更改操作设置'],
 });
+addStrings({ 'msg.limitBreak': ['엔진 임계점 돌파!', 'ENGINE LIMIT BREAK!', 'エンジン限界突破!', '引擎临界突破!'] });
 
 /* ===== 00_strings_cars.js ===== */
 /* 00_cars_lore.js — 차고 차량 소개 (6.0.1) : 별칭 · 콘셉트 · 배경 스토리  [한국어, English, 日本語, 简体中文] */
@@ -1276,15 +1277,15 @@ const I18N_SRC = {
 "コーナーでドリフトするとブーストゲージがたまる",
 "弯道漂移可充能加速槽"
 ],
-"부스트 · 스퍼트": [
-"Boost · Spurt",
-"ブースト · スパート",
-"加速 · 冲刺"
+"부스트 · 임계점 부스트": [
+"Boost · Limit break",
+"ブースト · 限界突破",
+"加速 · 临界点加速"
 ],
-"끝나기 직전(노란 LIMIT)에 한 번 더 = 스퍼트": [
-"Press again in the yellow LIMIT zone = spurt",
-"終わる直前 (黄色い LIMIT) にもう一度 = スパート",
-"在黄色 LIMIT 区再按一次 = 冲刺"
+"끝나기 직전(노란 LIMIT)에 한 번 더 = 임계점 부스트": [
+"Press again in the yellow LIMIT zone = limit break",
+"終わる直前 (黄色い LIMIT) にもう一度 = 限界突破",
+"在黄色 LIMIT 区再按一次 = 临界点加速"
 ],
 "일시정지 · 재시작": [
 "Pause · Restart",
@@ -1356,10 +1357,10 @@ const I18N_SRC = {
 "押している間アクセルオフ",
 "按住时停止加速"
 ],
-"버튼 위 점 = 남은 부스트 개수 · 끝나기 직전 한 번 더 = 스퍼트": [
-"Dots = boosts stored · press again right before it ends = spurt",
-"ボタン上の点 = 残りのブースト · 終わる直前にもう一度 = スパート",
-"按钮上方圆点 = 剩余次数 · 结束前再按 = 冲刺"
+"버튼 위 점 = 남은 부스트 개수 · 끝나기 직전 한 번 더 = 임계점 부스트": [
+"Dots = boosts stored · press again right before it ends = limit break",
+"ボタン上の点 = 残りのブースト · 終わる直前にもう一度 = 限界突破",
+"按钮上方圆点 = 剩余次数 · 结束前再按 = 临界点加速"
 ],
 "자동 가속": [
 "Auto gas",
@@ -2211,7 +2212,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '6.1.0';
+const GAME_VERSION = '6.2.1';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -3383,7 +3384,7 @@ const BOOST_ACCELERATION = 600;
 const BOOST_DURATION = 3.4;   // 5.3: 2.6 → 3.4초 (충전이 까다로워진 만큼 한 번이 더 길게)
 const DRIFT_GRIP_BONUS = 1.4;
 const MAX_BOOST_STOCK = 2;
-/* 6.0 부스트 스퍼트: 부스트가 끝나기 직전(마지막 SPRINT_WINDOW초)에 한 번 더 누르면 SPRINT_DURATION초 동안 더 강한 스퍼트.
+/* 6.0 엔진 임계점 부스트: 부스트가 끝나기 직전(마지막 SPRINT_WINDOW초)에 한 번 더 누르면 SPRINT_DURATION초 동안 더 강한 임계점 부스트.
    그보다 일찍 누르면 남은 부스트가 사라져요(타이밍 실수 = 손해). 안 누르면 그냥 끝나요. */
 const SPRINT_WINDOW = 1.2;
 const SPRINT_DURATION = 3.0;
@@ -3530,7 +3531,7 @@ const versionTapTimes = [];      // 버전 표시 연속 탭 → 개발자 모�
 let fadeAlpha = 0;
 let fastestLap = { time: 0, carId: -1 };
 let punchZoom = 0;            // 부스트 순간 카메라 펀치
-let sprintFlash = 0;          // 6.0: 부스트 스퍼트 순간 화면 섬광·충격파
+let sprintFlash = 0;          // 6.0: 엔진 임계점 부스트 순간 화면 섬광·충격파
 let lastPlayerRank = 5;
 let rankCheckTimer = 0;
 let wallScrapeTimer = 0;
@@ -3791,11 +3792,13 @@ function activateBoost(car) {
   }
   return true;
 }
-/** 부스트 중 한 번 더 누르기: 마지막 창 안이면 스퍼트, 그 전이면 부스트 소멸 */
+/** 부스트 중 한 번 더 누르기: 마지막 창 안이면 임계점 부스트, 그 전이면 부스트 소멸 */
 function startSprint(car) {
   car.sprint = true; car.boostTime = car.boostMax = SPRINT_DURATION;
   car.speed = Math.max(car.speed, 0) + 70; car.sprintsUsed = (car.sprintsUsed || 0) + 1;
-  if (car === player) { showMessage('BOOST SPURT!', '#ff3b2f', 1.2); punchZoom = 1.6; sprintFlash = 1; sfx.sprint(); }
+  if (gameMode === 'race' && Math.hypot(car.x - player.x, car.y - player.y) < 1600)   // 6.1.1: 소닉붐에 바닥 먼지가 둥글게 터져요
+    for (let k = 0; k < 28; k++) { const a = (k / 28) * TAU + Math.random() * 0.2, v = 180 + Math.random() * 140; particles.push({ x: car.x, y: car.y, z: 2, vx: Math.cos(a) * v + Math.cos(car.heading) * car.speed * 0.3, vy: Math.sin(a) * v + Math.sin(car.heading) * car.speed * 0.3, vz: 8, life: 0.7, maxLife: 0.7, type: 'smoke', radius: 12 + Math.random() * 10 }); }
+  if (car === player) { showMessage(tr('msg.limitBreak'), '#ff3b2f', 1.2); punchZoom = 1.6; sprintFlash = 1; sfx.sprint(); }
   else if (gameMode === 'race') sfx.rivalSprint(car);
 }
 function boostSecondPress(car) {
@@ -3804,7 +3807,7 @@ function boostSecondPress(car) {
   car.boostTime = 0; car.boostMax = 0;
   if (car === player) { showMessage(tr('msg.tooEarly'), '#ff6b6b', 1.1, tr('msg.tooEarlySub')); sfx.boostFizzle(); }
 }
-/** 플레이어 부스트 버튼: 꺼져 있으면 켜고, 켜져 있으면 스퍼트 시도 */
+/** 플레이어 부스트 버튼: 꺼져 있으면 켜고, 켜져 있으면 임계점 부스트 시도 */
 function toggleBoost(car) {
   if (car.coolDown) return;
   if (car.boostTime > 0) { boostSecondPress(car); return; }
@@ -3934,7 +3937,7 @@ function controlAI(car, dt) {
   }
 }
 function aiConsiderBoost(car, trait, here) {
-  if (car.boostTime > 0 && !car.sprint && gameMode === 'race') {   // 6.0: AI 스퍼트 — 실력이 좋을수록 창 안에서 정확히 눌러요
+  if (car.boostTime > 0 && !car.sprint && gameMode === 'race') {   // 6.0: AI 임계점 부스트 — 실력이 좋을수록 창 안에서 정확히 눌러요
     if (car.aiSprintAt == null) { const miss = Math.random() < 0.12 * (1.2 - car.skill); car.aiSprintAt = miss ? (Math.random() < 0.5 ? SPRINT_WINDOW + 0.3 + Math.random() * 0.8 : -1) : 0.15 + Math.random() * (SPRINT_WINDOW - 0.25); }
     if (car.aiSprintAt >= 0 && car.boostTime <= car.aiSprintAt) { car.aiSprintAt = null; boostSecondPress(car); }
     return;
@@ -4389,7 +4392,7 @@ function initAudio() {
     const buses = {
       // 엔진: 고역을 깎고 부드럽게 압축 → 회전수를 올려도 귀가 아프지 않게
       engine: bus(0.23,   // 5.1.1: 녹음 엔진이 커서 절반으로
-         makeBiquad(c, 'peaking', 1100, 1.2, -3), makeBiquad(c, 'highshelf', 3200, 0.7, -6), makeCompressor(c, -22, 10, 2.5, 0.02, 0.25)),
+         makeBiquad(c, 'peaking', 1100, 1.2, -1), makeBiquad(c, 'highshelf', 3200, 0.7, -2), makeBiquad(c, 'peaking', 2400, 1, 2.5), makeCompressor(c, -22, 10, 2.5, 0.02, 0.25)),   // 6.2: 고역을 덜 깎아 거친 맛 살리기
       rivals: bus(0.12),   // 5.1.1: 상대 차 엔진·그리드 공회전도 절반
       effects: bus(0.6),
       // 환경음: 저역통과 + 강한 압축 → 툭 튀어나오지 않게
@@ -4454,9 +4457,14 @@ function buildLoops() {
   const kerbGain = c.createGain(); kerbGain.gain.value = 0;
   connectChain(kerb, makeBiquad(c, 'lowpass', 320, 1), kerbGain, B.effects); kerb.start();
   audio.kerbBuzz = { osc: kerb, gain: kerbGain };
-  const whine = c.createOscillator(); whine.type = 'sine'; whine.frequency.value = 1400;
-  const whineGain = c.createGain(); whineGain.gain.value = 0; connectChain(whine, whineGain, B.effects); whine.start();
-  audio.boostWhine = { osc: whine, gain: whineGain };
+  // 6.2: 부스트 터빈 — 기본음 + 옥타브 위 배음, 살짝 떨리는 비브라토. 부스트 동안 4.6k → 5.3k 쪽으로 천천히 올라가요
+  const whine = c.createOscillator(); whine.type = 'triangle'; whine.frequency.value = 2300;
+  const whine2 = c.createOscillator(); whine2.type = 'sine'; whine2.frequency.value = 4600;
+  const vib = c.createOscillator(), vibDepth = c.createGain(); vib.frequency.value = 23; vibDepth.gain.value = 18; vib.connect(vibDepth); vibDepth.connect(whine.frequency); vibDepth.connect(whine2.frequency); vib.start();
+  const whineGain = c.createGain(); whineGain.gain.value = 0;
+  const w2 = c.createGain(); w2.gain.value = 0.7; whine2.connect(w2).connect(whineGain);
+  connectChain(whine, whineGain, makeBiquad(c, 'highpass', 1500, 0.7), B.effects); whine.start(); whine2.start();
+  audio.boostWhine = { osc: whine, osc2: whine2, gain: whineGain };
   // 귀뚜라미 (야간): 4.7kHz 를 26Hz 로 떨고 1.6Hz 로 끊음
   const cricket = c.createOscillator(); cricket.frequency.value = 4700;
   const trem = c.createGain(); trem.gain.value = 0.5; const tremLfo = c.createOscillator(); tremLfo.frequency.value = 26; const tremDepth = c.createGain(); tremDepth.gain.value = 0.5; tremLfo.connect(tremDepth).connect(trem.gain);
@@ -4499,8 +4507,12 @@ function buildSampleEngine() {
   const lowGain = c.createGain(), highGain = c.createGain(); lowGain.gain.value = 0; highGain.gain.value = 0;
   const highShape = makeBiquad(c, 'highpass', 180, 0.7), tone = makeBiquad(c, 'lowpass', 1200, 0.8), body = makeBiquad(c, 'peaking', 140, 1, 3);
   low.connect(lowGain).connect(tone); high.connect(highShape).connect(highGain).connect(tone);
-  connectChain(tone, body, makeSoftClipper(c, 1.6), audio.buses.engine);
-  E.sample = { low, high, lowGain, highGain, tone };
+  const presence = makeBiquad(c, 'peaking', 2600, 0.9, 4);
+  connectChain(tone, body, makeSoftClipper(c, 2.4), presence, audio.buses.engine);
+  // 6.1.1: 거친 질감 층 — 중고역만 뽑아 세게 찌그러뜨린 '레이스 엔진의 쇳소리'를 같이 섞어요
+  const raspIn = makeBiquad(c, 'highpass', 700, 0.7), raspBand = makeBiquad(c, 'bandpass', 2200, 0.7), raspGain = c.createGain(); raspGain.gain.value = 0;
+  connectChain(tone, raspIn, makeSoftClipper(c, 7), raspBand, raspGain, audio.buses.engine);
+  E.sample = { low, high, lowGain, highGain, tone, raspGain, raspBand };
 }
 /** 상대 차 3대: 합성음을 줄이고 같은 녹음을 도플러와 함께 재생 */
 function buildSampleRivals() {
@@ -4628,25 +4640,26 @@ const sfx = {
     } else playNoise(0.28, { frequency: 2300, to: 3000, q: 8, gain: 0.11 });
   },
   miniTurbo() { sfx.backfire(1); playTone(260, 0.3, { type: 'sawtooth', to: 900, gain: 0.05, lowpass: 2600, reverb: 0.2 }); },
-  /** 6.0: 부스트 점화 — 저음 쿵 + 왜곡 폭발 + 불꽃 튀는 소리 + 상승음 */
+  /** 6.1.1: 부스트 점화 — 북처럼 '쿵' 하던 저음을 빼고, 제트 엔진이 치익 하고 붙어 포효로 커지는 소리 */
   boost() {
-    playTone(68, 0.9, { to: 26, gain: 0.5, attack: 0.004 });
-    playBlast(1.1, { gain: 0.34, from: 3800, to: 260, drive: 5 });
-    for (let i = 0; i < 5; i++) playNoise(0.035, { filter: 'highpass', frequency: 2400 + Math.random() * 2000, q: 0.8, gain: 0.14, at: 0.05 + i * 0.07 + Math.random() * 0.03, pan: (Math.random() - 0.5) * 0.6 });
-    playNoise(1.0, { pink: true, frequency: 300, to: 2400, q: 0.9, gain: 0.18, attack: 0.08, reverb: 0.25 });
-    duckEngine(0.45);
+    playNoise(0.35, { filter: 'highpass', frequency: 7500, q: 0.6, gain: 0.22, attack: 0.01 });                      // 6.2: 밝은 점화 분사 '치익' (8~12kHz)
+    playBlast(1.3, { gain: 0.26, from: 900, to: 4200, drive: 6, reverb: 0.25, white: true });                       // 낮게 붙어 밝게 열리는 분사음
+    playNoise(1.4, { pink: true, frequency: 400, to: 3600, slide: 0.9, q: 1.1, gain: 0.2, attack: 0.15, reverb: 0.2 }); // 휘이익 상승
+    playTone(140, 1.1, { type: 'sawtooth', to: 520, slide: 0.9, gain: 0.05, lowpass: 2400 });                        // 터빈 회전 상승
+    for (let i = 0; i < 4; i++) playNoise(0.03, { filter: 'highpass', frequency: 2800 + Math.random() * 2400, q: 0.8, gain: 0.1, at: 0.12 + i * 0.09, pan: (Math.random() - 0.5) * 0.6 });
+    duckEngine(0.55);
   },
-  /** 6.0: 스퍼트 — 두 번 연속 폭발 + 더 깊은 저음 + 날카로운 비명 + 긴 잔향 */
+  /** 6.1.1: 엔진 임계점 부스트 — 공기를 찢는 소닉붐 '빡' (짧고 날카로운 크랙 두 번) + 굉음 + 비명 같은 상승 */
   sprint() {
-    playTone(52, 1.3, { to: 20, gain: 0.7, attack: 0.003 });
-    playTone(104, 0.7, { type: 'triangle', to: 40, gain: 0.25 });
-    playBlast(1.5, { gain: 0.48, from: 5200, to: 180, drive: 9, reverb: 0.5 });
-    playBlast(1.0, { gain: 0.32, from: 3600, to: 240, drive: 7, at: 0.16, reverb: 0.5 });
-    playTone(320, 1.2, { type: 'sawtooth', to: 1400, slide: 0.9, gain: 0.07, lowpass: 3600, reverb: 0.4 });
-    for (let i = 0; i < 9; i++) sfx.backfire(1.4, 0.1 + i * 0.09 + Math.random() * 0.05);
+    playNoise(0.05, { filter: 'highpass', frequency: 1800, q: 0.5, gain: 0.55, reverb: 0.6 });                          // 크랙 1
+    playNoise(0.06, { filter: 'highpass', frequency: 1400, q: 0.5, gain: 0.4, at: 0.07, reverb: 0.6 });                // 크랙 2 (이중 소닉붐)
+    playBlast(1.6, { gain: 0.42, from: 5200, to: 380, drive: 10, reverb: 0.55, white: true });                       // 찢어지는 굉음
+    playTone(60, 0.5, { to: 34, gain: 0.22, attack: 0.02 });                                                            // 짧은 압력파 (북처럼 길게 울리지 않게)
+    playTone(380, 1.3, { type: 'sawtooth', to: 1900, slide: 1.0, gain: 0.07, lowpass: 4200, reverb: 0.4 });           // 비명 같은 상승
+    for (let i = 0; i < 9; i++) sfx.backfire(1.3, 0.12 + i * 0.08 + Math.random() * 0.05);
     duckEngine(0.3); audio.crowdCheer = Math.max(audio.crowdCheer || 0, 0.25);
   },
-  /** 스퍼트 타이밍 창이 열렸다는 신호 (짧은 두 번 삑) */
+  /** 임계점 부스트 타이밍 창이 열렸다는 신호 (짧은 두 번 삑) */
   sprintCue() { playTone(1760, 0.07, { type: 'square', lowpass: 4000, gain: 0.05, bus: 'ui' }); playTone(2349, 0.09, { type: 'square', lowpass: 4000, gain: 0.05, bus: 'ui', at: 0.09 }); },
   /** 너무 일찍 눌러 부스트가 꺼짐 */
   boostFizzle() { playNoise(0.6, { frequency: 2600, to: 300, q: 1.4, gain: 0.12 }); playTone(420, 0.4, { type: 'sawtooth', to: 110, gain: 0.06, lowpass: 1200 }); sfx.deny(); },
@@ -4696,9 +4709,9 @@ const sfx = {
     } else {
       [0, 0.3].forEach((delay, i) => [57, 60, 64].forEach((n) => playTone(midiToHz(n + (i ? 2 : 0)), i ? 1.2 : 0.3, { type: 'triangle', gain: 0.06, at: delay, bus: 'ui', reverb: 0.3 })));
     }
-    playNoise(3.5, { pink: true, frequency: 900, q: 0.6, gain: podium ? 0.32 : 0.14, attack: 0.5, reverb: 0.35 });
+    playNoise(1.8, { pink: true, frequency: 900, q: 0.6, gain: podium ? 0.24 : 0.11, attack: 0.3, reverb: 0.2 });   // 6.2.1: 결승선 함성은 짧게 (음악 전에 끝나도록)
     sfx.applause(podium ? 4 : 2.5, podium ? 1 : 0.5);
-    audio.crowdCheer = podium ? 0.28 : 0.1; audio.crowdCheerHold = podium ? 8 : 3;
+    audio.crowdCheer = podium ? 0.28 : 0.1; audio.crowdCheerHold = podium ? 1.6 : 1.2;
   },
   bird() {
     const f = 2400 + Math.random() * 1800, count = 2 + Math.floor(Math.random() * 3), pan = (Math.random() - 0.5) * 1.2;
@@ -4750,7 +4763,9 @@ function updateAudio(dt) {
     S.low.playbackRate.setTargetAtTime(rate, t, 0.05); S.high.playbackRate.setTargetAtTime(rate * 2, t, 0.05);
     S.lowGain.gain.setTargetAtTime(racing * (0.5 + 0.35 * throttle) * (1 - 0.4 * rev) * audio.engineDuck, t, 0.08);
     S.highGain.gain.setTargetAtTime(racing * (0.06 + 0.75 * rev * rev) * (0.35 + 0.65 * throttle) * audio.engineDuck, t, 0.08);
-    S.tone.frequency.setTargetAtTime(450 + rev * 3600 * (0.4 + 0.6 * throttle) + (boosting ? 1500 : 0), t, throttle > 0.1 ? 0.06 : 0.25);   // 액셀을 떼면 천천히 먹먹해지며 감속
+    S.tone.frequency.setTargetAtTime(700 + rev * 5200 * (0.4 + 0.6 * throttle) + (boosting ? 1800 : 0), t, throttle > 0.1 ? 0.06 : 0.25);   // 6.1.1: 더 밝게
+    S.raspGain.gain.setTargetAtTime(racing * (0.05 + 0.32 * rev) * (0.3 + 0.7 * throttle) * audio.engineDuck, t, 0.07);
+    S.raspBand.frequency.setTargetAtTime(1500 + rev * 2400, t, 0.08);   // 액셀을 떼면 천천히 먹먹해지며 감속
     E.volume.gain.setTargetAtTime(racing * (0.1 + 0.1 * throttle + 0.07 * rev) * audio.engineDuck * 0.35, t, 0.12);
   }
   E.whine.frequency.setTargetAtTime(baseHz * 6, t, 0.05);
@@ -4779,17 +4794,23 @@ function updateAudio(dt) {
   L.wind.filter.frequency.setTargetAtTime(700 + speed * 1.6, t, 0.15);
   L.wetSpray.gain.gain.setTargetAtTime(racing * onTarmac * (environment === 'RAIN' ? clamp(speed / 500, 0, 1) * 0.05 * weatherStrength() : environment === 'SNOW' ? clamp(speed / 500, 0, 1) * 0.025 * weatherStrength() : 0), t, 0.2);
   const spr = p.sprint && p.boostTime > 0 ? 1 : 0, roar = p.boostTime > 0 ? 1 : p.boostTransform * 0.4;
-  L.boostRush.gain.gain.setTargetAtTime(racing * roar * (0.16 + 0.12 * spr) * (0.85 + 0.15 * Math.random()), t, 0.05);   // 로켓 굉음 (스퍼트면 더 크고 밝게)
+  L.boostRush.gain.gain.setTargetAtTime(racing * roar * (0.16 + 0.12 * spr) * (0.85 + 0.15 * Math.random()), t, 0.05);   // 로켓 굉음 (임계점 부스트면 더 크고 밝게)
   L.boostRush.filter.frequency.setTargetAtTime(520 + 380 * roar + 1100 * spr + Math.random() * 120, t, 0.06);
-  L.boostRumble.gain.gain.setTargetAtTime(racing * roar * (0.32 + 0.25 * spr), t, 0.06);
-  audio.boostWhine.gain.gain.setTargetAtTime(0, t, 0.08);
-  if (spr && Math.random() < 0.18) sfx.backfire(0.9);                                                // 스퍼트 중 불꽃 튀는 팝
+  L.boostRumble.gain.gain.setTargetAtTime(racing * roar * (0.2 + 0.18 * spr), t, 0.06);
+  // 터빈: 부스트가 진행될수록 음이 올라가고, 임계점 부스트는 한 단계 더 높게 비명처럼
+  const prog = p.boostTime > 0 ? 1 - p.boostTime / Math.max(0.1, p.boostMax || 1) : 0, wf = (spr ? 2650 : 2300) + prog * (spr ? 450 : 350) + speed * 0.12;
+  audio.boostWhine.osc.frequency.setTargetAtTime(wf, t, 0.08); audio.boostWhine.osc2.frequency.setTargetAtTime(wf * 2, t, 0.08);
+  audio.boostWhine.gain.gain.setTargetAtTime(racing * roar * (spr ? 0.03 : 0.022), t, 0.1);
+  if (spr && Math.random() < 0.18) sfx.backfire(0.9);                                                // 임계점 부스트 중 불꽃 튀는 팝
 
   // 관중 · 날씨 · 자연
   audio.crowdCheerHold = Math.max(0, audio.crowdCheerHold - dt);
   if (audio.crowdCheerHold <= 0) audio.crowdCheer = Math.max(0, audio.crowdCheer - dt * 0.06);
   if (audible && gameMode === 'finish' && audio.crowdCheerHold > 0 && Math.random() < dt * 0.9) sfx.applause(1, isCelebration(finishResult) ? 0.6 : 0.3);
-  L.crowd.gain.gain.setTargetAtTime(audible ? (0.035 + 0.09 * audio.crowdNearness + audio.crowdCheer) * (gameMode === 'menu' ? 0.5 : 1) : 0, t, 0.4);
+  // 6.2.1: 결과 음악이 나오는 동안엔 관중 소리를 크게 낮춰요 (쉬익거리는 함성이 노래와 겹쳐 '들끓는' 느낌이 나지 않게)
+  const finishMusic = gameMode === 'finish' && finishTimer > 1.6 && settings.musicOn && !isMuted();
+  if (finishMusic) audio.crowdCheer = Math.max(0, audio.crowdCheer - dt * 0.5);
+  L.crowd.gain.gain.setTargetAtTime(audible ? (0.035 + 0.09 * audio.crowdNearness + audio.crowdCheer) * (gameMode === 'menu' ? 0.5 : finishMusic ? 0.25 : 1) : 0, t, finishMusic ? 0.6 : 0.4);
   L.rain.gain.gain.setTargetAtTime(audible && environment === 'RAIN' ? 0.022 + 0.04 * weatherStrength() : 0, t, 0.6);
   L.snowWind.gain.gain.setTargetAtTime(audible && environment === 'SNOW' ? 0.022 + 0.04 * weatherStrength() : 0, t, 0.6);
   L.snowWind.filter.frequency.setTargetAtTime(420 + Math.sin(t * 0.3) * 200, t, 0.5);
@@ -5348,7 +5369,7 @@ function drawReplayHUD() {
 const PEERJS_SCRIPT_URL = 'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';
 const ROOM_ID_PREFIX = 'apexgp2-room-';
 const ROOM_CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';   // 헷갈리는 0/O, 1/I 제외
-const DUEL_PROTOCOL = 6;   // 6.0: 로비(차량 표시 · 준비) · 기권 · 5초 리타이어 · 부스트 스퍼트
+const DUEL_PROTOCOL = 6;   // 6.0: 로비(차량 표시 · 준비) · 기권 · 5초 리타이어 · 엔진 임계점 부스트
 const RETIRE_AFTER = 5;    // 상대가 먼저 들어온 뒤 이 시간 안에 못 들어오면 리타이어
 /* 방(room) 구조: players 배열에 { id, name, car, ready, host } — 지금은 2명(1:1)이지만 6~8명으로 늘릴 때
    호스트가 모든 참가자와 연결하고 메시지를 중계하는 별(star) 구조로 확장할 수 있게 id 기반으로 만들어 뒀어요. */
@@ -5998,12 +6019,18 @@ function makeCarModel(designId, L, ghost, scene = W3.scene) {
   const blob = new THREE.Mesh(P.blob, Sh.blob); blob.scale.set((opts.length || 120) * CAR_SCALE, 1, 60 * CAR_SCALE); blob.position.y = 0.5; blob.renderOrder = 2; root.add(blob);
   const cone = new THREE.Mesh(P.cone, M.cone); cone.scale.set(340, 1, 170); cone.position.set(40, 0.7, 0); cone.renderOrder = 3; root.add(cone);
   const under = new THREE.Mesh(P.blob, M.under); under.scale.set(140 * CAR_SCALE, 1, 74 * CAR_SCALE); under.position.y = 0.8; under.renderOrder = 3; root.add(under);
-  // 6.0: 부스트 오라(차 뒤 큰 빛 덩어리) + 스퍼트 충격파 고리 — 부스트 연출 2~3배
+  // 6.0: 부스트 오라(차 뒤 큰 빛 덩어리)
   const aura = new THREE.Sprite(new THREE.SpriteMaterial({ map: W3.textures.dot, color: L.glow, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
   aura.position.set(-(opts.length || 120) * 0.5 * CAR_SCALE, 9 * CAR_SCALE, 0); aura.visible = false; root.add(aura);
-  const shock = new THREE.Mesh(new THREE.RingGeometry(0.82, 1, 48).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, side: THREE.DoubleSide }));
-  shock.position.y = 1.2; shock.visible = false; shock.renderOrder = 4; root.add(shock);
-  Object.assign(m, { blob, cone, under, aura, shock, shockT: 9, wasSprint: false, glowColor: L.glow }); m.ownGeometry.push(shock.geometry);
+  // 6.1.1: 로켓 분사 기둥 (바깥 빛 + 안쪽 흰 심지) — 부스트 때 굵고 길게 뒤로 뻗어요
+  const rearX = -(opts.length || 120) * 0.47 * CAR_SCALE, plumes = [[L.glow, 1.0], ['#ffffff', 0.45]].map(([c, r]) => {
+    const mesh = new THREE.Mesh(P.flame, boostFxMaterial('plume', c)); mesh.position.set(rearX, 8 * CAR_SCALE, 0); mesh.visible = false; mesh.renderOrder = 5; mesh.userData.r = r; root.add(mesh); return mesh;
+  });
+  // 6.1.1: 소닉붐 (엔진 임계점 부스트) — 차를 감싸는 흰 수증기 원뿔 + 뒤로 날아가며 커지는 충격파 고리 여러 겹
+  const vapor = new THREE.Mesh(sharedBoomGeometry().cone, boostFxMaterial('vapor', new THREE.Color('#ffffff').lerp(new THREE.Color(L.glow), 0.35))); vapor.position.set(10 * CAR_SCALE, 9 * CAR_SCALE, 0); vapor.visible = false; vapor.renderOrder = 6; root.add(vapor);
+  const rings = [];
+  for (let k = 0; k < 7; k++) { const r = new THREE.Mesh(sharedBoomGeometry().ring, new THREE.MeshBasicMaterial({ map: boomRingTexture(), color: k % 2 ? L.glow : '#ffffff', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, side: THREE.DoubleSide })); r.visible = false; r.renderOrder = 6; root.add(r); rings.push({ mesh: r, age: 9, big: false, life: 0.6 }); }
+  Object.assign(m, { blob, cone, under, aura, plumes, vapor, rings, boomT: 9, machTimer: 0, wasSprint: false, glowColor: L.glow, rearX });
   m.trails = m.emitters.map((e) => makeTrail(e.color || L.glow, e.width || 5, e.length || 22, scene));
   scene.add(root); scene.add(fx);
   return m;
@@ -6044,7 +6071,8 @@ function disposeCarModel(m) {
   for (const g of m.ownGeometry) g.dispose();
   for (const k in m.mats) { const mat = m.mats[k]; if (k === 'decal' && mat.map) mat.map.dispose(); mat.dispose && mat.dispose(); }
   for (const p of m.rig.poolMaterials || []) p.dispose();
-  if (m.aura) m.aura.material.dispose(); if (m.shock) m.shock.material.dispose();
+  if (m.aura) m.aura.material.dispose();
+  for (const o of [...(m.plumes || []), m.vapor, ...(m.rings || []).map((r) => r.mesh)]) if (o) o.material.dispose();
 }
 
 /* ===================================================================
@@ -6673,7 +6701,7 @@ function updateTrails(car, m, tf, fxK = 1) {
     const pos = tr.mesh.geometry.attributes.position.array, al = tr.mesh.geometry.attributes.alpha.array, count = tr.points.length / 3;
     for (let i = 0; i < tr.N; i++) {
       const j = Math.min(i, count - 1) * 3, px = tr.points[j], py = tr.points[j + 1], pz = tr.points[j + 2];
-      const f = 1 - i / (tr.N - 1), w = tr.width * (0.3 + 0.7 * f) * (1 + (fxK - 1) * 0.55);
+      const f = 1 - i / (tr.N - 1), w = tr.width * (0.3 + 0.7 * f) * (1 + (fxK - 1) * 0.22);   // 6.2: 궤적은 살짝만 (긴 꼬리는 분사 기둥이 담당)
       if (e.flat) {   // 바닥에 눕는 띠: 진행 방향에 수직으로 펼침
         const n = Math.min(i + 1, count - 1) * 3, p = Math.max(0, Math.min(i, count - 1) - 1) * 3;
         let dx = tr.points[p] - tr.points[n], dz = tr.points[p + 2] - tr.points[n + 2]; const len = Math.hypot(dx, dz) || 1; dx /= len; dz /= len;
@@ -6686,10 +6714,45 @@ function updateTrails(car, m, tf, fxK = 1) {
       al[i * 2] = al[i * 2 + 1] = i < count ? f * f : 0;
     }
     tr.mesh.geometry.attributes.position.needsUpdate = true; tr.mesh.geometry.attributes.alpha.needsUpdate = true;
-    tr.mesh.material.uniforms.strength.value = (m.ghost ? 0.4 : Math.min(1.6, 0.85 * (1 + (fxK - 1) * 0.4))) * Math.max(tf, 0.35);
+    tr.mesh.material.uniforms.strength.value = (m.ghost ? 0.4 : Math.min(1.1, 0.85 * (1 + (fxK - 1) * 0.15))) * Math.max(tf, 0.35);
   });
 }
 
+
+/* ---------- 6.1.1 부스트 분사 기둥 · 소닉붐 재질 ---------- */
+const BOOST_FX_VERTEX = 'varying vec3 vP; varying vec2 vUv; void main(){ vP = position; vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
+const BOOST_FX_FRAGMENT = {
+  // 분사 기둥: P.flame 은 x=0(노즐) → x=-1(끝). 노즐 쪽은 진하고, 끝으로 갈수록 가늘게 사라지며 일렁여요
+  plume: `uniform vec3 color; uniform float opacity; uniform float time; varying vec3 vP; varying vec2 vUv;
+    void main(){ float t = clamp(-vP.x, 0.0, 1.0); float flick = 0.75 + 0.25 * sin(time * 55.0 + t * 30.0) * sin(time * 23.0 + vUv.x * 40.0);
+      float a = pow(1.0 - t, 1.5) * smoothstep(0.0, 0.05, t) * flick * opacity; vec3 c = mix(vec3(1.0), color, smoothstep(0.0, 0.45, t));
+      gl_FragColor = vec4(c * (1.4 - t * 0.6), a); }`,
+  // 수증기 원뿔: 앞(꼭짓점)은 투명, 가운데가 가장 하얗고 뒤로 흩어지는 줄무늬
+  vapor: `uniform vec3 color; uniform float opacity; uniform float time; varying vec3 vP; varying vec2 vUv;
+    float h(float n){ return fract(sin(n) * 43758.5453); }
+    void main(){ float t = clamp(0.5 - vP.x, 0.0, 1.0); float streak = 0.55 + 0.45 * h(floor(vUv.x * 64.0) + floor(time * 20.0) * 7.0);
+      float a = smoothstep(0.0, 0.35, t) * pow(1.0 - t, 0.8) * streak * opacity * 0.85; gl_FragColor = vec4(color, a); }`,
+};
+function boostFxMaterial(kind, color) {
+  return new THREE.ShaderMaterial({ vertexShader: BOOST_FX_VERTEX, fragmentShader: BOOST_FX_FRAGMENT[kind], transparent: true, depthWrite: false, fog: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
+    uniforms: { color: { value: new THREE.Color(color) }, opacity: { value: 0 }, time: { value: 0 } } });
+}
+let _boomGeo = null, _boomRingTex = null;
+function sharedBoomGeometry() {
+  if (!_boomGeo) _boomGeo = { cone: new THREE.ConeGeometry(1, 1, 48, 1, true).rotateZ(-Math.PI / 2), ring: new THREE.PlaneGeometry(1, 1).rotateY(Math.PI / 2) };   // 원뿔 꼭짓점 = 앞(+x), 고리 = 진행 방향을 바라봄
+  return _boomGeo;
+}
+/** 충격파 고리: 밝은 테두리 + 안쪽으로 번지는 흐린 파동 + 바깥 잔물결 */
+function boomRingTexture() {
+  if (_boomRingTex) return _boomRingTex;
+  const S = 256, c = makeCanvas(S, S), x = c.getContext('2d'), g = x.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
+  g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.55, 'rgba(255,255,255,.06)'); g.addColorStop(0.78, 'rgba(255,255,255,.35)'); g.addColorStop(0.86, 'rgba(255,255,255,1)');
+  g.addColorStop(0.9, 'rgba(255,255,255,.4)'); g.addColorStop(0.95, 'rgba(255,255,255,.12)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = g; x.fillRect(0, 0, S, S);
+  x.globalCompositeOperation = 'destination-out';   // 테두리를 고르지 않게 (공기가 찢어지는 느낌)
+  for (let k = 0; k < 90; k++) { const a = Math.random() * Math.PI * 2, r = S * (0.38 + Math.random() * 0.1); x.fillStyle = `rgba(0,0,0,${0.15 + Math.random() * 0.35})`; x.beginPath(); x.arc(S / 2 + Math.cos(a) * r, S / 2 + Math.sin(a) * r, 2 + Math.random() * 7, 0, Math.PI * 2); x.fill(); }
+  return (_boomRingTex = canvasTexture(c, false));
+}
 /* ===================================================================
    매 프레임 차량 갱신
    =================================================================== */
@@ -6723,19 +6786,36 @@ function updateCarModel(car, dt) {
   m.blob.material.opacity = 0.85 * clamp(1 - m.lift / 14, 0.35, 1);
   for (const g of m.rimGlows) g.visible = tf > 0.04;
   m.mats.rimGlow.opacity = tf * 0.95 * (m.ghost ? 0.4 : 1);
-  const spr = boosting && car.sprint ? 1 : 0, fxK = boosting ? (spr ? 2.6 : 2.0) : 1;   // 6.0: 부스트 연출 배율 (스퍼트 3배)
+  const spr = boosting && car.sprint ? 1 : 0, fxK = boosting ? (spr ? 3.2 : 2.4) : 1;   // 6.0: 부스트 연출 배율 (임계점 부스트 3배)
   if (m.designId !== 'glacier') { m.mats.under.opacity = Math.min(1, tf * 0.55 * fxK * 0.6) * (m.ghost ? 0.4 : 1); m.under.scale.set(140 * CAR_SCALE * (1 + 0.5 * tf * (fxK - 1)), 1, 74 * CAR_SCALE * (1 + 0.4 * tf * (fxK - 1))); }
   m.aura.visible = tf > 0.03;
   if (m.aura.visible) { const pulse = 0.85 + 0.15 * Math.sin(t * 38 + car.x); m.aura.material.opacity = tf * (spr ? 0.55 : 0.38) * pulse * (m.ghost ? 0.4 : 1); m.aura.scale.setScalar((spr ? 105 : 78) * CAR_SCALE * pulse * (0.6 + 0.4 * tf)); }
-  if (spr && !m.wasSprint) m.shockT = 0;   // 스퍼트 시작 순간 충격파
-  m.wasSprint = !!spr; m.shockT += dt;
-  m.shock.visible = m.shockT < 0.7;
-  if (m.shock.visible) { const k = m.shockT / 0.7, r = (30 + 260 * Math.pow(k, 0.6)) * CAR_SCALE; m.shock.scale.set(r, 1, r); m.shock.material.opacity = (1 - k) * 0.9; m.shock.material.color.set(k < 0.25 ? '#ffffff' : m.glowColor); }
+  // 분사 기둥: 일반 부스트 굵고 길게, 임계점 부스트는 더 굵고 더 길게 + 흰 심지
+  const plumeOn = boosting, flick = 0.88 + Math.random() * 0.24;
+  for (const pl of m.plumes) {
+    pl.visible = plumeOn && tf > 0.05; if (!pl.visible) continue;
+    const len = (spr ? 240 : 165) * CAR_SCALE * tf * flick, rad = (spr ? 13 : 10) * CAR_SCALE * pl.userData.r * (0.9 + 0.1 * flick);
+    pl.scale.set(len, rad, rad); pl.material.uniforms.time.value = t; pl.material.uniforms.opacity.value = (spr ? 0.6 : 0.45) * (pl.userData.r < 1 ? 0.55 : 1) * tf * (m.ghost ? 0.4 : 1);
+  }
+  // 소닉붐: 임계점 부스트 시작 순간 큰 고리 3겹 + 수증기 원뿔, 이어지는 동안 작은 고리(마하 다이아몬드)가 계속 뒤로
+  const spawnRing = (big, delay) => { const r = m.rings.find((o) => o.age > o.life) || m.rings[0]; Object.assign(r, { age: -delay, big, life: big ? 0.75 : 0.45 }); };
+  if (spr && !m.wasSprint) { m.boomT = 0; spawnRing(true, 0); spawnRing(true, 0.09); spawnRing(true, 0.18); }
+  m.wasSprint = !!spr; m.boomT += dt;
+  if (spr) { m.machTimer -= dt; if (m.machTimer <= 0) { m.machTimer = 0.22; spawnRing(false, 0); } }
+  for (const r of m.rings) {
+    r.age += dt; const k = r.age / r.life; r.mesh.visible = k >= 0 && k < 1; if (!r.mesh.visible) continue;
+    const e = 1 - Math.pow(1 - k, 2.2);
+    if (r.big) { r.mesh.position.set((20 - 260 * e) * CAR_SCALE, 10 * CAR_SCALE, 0); r.mesh.scale.setScalar((40 + 160 * e) * CAR_SCALE); r.mesh.material.opacity = (1 - k) * (1 - k) * 0.7 * (m.ghost ? 0.4 : 1); }
+    else { r.mesh.position.set(m.rearX - (20 + 200 * e) * CAR_SCALE, 8 * CAR_SCALE, 0); r.mesh.scale.setScalar((16 + 30 * e) * CAR_SCALE); r.mesh.material.opacity = (1 - k) * 0.45 * (m.ghost ? 0.4 : 1); }
+  }
+  const vk = m.boomT < 0.6 ? 1 - m.boomT / 0.6 : 0, vHold = spr ? 0.16 + 0.06 * Math.sin(t * 17) : 0, vo = Math.max(vk * 0.55, vHold) * (m.ghost ? 0.4 : 1);
+  m.vapor.visible = vo > 0.02;
+  if (m.vapor.visible) { const g = 1 + 0.35 * (1 - vk); m.vapor.scale.set(150 * CAR_SCALE * g, 40 * CAR_SCALE * g, 40 * CAR_SCALE * g); m.vapor.material.uniforms.opacity.value = vo; m.vapor.material.uniforms.time.value = t; }
   for (const f of m.flames) {
     f.mesh.visible = boosting || (car.miniTurboTime > 0 && f.length > 22);
     if (!f.mesh.visible) continue;
     const len = f.length * (boosting ? fxK : 0.55) * (0.85 + Math.random() * 0.35);
-    f.mesh.scale.set(len, f.radius * (boosting ? 1 + 0.25 * (fxK - 1) : 1), f.radius * (boosting ? 1 + 0.25 * (fxK - 1) : 1));
+    f.mesh.scale.set(len, f.radius * (boosting ? 1 + 0.45 * (fxK - 1) : 1), f.radius * (boosting ? 1 + 0.45 * (fxK - 1) : 1));   // 6.1.1: 더 굵게
     f.mesh.material = boosting ? f.base : m.mats.mini;
   }
   m.root.updateMatrixWorld(true);
@@ -8199,7 +8279,7 @@ function boostCameraWeights(dt) {
 }
 /* ---------- 6.0 리플레이 하이라이트 카메라 ----------
    샷 종류: 높은 항공(전체 흐름) · 트랙 옆 고정 카메라(지나가는 차를 따라 패닝) · 헬기 선회 · 방송 추적 · 선두권 와이드
-   부스트 · 스퍼트 · 결승선 통과 · 접전(두 차가 가까이)이 생기면 그 차로 컷. 컷은 최소 1.6초 간격, 샷은 4~7초. */
+   부스트 · 임계점 부스트 · 결승선 통과 · 접전(두 차가 가까이)이 생기면 그 차로 컷. 컷은 최소 1.6초 간격, 샷은 4~7초. */
 const REPLAY_SHOTS = ['aerial', 'trackside', 'heli', 'follow', 'pack', 'trackside', 'aerial'];
 function replayDirector(dt, pos, look) {
   const P = replayPlayer, cars = P.cars.filter((c) => c && c.x != null), D = (W3.rd = W3.rd || { shot: 'aerial', timer: 0, focus: 0, last: [], since: 9, shotIndex: 0, angle: 0 });
@@ -8257,6 +8337,8 @@ function updateCamera3D(dt) {
   const cam = W3.camera, p = player, desiredPos = new THREE.Vector3(), lookAt = new THREE.Vector3();
   let fov = 58, lerpRate = 9;
   const BC = BOOST_CAMERA, { show, ahead: aheadK } = boostCameraWeights(dt);
+  // 6.1.1: 엔진 임계점 부스트 — 화각을 크게 벌리고 카메라를 낮추며 살짝 뒤로 → 일반 부스트보다 확실히 빠른 느낌
+  W3.sprintK = lerp(W3.sprintK || 0, gameMode === 'race' && p.sprint && p.boostTime > 0 ? 1 : 0, smoothFactor(p.sprint ? 5 : 2.5, dt)); const sk = W3.sprintK;
   if (gameMode === 'menu') {
     const q = trackPoint(menuCameraTrackPos), t = nowSeconds() * 0.12;
     lookAt.set(q.x, 20, q.y);
@@ -8272,14 +8354,14 @@ function updateCamera3D(dt) {
     lookAt.set(p.x + camera.lookX + Math.cos(travel) * extra * dir, 0, p.y + camera.lookY + Math.sin(travel) * extra * dir);
     const dist = (460 + clamp(Math.abs(p.speed) / 720, 0, 1.4) * 110 - punchZoom * 30) * (1 - 0.32 * show) + 70 * aheadK;
     desiredPos.set(lookAt.x + dist * 0.6, dist * 0.95, lookAt.z + dist * 0.6);
-    fov = 40; lerpRate = 10;
+    fov = 40 + 9 * sk; lerpRate = 10;
   } else {
     const C = CHASE_CAMERA, travel = p.heading + (p.speed >= 0 ? (p.bodySlip || 0) * 0.6 : Math.PI);
     W3.camYaw = W3.snap ? travel : W3.camYaw + angleDiff(travel, W3.camYaw) * smoothFactor(C.yawRate, dt);
     // 출발 그리드: 바로 뒤 차에 가려지지 않게 높고 가까이서 내려다보다가 출발 후 2초간 평소 위치로
     const grid = gameMode === 'lights' ? 1 : gameMode === 'race' ? clamp(1 - raceTime / 2, 0, 1) : 0;
     const speedK = clamp(Math.abs(p.speed) / 720, 0, 1.5);
-    let dist = lerp(C.distance + speedK * 45, 120, grid), height = lerp(C.height + speedK * 6, 118, grid);
+    let dist = lerp(C.distance + speedK * 45, 120, grid) + 34 * sk, height = lerp(C.height + speedK * 6, 118, grid) * (1 - 0.24 * sk);
     dist = dist * (1 - BC.closeDist * show) + BC.aheadDist * aheadK;           // 쇼케이스: 가까이 / 전방 주시: 살짝 뒤로
     height = height * (1 - BC.closeHeight * show) + BC.aheadHeight * aheadK;   // 쇼케이스: 낮게 / 전방 주시: 높게
     const side = (W3.boostOrbitSide || 1) * BC.orbit * show, yaw = W3.camYaw + side; // 쇼케이스 때 옆으로 살짝 돌아 변신 모습이 보이게
@@ -8287,12 +8369,12 @@ function updateCamera3D(dt) {
     desiredPos.set(p.x - Math.cos(yaw) * dist, height, p.y - Math.sin(yaw) * dist);
     const ahead = lerp(C.lookAhead, 95, grid) * (1 - BC.zoomCenter * show) + BC.aheadLook * aheadK;   // 줌 중심을 살짝 차 쪽으로 → 차가 평소와 같은 높이에 남아요
     lookAt.set(p.x + Math.cos(W3.camYaw) * ahead, C.lookHeight, p.y + Math.sin(W3.camYaw) * ahead);
-    fov = C.fov + speedK * 7 + (p.boostTransform || 0) * 8 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show);
+    fov = C.fov + speedK * 7 + (p.boostTransform || 0) * 8 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show) + 16 * sk;
     lerpRate = 12 + 18 * show;   // 부스트 속도에서도 쇼케이스 거리를 유지하도록 더 빨리 따라붙어요
   }
   if (W3.snap) { W3.camPos.copy(desiredPos); W3.camTarget.copy(lookAt); W3.snap = false; }
   else { W3.camPos.lerp(desiredPos, smoothFactor(lerpRate, dt)); W3.camTarget.lerp(lookAt, smoothFactor(lerpRate * 1.2, dt)); }
-  const boostRumble = gameMode === 'race' && p.boostTime > 0 ? (p.sprint ? 2.6 : 1.1) : 0;   // 6.0: 부스트 중 카메라 진동 (스퍼트 더 강하게)
+  const boostRumble = gameMode === 'race' && p.boostTime > 0 ? (p.sprint ? 2.6 : 1.1) : 0;   // 6.0: 부스트 중 카메라 진동 (임계점 부스트 더 강하게)
   W3.shake = Math.max(W3.shake * Math.exp(-8 * dt), (p.hitFlash || 0) * 6, boostRumble, sprintFlash * 9);
   cam.position.copy(W3.camPos).add(new THREE.Vector3((Math.random() - 0.5) * W3.shake, (Math.random() - 0.5) * W3.shake, (Math.random() - 0.5) * W3.shake));
   cam.lookAt(W3.camTarget);
@@ -8360,9 +8442,9 @@ function renderWorld3D(dt) {
   for (const pts of [W3.glowPoints, W3.dustPoints, W3.snow, W3.flashes]) if (pts) pts.material.uniforms.pixelScale.value = pixelScale;
   const racing = gameMode === 'race' ? 1 : 0, tf = (p.boostTransform || 0) * racing, speedK = clamp((Math.abs(p.speed) - 450) / 400, 0, 1) * racing;
   renderPost(W3.scene, W3.camera, {
-    exposure: W3.exposure * (1 + tf * 0.12 + sprintFlash * 0.25), bloom: W3.bloomStrength + tf * 0.35 + (player.sprint && player.boostTime > 0 ? 0.35 : 0) + sprintFlash * 0.6, bloomThreshold: W3.bloomThreshold * (1 - 0.25 * tf),
+    exposure: W3.exposure * (1 + tf * 0.1 + sprintFlash * 0.08), bloom: W3.bloomStrength + tf * 0.22 + (player.sprint && player.boostTime > 0 ? 0.15 : 0) + sprintFlash * 0.15, bloomThreshold: W3.bloomThreshold * (1 - 0.12 * tf),
     vignette: 0.3 + tf * 0.25, flash: lightningFlash * lightningFlash * 0.35,
-    speedBlur: ((settings.cameraMode === 'tv' ? 0.02 : 0.05) * speedK + 0.14 * tf) * (1 - 0.85 * (W3.boostShow || 0)), aberration: (0.004 * speedK + 0.014 * tf) * (1 - 0.7 * (W3.boostShow || 0)),
+    speedBlur: ((settings.cameraMode === 'tv' ? 0.02 : 0.05) * speedK + 0.14 * tf + 0.16 * (W3.sprintK || 0)) * (1 - 0.85 * (W3.boostShow || 0)), aberration: (0.004 * speedK + 0.014 * tf + 0.018 * (W3.sprintK || 0)) * (1 - 0.7 * (W3.boostShow || 0)),
     aoRadius: 22, aoIntensity: 1.5,
   });
 }
@@ -8426,17 +8508,13 @@ function drawScreenEffects(dt) {
   }
   ctx.lineCap = 'butt';
   if (punchZoom > 0) { ctx.fillStyle = `rgba(150,245,255,${Math.min(1, punchZoom) * 0.24})`; ctx.fillRect(0, 0, screenW, screenH); }
-  if (gameMode === 'race' && p.boostTime > 0) {   // 6.0: 부스트 중 화면 가장자리 열기 (스퍼트 = 붉은 불꽃)
+  if (gameMode === 'race' && p.boostTime > 0) {   // 6.0: 부스트 중 화면 가장자리 열기 (임계점 부스트 = 붉은 불꽃)
     const spr = p.sprint, g = ctx.createRadialGradient(cx, cy, Math.min(screenW, screenH) * 0.3, cx, cy, Math.max(screenW, screenH) * 0.75);
     g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, spr ? `rgba(255,70,20,${0.32 + 0.08 * Math.sin(nowSeconds() * 30)})` : 'rgba(60,220,255,.16)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, screenW, screenH);
   }
-  if (sprintFlash > 0) {   // 스퍼트 순간: 흰 섬광 + 퍼져 나가는 충격파 고리
-    const k = 1 - sprintFlash;
-    ctx.fillStyle = `rgba(255,240,220,${Math.pow(sprintFlash, 3) * 0.55})`; ctx.fillRect(0, 0, screenW, screenH);
-    ctx.strokeStyle = `rgba(255,200,140,${sprintFlash * 0.8})`; ctx.lineWidth = 18 * sprintFlash + 2;
-    ctx.beginPath(); ctx.ellipse(cx, cy, 60 + k * screenW * 0.9, (60 + k * screenW * 0.9) * 0.6, 0, 0, TAU); ctx.stroke();
-  }
+  if (sprintFlash > 0) { ctx.fillStyle = `rgba(255,250,240,${Math.pow(sprintFlash, 4) * 0.28})`; ctx.fillRect(0, 0, screenW, screenH); }   // 6.1.1: 짧은 섬광만 (충격파는 3D 소닉붐으로)
+
   if (p.hitFlash > 0) { ctx.fillStyle = `rgba(255,255,255,${p.hitFlash * 0.22})`; ctx.fillRect(0, 0, screenW, screenH); p.hitFlash = Math.max(0, p.hitFlash - dt); }
 }
 
@@ -8829,18 +8907,22 @@ function drawDashboard() {
   dashPanelPath(T.shape, w, h); ctx.fillStyle = bg; ctx.fill(); ctx.strokeStyle = T.line; ctx.lineWidth = 1.2; ctx.stroke();
   drawDashDeco(T, w, h, tf, t);
   if (bm > 0) {
-    const rg = ctx.createLinearGradient(0, 0, 0, h); rg.addColorStop(0, `rgba(120,18,6,${0.86 * bm})`); rg.addColorStop(1, `rgba(40,6,4,${0.9 * bm})`);
+    // 6.1.1: 부스트 모드도 차량 테마 색 (게이지의 빨강·노랑만 공통). 임계점 부스트면 테두리가 더 밝게 맥동
+    const spr = p.sprint ? 1 : 0, pulse = 0.75 + 0.25 * Math.sin(t * (spr ? 26 : 9));
+    const rg = ctx.createLinearGradient(0, 0, 0, h); rg.addColorStop(0, withAlpha(T.deep, 0.95 * bm)); rg.addColorStop(1, `rgba(4,6,10,${0.94 * bm})`);
     dashPanelPath(T.shape, w, h); ctx.fillStyle = rg; ctx.fill();
-    ctx.save(); dashPanelPath(T.shape, w, h); ctx.clip(); ctx.strokeStyle = `rgba(255,120,40,${0.08 * bm})`; ctx.lineWidth = 1;   // 화면 격자
+    const gl = ctx.createRadialGradient(w - 112, h / 2, 10, w - 112, h / 2, w * 0.7); gl.addColorStop(0, withAlpha(T.glow, (0.22 + 0.18 * spr) * bm)); gl.addColorStop(1, withAlpha(T.glow, 0));
+    dashPanelPath(T.shape, w, h); ctx.fillStyle = gl; ctx.fill();
+    ctx.save(); dashPanelPath(T.shape, w, h); ctx.clip(); ctx.strokeStyle = withAlpha(T.glow, 0.09 * bm); ctx.lineWidth = 1;   // 화면 격자
     for (let gx = 0; gx < w; gx += 16) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); } for (let gy = 0; gy < h; gy += 16) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
     ctx.restore();
-    dashPanelPath(T.shape, w, h); ctx.strokeStyle = `rgba(255,110,40,${bm})`; ctx.lineWidth = 2.4; ctx.shadowColor = '#ff5a1a'; ctx.shadowBlur = 20; ctx.stroke(); ctx.shadowBlur = 0;
+    dashPanelPath(T.shape, w, h); ctx.strokeStyle = withAlpha(spr ? '#ffffff' : T.glow, bm * pulse); ctx.lineWidth = spr ? 3.2 : 2.4; ctx.shadowColor = T.glow; ctx.shadowBlur = spr ? 30 : 20; ctx.stroke(); ctx.shadowBlur = 0;
   }
   if (tf > 0.05) { dashPanelPath(T.shape, w, h); ctx.strokeStyle = withAlpha(T.glow, tf); ctx.lineWidth = 2.2; ctx.shadowColor = T.glow; ctx.shadowBlur = 16; ctx.stroke(); ctx.shadowBlur = 0; }
   if (bm > 0.5) {
     const D = CAR_DESIGNS[p.designId] || CAR_DESIGNS.aero;
-    drawText(p.sprint ? 'SPURT ACTIVE' : 'BOOST ACTIVE', T.shape === 'pill' ? 40 : 22, 22, 11, p.sprint ? '#ffe28a' : '#ffb45a', 900, 'left', true);
-    drawText(`${(D.boostName || 'BOOST').replace(/ MODE$/, '')} ON`, w / 2 - 50, 22, 12, '#ff9a4a', 900, 'center', true);
+    drawText(p.sprint ? 'ENGINE LIMIT BREAK' : 'BOOST ACTIVE', T.shape === 'pill' ? 40 : 22, 22, 11, p.sprint ? '#ffffff' : T.boostSpeed, 900, 'left', true);
+    drawText(`${(D.boostName || 'BOOST').replace(/ MODE$/, '')} ON`, w / 2 - 50, 22, 12, T.accent, 900, 'center', true);
   } else drawText(T.label, T.shape === 'pill' ? 40 : 22, 22, 10, withAlpha(T.accent, 0.85), 900, 'left', true);
   const lightsCount = 15, litCount = clamp((p.rpm - 8600) / 3800, 0, 1) * lightsCount;
   if (!(bm > 0.5)) for (let i = 0; i < lightsCount; i++) {
@@ -8848,7 +8930,7 @@ function drawDashboard() {
     const lx = w / 2 - (lightsCount - 1) * 11 + i * 22, ly = T.lights === 'arc' ? 20 - Math.cos(((i - 7) / 7) * 0.9) * 8 + 4 : 16;   // 솔라: 해처럼 둥근 호
     drawShiftLight(T.lights === 'arc' ? 'dot' : T.lights, lx, ly, color, i < litCount);
   }
-  drawText(String(Math.round(Math.abs(p.speed) * SPEED_TO_KMH)), 160, 82, 54, bm > 0.5 ? (p.sprint ? '#ffe7b0' : '#ff9a4a') : T.speed, 900, 'right'); drawText('KM/H', 166, 82, 12, COLORS.dim, 800);
+  drawText(String(Math.round(Math.abs(p.speed) * SPEED_TO_KMH)), 160, 82, 54, bm > 0.5 ? (p.sprint ? '#ffffff' : T.boostSpeed) : T.speed, 900, 'right'); drawText('KM/H', 166, 82, 12, COLORS.dim, 800);
   drawGearFrame(T.gear, w / 2 - 36, 32, 72, 74, p.rpm > 12100 ? T.lightColors[2] : withAlpha(T.accent, 0.45 + 0.4 * tf));
   drawText(p.speed < -2 ? 'R' : String(p.gear), w / 2, 94, 58, '#fff', 900, 'center', false);
   const currentLap = gameMode === 'race' || gameMode === 'finish' ? raceTime - p.lapStartTime : 0;
@@ -8868,8 +8950,8 @@ function drawDashboard() {
   else if (Math.abs(gripMultiplier() - 1) > 0.02) drawText(`${ENVIRONMENTS[environment].english} · GRIP ${Math.round(gripMultiplier() * racingLineGrip(p) * 100)}%`, right, 123, 11, ENVIRONMENTS[environment].color, 900, 'right');
 }
 /* ---------- 6.0 부스트 시간 표시등 (차마다 모양이 달라요) ----------
-   15칸 빨간 표시등이 양끝에서 가운데로 꺼져요. 가운데 금색 테두리 칸 = 스퍼트 타이밍 창(마지막 1.2초).
-   창이 열리면 남은 칸이 금색으로 깜빡 → 그때 한 번 더 누르면 스퍼트(불꽃색), 너무 일찍 누르면 꺼져요. */
+   15칸 빨간 표시등이 양끝에서 가운데로 꺼져요. 가운데 금색 테두리 칸 = 임계점 부스트 타이밍 창(마지막 1.2초).
+   창이 열리면 남은 칸이 금색으로 깜빡 → 그때 한 번 더 누르면 임계점 부스트(불꽃색), 너무 일찍 누르면 꺼져요. */
 const BOOST_LED_STYLE = {   // 차별 특징: 칸 모양 · 배치 · 크기
   aero:    { kind: 'skew',    gap: 23, size: 1.15, arc: 0 },
   vortex:  { kind: 'hex',     gap: 22, size: 1.2,  arc: 0 },
@@ -8904,8 +8986,8 @@ function drawBoostLeds(T, w, t) {
 }
 /** 부스트 모듈: 계기판 위 탭 — 처음 1.2초는 부스트 이름을 크게, 그다음엔 남은 시간 + 상태(PUSH! / SPURT) */
 /* ---------- 6.0 BOOSTER 원형 게이지 (부스트 모드 계기판 오른쪽) ----------
-   빨간 칸이 시계 방향으로 줄어들고, 마지막 노란 LIMIT 칸 = 스퍼트 타이밍 창(마지막 1.2초).
-   창에 들어오면 노랗게 깜빡 → 그때 부스트를 한 번 더 누르면 스퍼트(불꽃 색). 테두리 불꽃은 차마다 달라요. */
+   빨간 칸이 시계 방향으로 줄어들고, 마지막 노란 LIMIT 칸 = 임계점 부스트 타이밍 창(마지막 1.2초).
+   창에 들어오면 노랗게 깜빡 → 그때 부스트를 한 번 더 누르면 임계점 부스트(불꽃 색). 테두리 불꽃은 차마다 달라요. */
 const BOOSTER_RING_STYLE = {
   solar:   { kind: 'fire',   colors: ['#fff1a0', '#ffb030', '#ff5a10'] },   // 태양 불꽃
   vortex:  { kind: 'plasma', colors: ['#ffe0e6', '#ff4a6a', '#ff1e3c'] },   // 붉은 플라즈마 번개
@@ -8952,9 +9034,9 @@ function drawBoosterGauge(T, w, h, bm, t) {
   const inWin = !p.sprint && p.boostTime <= SPRINT_WINDOW, blink = Math.sin(t * 22) > 0, style = BOOSTER_RING_STYLE[p.designId] || BOOSTER_RING_STYLE.solar;
   ctx.globalAlpha = bm;
   // 받침 원판 + 불꽃 고리
-  const disc = ctx.createRadialGradient(cx, cy, 10, cx, cy, R + 6); disc.addColorStop(0, '#1a0604'); disc.addColorStop(1, '#3a0c06');
+  const disc = ctx.createRadialGradient(cx, cy, 10, cx, cy, R + 6); disc.addColorStop(0, '#05070b'); disc.addColorStop(1, T.deep);   // 받침은 차량 테마, 칸은 빨강·노랑 공통
   ctx.fillStyle = disc; ctx.beginPath(); ctx.arc(cx, cy, R + 6, 0, TAU); ctx.fill();
-  drawBoosterRingFx(style.kind, p.sprint ? ['#fff6d8', '#ffc040', '#ff6a10'] : style.colors, cx, cy, R + 6, (p.sprint ? 1.5 : 1.0) * (0.85 + 0.15 * Math.sin(t * 31)), t);
+  drawBoosterRingFx(style.kind, p.sprint ? ['#ffffff', style.colors[0], style.colors[1]] : style.colors, cx, cy, R + 6, (p.sprint ? 1.5 : 1.0) * (0.85 + 0.15 * Math.sin(t * 31)), t);
   // 칸 (12시부터 시계 방향). 남은 시간만큼 켜짐. 끝의 LIMIT 구간 = 타이밍 창
   for (let i = 0; i < N; i++) {
     const a0 = -Math.PI / 2 + (i / N) * TAU + 0.02, a1 = -Math.PI / 2 + ((i + 1) / N) * TAU - 0.02, f0 = i / N;
@@ -8970,15 +9052,15 @@ function drawBoosterGauge(T, w, h, bm, t) {
   }
   // 가운데 숫자
   ctx.fillStyle = '#0b0302'; ctx.beginPath(); ctx.arc(cx, cy, r0, 0, TAU); ctx.fill();
-  ctx.strokeStyle = p.sprint ? '#ffc040' : inWin ? '#ffe600' : '#ff5a2a'; ctx.lineWidth = 1.6; ctx.stroke();
-  drawText(p.sprint ? 'SPURT' : inWin ? 'PUSH!' : 'BOOSTER', cx, cy - 24, p.sprint || inWin ? 13 : 11, p.sprint ? '#ffd27a' : inWin ? '#ffe600' : '#ffffff', 900, 'center', false);
+  ctx.strokeStyle = p.sprint ? '#ffc040' : inWin ? '#ffe600' : T.glow; ctx.lineWidth = 1.6; ctx.stroke();
+  drawText(p.sprint ? 'LIMIT BREAK' : inWin ? 'PUSH!' : 'BOOSTER', cx, cy - 24, p.sprint ? 10 : inWin ? 13 : 11, p.sprint ? '#ffd27a' : inWin ? '#ffe600' : '#ffffff', 900, 'center', false);
   drawText(p.boostTime.toFixed(1), cx, cy + 13, 36, '#ffffff', 900, 'center', true);
-  drawText(inWin ? (useTouchUI ? '⚡' : activeKeyLayout().labels.boost) : 'SEC.', cx, cy + 32, inWin ? 13 : 9, inWin ? '#ffe600' : '#ffb08a', 900, 'center', false);
+  drawText(inWin ? (useTouchUI ? '⚡' : activeKeyLayout().labels.boost) : 'SEC.', cx, cy + 32, inWin ? 13 : 9, inWin ? '#ffe600' : withAlpha(T.boostSpeed, 0.85), 900, 'center', false);
   ctx.globalAlpha = 1;
 }
 function drawBottomBoostRow(T, w, h, p, boosting) {
   const left = T.shape === 'pill' ? 34 : 20;
-  drawText(boosting ? (p.sprint ? 'SPURT' : 'BOOST ON') : 'BOOST', left, 124, 11, boosting ? (p.sprint ? '#ffd27a' : '#ff6a3a') : COLORS.gold, 900);
+  drawText(boosting ? (p.sprint ? 'LIMIT BREAK' : 'BOOST ON') : 'BOOST', left, 124, 11, boosting ? (p.sprint ? '#ffd27a' : '#ff6a3a') : COLORS.gold, 900);
   const gaugeX = left + (boosting ? 66 : 46), gaugeW = boosting ? 150 - (left - 20) : 170 - (left - 20), gaugeGradient = ctx.createLinearGradient(gaugeX, 0, gaugeX + gaugeW, 0);
   gaugeGradient.addColorStop(0, '#ffb000'); gaugeGradient.addColorStop(1, '#ffee55');
   drawBar(gaugeX, 113, gaugeW, 12, boosting ? p.boostTime / Math.max(0.1, p.boostMax) : p.boostGauge / 100, boosting ? (p.sprint ? '#ff7a2a' : '#ff2a2a') : gaugeGradient);
@@ -9029,7 +9111,7 @@ function drawKeyboardHelp() {
   drawKeyCap(driveX + kw + gap, top + kh + gap, kw, kh, L.down, d.down, COLORS.brake, '브레이크');
   drawKeyCap(driveX + (kw + gap) * 2, top + kh + gap, kw, kh, L.right, d.right, COLORS.steer, '오른쪽');
   drawKeyCap(actionX, top, actionW, kh, L.drift, input.drift || player.isDrifting, COLORS.drift, '드리프트', true);
-  drawKeyCap(actionX, top + kh + gap, actionW, kh, L.boost, anyKeyDown(layout.boost) || player.boostTime > 0, COLORS.boost, player.boostTime > 0 ? 'SPURT' : '부스트', true);
+  drawKeyCap(actionX, top + kh + gap, actionW, kh, L.boost, anyKeyDown(layout.boost) || player.boostTime > 0, COLORS.boost, player.boostTime > 0 ? 'LIMIT BREAK' : '부스트', true);
   // 시스템 키 한 줄
   const sy = top + (kh + gap) * 2 + 6, sysW = (W - 28 - gap * 3) / 4;
   [['R', '재시작', keysDown.has('KeyR')], ['M', '소리', keysDown.has('KeyM') || isMuted()], ['B', '음악', keysDown.has('KeyB') || !settings.musicOn], ['O', '설정', keysDown.has('KeyO')]]
@@ -9076,7 +9158,7 @@ function drawTouchControls() {
     const big = b.label.length <= 2;
     ctx.fillStyle = active ? '#fff' : withAlpha(b.color, 0.95); ctx.font = `900 ${Math.round(b.radius * (big ? 0.6 : 0.34))}px ${UI_FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(L(b.label), b.x, b.y - b.radius * 0.1);
-    const sub = isBoost ? (player.boostTime > 0 ? (player.sprint ? 'SPURT' : player.boostTime <= SPRINT_WINDOW ? 'PUSH!' : player.boostTime.toFixed(1) + 's') : 'BOOST') : b.sub;
+    const sub = isBoost ? (player.boostTime > 0 ? (player.sprint ? 'LIMIT!' : player.boostTime <= SPRINT_WINDOW ? 'PUSH!' : player.boostTime.toFixed(1) + 's') : 'BOOST') : b.sub;
     ctx.font = `700 ${Math.round(Math.max(9, b.radius * 0.2))}px ${UI_FONT}`; ctx.fillStyle = active ? b.color : withAlpha(b.color, 0.65); ctx.fillText(L(sub), b.x, b.y + b.radius * 0.42);
     if (isBoost) {
       for (let k = 0; k < MAX_BOOST_STOCK; k++) { ctx.fillStyle = k < player.boostStock ? COLORS.gold : 'rgba(255,255,255,.25)'; ctx.beginPath(); ctx.arc(b.x - 7 + k * 14, b.y - b.radius - 9, 4, 0, TAU); ctx.fill(); }
@@ -9637,7 +9719,7 @@ function openControlsHelp(tab) {
     row(`${L.up} · ${L.down}`, '가속 · 브레이크', '정지 상태에서 브레이크를 계속 누르면 후진', '#2bff88'),
     row(`${L.left} · ${L.right}`, '조향', '', '#54ecdf'),
     row(`${L.drift} / SHIFT`, '드리프트', '코너에서 드리프트하면 부스트 게이지가 차요', '#ffb43c'),
-    row(`${L.boost} / SPACE`, '부스트 · 스퍼트', '끝나기 직전(노란 LIMIT)에 한 번 더 = 스퍼트', '#5ff3ff'),
+    row(`${L.boost} / SPACE`, '부스트 · 임계점 부스트', '끝나기 직전(노란 LIMIT)에 한 번 더 = 임계점 부스트', '#5ff3ff'),
     row('P · R', '일시정지 · 재시작', '', '#b995ff'),
     row('M · B · O', '볼륨 · 음악 · 설정', '', '#b995ff'),
   ].join('');
@@ -9653,7 +9735,7 @@ function openControlsHelp(tab) {
     row('밀기', `${hand} 화면 누르고 좌우로 밀기`, '처음 누른 곳이 중심, 민 만큼 조향', '#54ecdf'),
     row('DRIFT', `${action} 큰 버튼`, '누르는 동안 가속 + 드리프트', '#ffb43c'),
     row('BRAKE', '브레이크', '누르는 동안 가속이 꺼져요', '#ff4d5e'),
-    row('⚡', '부스트 · 스퍼트', '버튼 위 점 = 남은 부스트 개수 · 끝나기 직전 한 번 더 = 스퍼트', '#5ff3ff'),
+    row('⚡', '부스트 · 임계점 부스트', '버튼 위 점 = 남은 부스트 개수 · 끝나기 직전 한 번 더 = 임계점 부스트', '#5ff3ff'),
     row('AUTO', '자동 가속', settings.autoGas ? '켜져 있어요 (설정에서 끌 수 있어요)' : '꺼져 있어요 → GAS 버튼 사용', '#2bff88'),
   ].join('');
   openOverlay('controls', `<div class="hd teal"><h2>🎮 조작법</h2><button class="x" data-close>닫기</button></div><div class="bd">
@@ -9918,7 +10000,7 @@ function tutorialKeymap() {
 function renderTutorial() {
   const S = tutorialState, pages = TUTORIAL_PAGES[S.kind], P = pages[S.page], last = S.page === pages.length - 1;
   const media = P.keymap ? tutorialKeymap()
-    : P.pair ? `<div class="tutpair">${P.pair.map((f, i) => `<figure><img src="tutorial/${f}" alt=""><figcaption>${i ? 'SPURT' : 'PUSH! (LIMIT)'}</figcaption></figure>`).join('<span>→</span>')}</div>`
+    : P.pair ? `<div class="tutpair">${P.pair.map((f, i) => `<figure><img src="tutorial/${f}" alt=""><figcaption>${i ? 'LIMIT BREAK' : 'PUSH! (LIMIT)'}</figcaption></figure>`).join('<span>→</span>')}</div>`
     : `<div class="tutmedia"><img src="tutorial/${P.img}" alt="" onerror="this.style.display='none'">${P.zoom ? `<img class="zoom" src="tutorial/${P.zoom}" alt="" onerror="this.style.display='none'">` : ''}</div>`;
   const L = activeKeyLayout().labels, keyNames = { up: L.up, down: L.down, left: L.left, right: L.right, drift: L.drift, boost: S.kind === 'mobile' ? '⚡' : L.boost };
   const points = tr(`tut.${P.key}.points`, keyNames).split('|').filter(Boolean).map((t) => `<li>${t}</li>`).join('');
