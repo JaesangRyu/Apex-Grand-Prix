@@ -304,6 +304,58 @@ addStrings({
   'tut.hud.title': ['레이스 화면 보기', 'Reading the race screen', 'レース画面の見方', '比赛画面说明'],
   'tut.hud.points': ['왼쪽 위: <b>랩</b> · <b>순위</b> · 순위표|오른쪽 위: 미니맵 (초록 = DRS 구간) · <b>⚙</b> 설정·일시정지|흰색·하늘색 연석 = 부스트 추천 구간 (긴 직선)', 'Top left: <b>lap</b> · <b>position</b> · standings|Top right: minimap (green = DRS zones) · <b>⚙</b> settings & pause|White/sky-blue kerbs = recommended boost zones (long straights)', '左上: <b>周回</b> · <b>順位</b> · 順位表|右上: ミニマップ (緑 = DRS 区間) · <b>⚙</b> 設定・一時停止|白と水色の縁石 = ブースト推奨区間 (長い直線)', '左上: <b>圈数</b> · <b>名次</b> · 排名|右上: 小地图 (绿色 = DRS 区) · <b>⚙</b> 设置与暂停|白蓝路肩 = 推荐加速区 (长直道)'],
 });
+addStrings({
+  'ui.ok': ['확인', 'OK', 'OK', '确定'],
+  'ctl.change': ['조작 설정 바꾸기', 'Change controls', '操作設定を変更', '更改操作设置'],
+});
+
+/* ===== 00_strings_cars.js ===== */
+/* 00_cars_lore.js — 차고 차량 소개 (6.0.1) : 별칭 · 콘셉트 · 배경 스토리  [한국어, English, 日本語, 简体中文] */
+addStrings({
+  /* ---------- AERO-X ---------- */
+  'lore.aero.title': ['바람을 접는 화살', 'The Folding Arrow', '風を折りたたむ矢', '折叠风之箭'],
+  'lore.aero.concept': ['항공기 가변익 기술을 그대로 옮겨 온, 약점 없는 올라운더 머신.', 'An all-rounder with no weak spot, built on aircraft variable-wing technology.', '航空機の可変翼技術をそのまま移した、弱点のないオールラウンダー。', '直接移植飞机可变翼技术、毫无短板的全能型赛车。'],
+  'lore.aero.story': [
+    'NOVA ENERGY 팀이 항공 엔지니어들과 함께 만든 첫 번째 레이스 머신입니다. 평소에는 날개를 접은 채 낮고 매끄러운 차체로 공기를 흘려보내며, 어떤 코스에서도 흔들리지 않는 균형을 보여 줍니다. 하지만 AERO MODE가 켜지는 순간 리어윙이 V자 블레이드로 솟구치고 측면 윙이 날개처럼 펼쳐지며, 차체 전체가 하나의 비행체처럼 기류를 움켜쥡니다. 다섯 대 중 부스트 출력이 가장 강해, 노련한 파일럿에게는 마지막 직선에서 판을 뒤집는 비장의 무기가 됩니다.',
+    'The first race machine Team NOVA ENERGY built with aerospace engineers. Most of the time its wings stay folded, letting air slip over a low, smooth body with a balance no circuit can upset. But the moment AERO MODE engages, the rear wing rises into V-shaped blades and the side wings unfold, and the whole car grips the airflow like an aircraft. With the strongest boost of all five machines, it becomes a seasoned pilot\'s trump card for turning the race on the final straight.',
+    'NOVA ENERGY チームが航空エンジニアと共に作り上げた最初のレースマシン。普段は翼をたたみ、低く滑らかなボディで空気を受け流し、どんなコースでも揺るがないバランスを見せます。しかし AERO MODE が起動した瞬間、リアウイングが V 字のブレードとなってそそり立ち、サイドウイングが翼のように広がって、車体全体が一機の飛行体のように気流をつかみます。5台の中で最も強いブースト出力を持ち、熟練パイロットにとっては最後の直線で勝負をひっくり返す切り札です。',
+    'NOVA ENERGY 车队与航空工程师联手打造的第一台赛车。平时它收起机翼，以低矮流畅的车身让气流顺滑掠过，在任何赛道上都保持稳定的平衡。而 AERO MODE 启动的瞬间，尾翼化作 V 形刀翼高高升起，侧翼如羽翼般展开，整台车像飞行器一样紧紧抓住气流。它拥有五台车中最强的加速输出，是老练车手在最后直道上逆转战局的王牌。'],
+  /* ---------- VORTEX ---------- */
+  'lore.vortex.title': ['붉은 반응로', 'The Crimson Reactor', '紅の反応炉', '赤红反应炉'],
+  'lore.vortex.concept': ['카본 모노코크 안에 실험용 플라즈마 리액터를 품은 최고속 하이퍼카.', 'A top-speed hypercar with an experimental plasma reactor inside a carbon monocoque.', 'カーボンモノコックの中に実験用プラズマリアクターを抱いた最高速ハイパーカー。', '碳纤维单体壳内藏实验型等离子反应炉的极速超跑。'],
+  'lore.vortex.story': [
+    '출처를 밝히지 않는 비밀 연구소에서 제작된 칠흑의 머신입니다. 걸윙 도어 아래 잠들어 있던 붉은 리액터는 OVERDRIVE 신호와 함께 깨어나, 차체 표면을 따라 플라즈마 전류를 흘려보내고 자기장 고리를 뒤로 밀어내며 공기 저항을 찢어 버립니다. 코너에서는 다소 무겁고 예민하지만, 긴 직선에 들어서는 순간 서킷의 누구도 따라잡을 수 없는 최고 속도를 뿜어냅니다. 메인 스트레이트의 지배자, 관중이 가장 먼저 이름을 외치는 머신입니다.',
+    'A pitch-black machine built in a secret lab that has never revealed its name. The crimson reactor sleeping beneath its gull-wing doors wakes on the OVERDRIVE signal, sending plasma currents racing across the bodywork and pushing magnetic rings backward to tear through the air. It feels heavy and twitchy in the corners, but the moment it hits a long straight it unleashes a top speed no one on the circuit can match. Ruler of the main straight — the car the crowd shouts for first.',
+    '名を明かさない秘密研究所で生まれた漆黒のマシン。ガルウイングドアの下で眠っていた紅のリアクターは OVERDRIVE の合図で目覚め、ボディ表面にプラズマ電流を走らせ、磁場リングを後方へ押し出しながら空気抵抗を引き裂きます。コーナーではやや重く神経質ですが、長い直線に入った瞬間、誰も追いつけない最高速度を解き放ちます。メインストレートの支配者、観客が真っ先に名前を叫ぶマシンです。',
+    '诞生于一座从不透露名号的秘密研究所的漆黑赛车。沉睡在鸥翼门下的赤红反应炉随 OVERDRIVE 信号苏醒，让等离子电流沿车身奔涌，并将磁场环向后推出，撕裂空气阻力。它在弯道中略显沉重与敏感，但一旦驶入长直道，便会爆发出赛道上无人能及的极速。它是主直道的霸主，也是观众最先高喊名字的赛车。'],
+  /* ---------- SOLAR WING ---------- */
+  'lore.solar.title': ['태양의 질주', 'Sprint of the Sun', '太陽の疾走', '太阳的疾驰'],
+  'lore.solar.concept': ['차세대 고효율 솔라 셀 아머와 집광형 원형 플라즈마 부스터를 탑재한 하이브리드 머신.', 'A hybrid machine armoured in next-gen solar cells, with a light-focusing circular plasma booster.', '次世代の高効率ソーラーセルアーマーと集光型円形プラズマブースターを搭載したハイブリッドマシン。', '搭载新一代高效太阳能电池装甲与聚光式环形等离子加速器的混合动力赛车。'],
+  'lore.solar.story': [
+    '환경 규제와 신에너지 패러다임 전환 속에서 태어난 실험적 머신입니다. 차체 전면과 휠 하우스 위에 촘촘히 박힌 플렉시블 솔라 셀이 서킷 위에서 실시간으로 태양광을 흡수해 고밀도 축전지에 저장합니다. 평소에는 정밀한 다운포스로 코너를 공략하고, 가장 빠른 가속으로 코너를 박차고 나갑니다. 그리고 콕핏 뒤의 원형 부스터가 회전을 시작하는 순간(CIRCULAR BOOST), 모아 둔 태양 에너지를 초고온 플라즈마로 바꿔 폭발적인 스피드를 뿜어냅니다. 부스터 타이머가 줄어드는 몇 초 동안 파일럿의 심박수를 한계까지 끌어올리는, 서킷의 새로운 혁신입니다.',
+    'An experimental machine born from tightening regulations and the shift to new energy. Flexible solar cells packed across the nose and wheel arches soak up sunlight live on the circuit and store it in high-density cells. Normally it attacks corners with precise downforce and explodes out of them with the quickest acceleration of the field. Then, the instant the circular booster behind the cockpit starts to spin (CIRCULAR BOOST), the stored solar energy turns into superheated plasma for a violent burst of speed. For the few seconds the booster timer counts down, it drives the pilot\'s heart rate to the limit — the circuit\'s newest innovation.',
+    '環境規制と新エネルギーへのパラダイム転換の中で生まれた実験的マシン。車体前面とホイールハウス上部にびっしりと埋め込まれたフレキシブルソーラーセルが、サーキット上でリアルタイムに太陽光を吸収し、高密度バッテリーに蓄えます。普段は精密なダウンフォースでコーナーを攻め、最速の加速でコーナーを蹴り出します。そしてコックピット後方の円形ブースターが回転を始めた瞬間 (CIRCULAR BOOST)、蓄えた太陽エネルギーを超高温プラズマに変え、爆発的なスピードを放ちます。ブースタータイマーが減っていく数秒間、パイロットの心拍数を限界まで引き上げる、サーキットの新たな革新です。',
+    '在环保法规与新能源范式转变中诞生的实验型赛车。密布于车头与轮拱上方的柔性太阳能电池在赛道上实时吸收阳光，储存在高密度电池中。平时它凭借精准的下压力攻克弯道，并以全场最快的加速冲出弯角。而当座舱后方的环形加速器开始旋转 (CIRCULAR BOOST) 的瞬间，积蓄的太阳能化作超高温等离子，喷发出爆炸性的速度。在加速计时器倒数的几秒内，车手的心跳被推向极限 —— 这是赛道上最新的革新。'],
+  /* ---------- GLACIER ---------- */
+  'lore.glacier.title': ['얼음 위의 정적', 'Silence on the Ice', '氷上の静寂', '冰上的寂静'],
+  'lore.glacier.concept': ['극지 탐사 기술로 태어난, 어떤 노면도 놓치지 않는 그립 특화 머신.', 'A grip specialist born from polar-expedition tech that never lets go of the road.', '極地探査の技術から生まれた、どんな路面も逃さないグリップ特化マシン。', '源自极地探险技术、牢牢抓住任何路面的抓地专精赛车。'],
+  'lore.glacier.story': [
+    '영하 40도의 빙원 테스트 트랙에서 다듬어진 머신입니다. 차체를 감싼 냉각 코팅과 정밀한 서스펜션이 노면을 끝까지 붙잡아, 비가 쏟아지거나 눈이 쌓인 서킷에서도 라인을 잃지 않습니다. GLIDE MODE가 켜지면 차체 곳곳에서 얼음 결정이 돋아나고 냉각 쿠션 위로 살짝 떠올라, 바닥에 서리 자국만 남긴 채 미끄러지듯 질주합니다. 날씨가 거칠어질수록 더 차갑고 정확해지는, 악천후의 지배자입니다.',
+    'A machine honed on an ice-field test track at minus forty degrees. Its cryo-coated body and precise suspension hold on to the surface to the very end, so it never loses its line even when rain pours or snow piles onto the circuit. When GLIDE MODE engages, ice crystals sprout across the bodywork and the car lifts slightly on a cooling cushion, gliding forward and leaving only frost marks on the asphalt. The rougher the weather, the colder and more precise it becomes — the master of foul conditions.',
+    '零下40度の氷原テストトラックで磨き上げられたマシン。ボディを包む冷却コーティングと精密なサスペンションが路面を最後までつかみ、雨が降り注いでも雪が積もってもラインを失いません。GLIDE MODE が起動すると、車体のあちこちから氷の結晶が生え、冷却クッションの上にわずかに浮き上がり、路面に霜の跡だけを残して滑るように疾走します。天候が荒れるほど冷たく正確になる、悪天候の支配者です。',
+    '在零下 40 度冰原测试赛道上打磨而成的赛车。包裹车身的冷却涂层与精密悬挂将路面牢牢抓住，即使暴雨倾盆、积雪覆盖，也绝不会偏离路线。GLIDE MODE 启动时，车身各处生出冰晶，车体在冷却气垫上微微浮起，只在路面留下霜痕，滑行般疾驰而去。天气越恶劣，它就越冷静精准 —— 恶劣天气的主宰。'],
+  /* ---------- APEX F1 ---------- */
+  'lore.apex.title': ['정점을 찌르는 칼날', 'The Blade at the Apex', '頂点を突く刃', '直刺弯心之刃'],
+  'lore.apex.concept': ['서킷의 이름을 이어받은 오픈휠 클래식, 코너링 하나에 모든 것을 건 순수 레이서.', 'The open-wheel classic that carries the circuit\'s name — a pure racer that bets everything on cornering.', 'サーキットの名を受け継ぐオープンホイールの名機。コーナリングにすべてを懸けた純粋なレーサー。', '传承赛道之名的开轮经典，将一切押在过弯上的纯粹赛车。'],
+  'lore.apex.story': [
+    'APEX INTERNATIONAL 서킷과 함께 태어난 원조 머신입니다. 바퀴가 드러난 오픈휠 구조라 직선에서는 공기 저항을 이겨 내기 버겁지만, 가볍고 낮은 차체와 날카로운 스티어링으로 코너의 정점(Apex)을 가장 깊고 정확하게 찌릅니다. BLADE MODE가 켜지면 사이드포드에서 빛의 블레이드가 뻗고 DRS가 활짝 열리며, 코끝에서 음속 고리가 연달아 터집니다. 기술 구간이 많은 코스일수록 강해지는, 순수한 드라이빙 실력을 증명하는 머신입니다.',
+    'The original machine, born together with the APEX INTERNATIONAL circuit. Its exposed open wheels struggle against the air on the straights, but its light, low body and razor-sharp steering strike the apex of every corner deeper and cleaner than anyone. When BLADE MODE engages, blades of light extend from the sidepods, the DRS flap swings wide open and sonic rings burst one after another from the nose. The more technical the track, the stronger it gets — a machine that proves pure driving skill.',
+    'APEX INTERNATIONAL サーキットと共に生まれた元祖マシン。ホイールがむき出しのオープンホイール構造のため直線では空気抵抗に苦しみますが、軽く低いボディと鋭いステアリングで、コーナーの頂点 (Apex) を誰よりも深く正確に突きます。BLADE MODE が起動すると、サイドポッドから光のブレードが伸び、DRS が大きく開き、ノーズから音速リングが次々と弾けます。テクニカルな区間が多いコースほど強くなる、純粋なドライビングの腕を証明するマシンです。',
+    '与 APEX INTERNATIONAL 赛道一同诞生的元祖赛车。裸露的开轮结构让它在直道上难敌空气阻力，但轻盈低矮的车身与锋利的转向，让它能比任何人都更深、更准地刺入弯心 (Apex)。BLADE MODE 启动时，光刃从侧箱伸出，DRS 大幅张开，音速环从车头接连爆发。赛道的技术路段越多，它就越强 —— 一台证明纯粹驾驶实力的赛车。'],
+  'lore.concept': ['콘셉트', 'CONCEPT', 'コンセプト', '概念'],
+  'lore.story': ['배경 스토리', 'BACKGROUND', 'ストーリー', '背景故事'],
+  'lore.read': ['📖 스토리', '📖 Story', '📖 ストーリー', '📖 故事'],
+});
 
 /* ===== 00_strings_src.js ===== */
 /* 00_strings_src.js — 화면에 보이는 한국어 원문 → [English, 日本語, 简体中文] (6.0)
@@ -2159,7 +2211,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '6.0.0';
+const GAME_VERSION = '6.1.0';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -6838,11 +6890,11 @@ function renderGarage(dt) {
   for (const f of m.flames) if (f.mesh.visible) f.mesh.material = f.base;
   const t = nowSeconds(), cam = G.camera;
   cam.aspect = screenW / Math.max(1, screenH); cam.updateProjectionMatrix();
-  const R = useTouchUI ? 172 : 150, a = 0.85 + Math.sin(t * 0.13) * 0.18;
+  const R = useTouchUI ? 172 : garage.twoCol ? 188 : 150, a = 0.85 + Math.sin(t * 0.13) * 0.18;
   cam.position.set(Math.cos(a) * R, 40 + Math.sin(t * 0.21) * 5, Math.sin(a) * R);
   cam.lookAt(0, 10, 0);
   // 화면 왼쪽 패널을 피해 차가 약간 오른쪽에 보이게
-  cam.setViewOffset(screenW, screenH, -screenW * (useTouchUI ? 0.2 : 0.12), useTouchUI ? screenH * 0.04 : 0, screenW, screenH);   // 6.0: 모바일은 차를 더 오른쪽 · 살짝 위로
+  cam.setViewOffset(screenW, screenH, -screenW * (useTouchUI ? 0.2 : garage.twoCol ? 0.01 : 0.12), useTouchUI ? screenH * 0.04 : 0, screenW, screenH);   // 두 칸 배치면 차는 가운데   // 6.0: 모바일은 차를 더 오른쪽 · 살짝 위로
   renderPost(G.scene, cam, { exposure: 1.0, bloom: 0.35, bloomThreshold: 2.8, vignette: 0.28, flash: 0, speedBlur: 0, aberration: 0, aoRadius: 10, aoIntensity: 1.0 });
   cam.clearViewOffset();
 }
@@ -6856,44 +6908,72 @@ function drawGarage() {
   const shade = ctx.createLinearGradient(0, 0, screenW * 0.55, 0);
   shade.addColorStop(0, withAlpha(THEME.ink, 0.92)); shade.addColorStop(1, withAlpha(THEME.ink, 0));
   ctx.fillStyle = shade; ctx.fillRect(0, 0, screenW, screenH);
-  const compact = useTouchUI || screenH < 640, panelH = compact ? 452 : 520;
+  const compact = useTouchUI || screenH < 640, panelH = compact ? 452 : 572;
   // 6.0: 모바일은 보이는 높이(내비게이션 바 · 노치 제외) 안에 패널이 다 들어오도록
   const top = useTouchUI ? 8 + safeInsets.top : Math.max(12, screenH * 0.06), bottomGap = useTouchUI ? bottomInset() + 8 : 70;
   const scale = Math.min(useTouchUI ? clamp(screenW / 900, 0.55, 1.1) : clamp(Math.min(screenW / 1500, screenH / 860), 0.7, 1.25), (screenH - top - bottomGap) / panelH, useTouchUI ? (screenW * 0.44) / 410 : 9);
   const appear = 1 - Math.pow(1 - clamp(menuStageTimer / 0.4, 0, 1), 3);
-  setPanel(Math.max(16, screenW * 0.04, safeInsets.left + 12) - (1 - appear) * 60, top, scale / uiScale);
+  // 6.0.1: 넓은 PC 화면 = 왼쪽(이름·콘셉트·성능·부스트) + 오른쪽(배경 스토리 카드) 두 칸, 차는 가운데
+  const twoCol = !compact && screenW >= (450 + 420 + 420) * scale;
+  garage.twoCol = twoCol;
+  if (garage.shownIndex !== garage.index) { garage.shownIndex = garage.index; garage.changedAt = t; }
+  const fadeIn = clamp((t - (garage.changedAt || 0)) / 0.35, 0, 1);
+  const marginX = Math.max(16, screenW * 0.04, safeInsets.left + 12);
+  setPanel(marginX - (1 - appear) * 60, top, scale / uiScale);
   ctx.globalAlpha = appear;
   drawText('GARAGE', 0, 34, 34, THEME.text, 900, 'left', true);
   drawText('차량 선택', 172, 32, 16, THEME.muted, 800, 'left', false);
   ctx.fillStyle = THEME.red; ctx.fillRect(0, 46, 60, 4);
-  // 이름 · 소개
+  // 이름 · 별칭 · 콘셉트
+  ctx.globalAlpha = appear * fadeIn;
   drawText(D.name, 0, 112, 54, '#ffffff', 900, 'left', true);
-  if (currentLang === 'ko') drawText(D.ko, 2, 140, 18, THEME.teal, 800, 'left', false);
-  drawText(D.tagline, 2, 168, 16, THEME.text, 700, 'left', false);
+  const title = `“${tr('lore.' + id + '.title')}”`;
+  let y = 142;
+  if (currentLang === 'ko') { drawText(D.ko, 2, y, 18, THEME.teal, 800, 'left', false); drawText(title, 12 + measureText(D.ko, 18, 800), y, 18, D.uiColor, 900, 'left', true); }
+  else drawText(title, 2, y, 18, D.uiColor, 900, 'left', true);
+  if (compact) { drawText(D.tagline, 2, 168, 16, THEME.text, 700, 'left', false); y = 200; }
+  else { y += 30; const n = wrapText(tr('lore.' + id + '.concept'), 2, y, 440, 15, 22, THEME.text); y += (n - 1) * 22 + 26; }
   // 성능
+  const statW = compact ? 240 : 290;
   STAT_LABELS.forEach(([key, label], i) => {
-    const y = 200 + i * 34, pct = statPercent(D.stats[key]);
-    drawText(label, 2, y + 16, 15, THEME.muted, 800, 'left', false);
-    ctx.fillStyle = withAlpha(THEME.line, 0.9); ctx.fillRect(100, y + 4, 240, 12);
-    const g = ctx.createLinearGradient(100, 0, 340, 0); g.addColorStop(0, THEME.redDeep); g.addColorStop(1, THEME.red);
-    ctx.fillStyle = g; ctx.fillRect(100, y + 4, 240 * pct / 100, 12);
-    for (let k = 1; k < 10; k++) { ctx.fillStyle = withAlpha(THEME.ink, 0.6); ctx.fillRect(100 + k * 24, y + 4, 2, 12); }
-    drawText(String(pct), 356, y + 16, 15, THEME.text, 900, 'left', false);
+    const yy = y + i * 32, pct = statPercent(D.stats[key]);
+    drawText(label, 2, yy + 16, 15, THEME.muted, 800, 'left', false);
+    ctx.fillStyle = withAlpha(THEME.line, 0.9); ctx.fillRect(100, yy + 4, statW, 12);
+    const g = ctx.createLinearGradient(100, 0, 100 + statW, 0); g.addColorStop(0, THEME.redDeep); g.addColorStop(1, THEME.red);
+    ctx.fillStyle = g; ctx.fillRect(100, yy + 4, statW * pct / 100, 12);
+    for (let k = 1; k < 10; k++) { ctx.fillStyle = withAlpha(THEME.ink, 0.6); ctx.fillRect(100 + k * statW / 10, yy + 4, 2, 12); }
+    drawText(String(pct), 116 + statW, yy + 16, 15, THEME.text, 900, 'left', false);
   });
   // 부스트
-  const by = 344, boxH = compact ? 46 : 92;
-  ctx.fillStyle = withAlpha(THEME.panel, 0.9); ctx.beginPath(); ctx.roundRect(0, by, 400, boxH, 12); ctx.fill();
+  const by = y + 4 * 32 + 12, colW = compact ? 400 : 450, boxH = compact ? 46 : 84;
+  ctx.fillStyle = withAlpha(THEME.panel, 0.9); ctx.beginPath(); ctx.roundRect(0, by, colW, boxH, 12); ctx.fill();
   ctx.strokeStyle = THEME.line; ctx.lineWidth = 1.5; ctx.stroke(); ctx.fillStyle = THEME.teal; ctx.fillRect(0, by + 10, 4, boxH - 20);
   drawText('⚡ ' + D.boostName, 18, by + 30, 19, THEME.teal, 900, 'left', true);
-  if (!compact) wrapText(D.boostDesc, 18, by + 56, 370, 14, 20, THEME.text);
-  // 버튼
-  const yb = by + boxH + 16;
-  drawButton(0, yb, 190, 46, garage.previewTimer > 0 ? '부스트 작동 중…' : '⚡ 부스트 미리보기', THEME.teal, garagePreviewBoost, { key: 'SPACE', fontSize: 14 });
-  drawButton(200, yb, 200, 46, garage.next === 'solo' ? '🏁 이 차로 출발' : garage.next === 'duel' ? '⚔ 이 차로 대전' : settings.carDesign === id ? '✓ 선택된 차량' : '이 차로 결정', THEME.red, garageConfirm, { active: true, key: 'ENTER', fontSize: 15 });
+  if (!compact) wrapText(D.boostDesc, 18, by + 56, colW - 36, 14, 20, THEME.text);
+  ctx.globalAlpha = appear;
+  // 버튼 (스토리 카드가 따로 없으면 📖 버튼)
+  const yb = by + boxH + 16, bw = twoCol ? (colW - 10) / 2 : 136;
+  drawButton(0, yb, twoCol ? bw : 150, 46, garage.previewTimer > 0 ? '부스트 작동 중…' : '⚡ 부스트 미리보기', THEME.teal, garagePreviewBoost, { key: 'SPACE', fontSize: 14 });
+  if (!twoCol) drawButton(compact ? 160 : 160, yb, 100, 46, tr('lore.read'), THEME.silver, () => openCarStory(id), { fontSize: 14 });
+  drawButton(twoCol ? bw + 10 : 270, yb, twoCol ? bw : 130, 46, garage.next === 'solo' ? '🏁 이 차로 출발' : garage.next === 'duel' ? '⚔ 이 차로 대전' : settings.carDesign === id ? '✓ 선택된 차량' : '이 차로 결정', THEME.red, garageConfirm, { active: true, key: 'ENTER', fontSize: 15 });
+  // 오른쪽: 배경 스토리 카드
+  if (twoCol) {
+    const cw = 420, story = tr('lore.' + id + '.story'), lh = 25, pad = 26;
+    const lines = wrapText(story, 0, 0, cw - pad * 2, 15, lh, '#fff', false);
+    const ch = 70 + lines * lh + pad;
+    setPanel(screenW - marginX - cw * scale + (1 - appear) * 60, top + 66 * scale, scale / uiScale);
+    ctx.globalAlpha = appear * fadeIn;
+    ctx.fillStyle = 'rgba(10,14,20,.82)'; ctx.beginPath(); ctx.roundRect(0, 0, cw, ch, 16); ctx.fill();
+    ctx.strokeStyle = withAlpha(D.uiColor, 0.55); ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = D.uiColor; ctx.fillRect(0, 18, 4, 30);
+    drawText(tr('lore.story'), pad, 32, 12, THEME.muted, 900, 'left', false);
+    drawText(title, pad, 54, 19, '#ffffff', 900, 'left', true);
+    wrapText(story, pad, 88, cw - pad * 2, 15, lh, '#dfe6ee');
+  }
   ctx.globalAlpha = 1;
   // 아래: 차 선택 점 + 화살표
   setPanel(0, 0, 1 / uiScale);
-  const cy = screenH - (useTouchUI ? bottomInset() + 30 : 56), cx = useTouchUI ? screenW * 0.73 : screenW * 0.62, gap = 26 * scale;
+  const cy = screenH - (useTouchUI ? bottomInset() + 30 : 56), cx = useTouchUI ? screenW * 0.73 : garage.twoCol ? screenW * 0.5 : screenW * 0.62, gap = 26 * scale;
   CAR_DESIGN_ORDER.forEach((k, i) => {
     const x = cx + (i - (CAR_DESIGN_ORDER.length - 1) / 2) * gap, on = i === garage.index;
     ctx.fillStyle = on ? THEME.red : THEME.line; ctx.beginPath(); ctx.arc(x, cy, on ? 6 : 4, 0, TAU); ctx.fill();
@@ -6911,16 +6991,31 @@ function drawGarage() {
   if (!useTouchUI) drawText((garage.next ? '← →  차량 변경     SPACE  부스트 미리보기     ENTER  출발     ESC  뒤로' : '← →  차량 변경     SPACE  부스트 미리보기     ENTER  결정     ESC  뒤로'), screenW / 2, screenH - 14, small, THEME.muted, 800, 'center', false);
   else { drawButton(topBarRight() - 168 * uiScale - 112, 18 * uiScale, 100, 40, '◀ ' + tr('ui.back'), THEME.silver, garageBack, { fontSize: 14 }); }
 }
-function wrapText(text, x, y, maxWidth, size, lineHeight, color) {
-  text = L(text);
-  ctx.font = `700 ${size}px ${UI_FONT}`;
-  let line = '', yy = y;
-  for (const word of text.split(' ')) {
-    const test = line ? line + ' ' + word : word;
-    if (ctx.measureText(test).width > maxWidth && line) { drawText(line, x, yy, size, color, 700, 'left', false); line = word; yy += lineHeight; }
+/** 줄바꿈 글쓰기. 한글·영문은 단어 단위, 일본어·중국어는 글자 단위. draw=false 면 줄 수만 세요. 반환: 줄 수 */
+function wrapText(text, x, y, maxWidth, size, lineHeight, color, draw = true, weight = 700) {
+  text = L(text); ctx.font = `${weight} ${size}px ${UI_FONT}`;
+  const tokens = text.match(/[\u3040-\u30ff\u3400-\u9fff\uff00-\uffef]|[^\s\u3040-\u30ff\u3400-\u9fff\uff00-\uffef]+|\s+/g) || [];
+  let line = '', lines = 0;
+  const flush = () => { if (draw && line.trim()) drawText(line.trim(), x, y + lines * lineHeight, size, color, weight, 'left', false); lines++; line = ''; };
+  for (const tk of tokens) {
+    const test = line + tk;
+    const closer = /^[、。，．,.!?！？）」』\)]$/.test(tk);   // 일본어·중국어 문장부호는 줄 앞에 오지 않게
+    if (!closer && ctx.measureText(test.trim()).width > maxWidth && line.trim()) { flush(); line = /^\s+$/.test(tk) ? '' : tk; }
     else line = test;
   }
-  if (line) drawText(line, x, yy, size, color, 700, 'left', false);
+  if (line.trim()) flush();
+  return lines;
+}
+
+/** 차량 배경 스토리 창 (모바일 · 좁은 화면) */
+function openCarStory(id) {
+  const D = CAR_DESIGNS[id];
+  openOverlay('carStory', `<div class="hd" style="background:linear-gradient(90deg,${D.uiColor},#0b0f12)"><h2>${escapeHtml(D.name)}</h2><button class="x" data-close>${tr('ui.close')}</button></div><div class="bd">
+    <h3 style="margin:0 0 6px;font:900 20px var(--font);color:#fff">“${tr('lore.' + id + '.title')}”</h3>
+    <div class="sect">${tr('lore.concept')}</div><p class="sub" style="font-size:15px;color:#fff">${tr('lore.' + id + '.concept')}</p>
+    <div class="sect">${tr('lore.story')}</div><p class="sub" style="font-size:15px;line-height:1.7">${tr('lore.' + id + '.story')}</p>
+    <div class="sect">⚡ ${escapeHtml(D.boostName)}</div><p class="sub">${escapeHtml(L(D.boostDesc))}</p>
+    <div class="row"><button class="btn" data-close>${tr('ui.ok')}</button></div></div>`);
 }
 
 /* ===== 16_post3d.js ===== */
