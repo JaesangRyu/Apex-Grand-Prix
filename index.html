@@ -2542,7 +2542,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '7.9.1';
+const GAME_VERSION = '7.9.2';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -7802,6 +7802,7 @@ function makeCarModel(designId, L, ghost, scene = W3.scene) {
     m.rake = rake;
   }
   mergeStatic(m, P);
+  if (!ghost) buildCarLod(m);   // 7.9.2: 멀리 있을 때 쓸 한 덩어리 모형
   const blob = new THREE.Mesh(P.blob, Sh.blob); blob.scale.set((opts.length || 120) * CAR_SCALE, 1, 60 * CAR_SCALE); blob.position.y = 0.5; blob.renderOrder = 2; root.add(blob);
   const cone = new THREE.Mesh(P.cone, M.cone); cone.scale.set(340, 1, 170); cone.position.set(40, 0.7, 0); cone.renderOrder = 3; root.add(cone);
   const under = new THREE.Mesh(P.blob, M.under); under.scale.set(140 * CAR_SCALE, 1, 74 * CAR_SCALE); under.position.y = 0.8; under.renderOrder = 3; root.add(under);
@@ -7822,6 +7823,41 @@ function makeCarModel(designId, L, ghost, scene = W3.scene) {
   return m;
 }
 /** 움직이지 않는 부품을 재질별로 합치기 */
+/* 7.9.2 최적화: 멀리 있는 차는 불투명한 부품 전체(바퀴 포함)를 한 덩어리로 그려요 (차 한 대 그리기 약 40번 → 몇 번).
+   모양 · 위치는 그대로(쉬는 자세)이고 색은 재질 색. 빛나는 부분(전조등 · 미등 · 부스트 빛)은 따로 그대로 그려요. 가까우면 원래 모형 */
+const CAR_LOD_DIST = 1500;
+let CAR_LOD_DIST_OVERRIDE = null;   // 테스트 · 비교용
+function buildCarLod(m) {
+  try {
+    m.root.updateMatrixWorld(true); m.chassis.updateMatrixWorld(true);
+    const inv = new THREE.Matrix4().copy(m.chassis.matrixWorld).invert(), pos = [], nor = [], col = [], v = new THREE.Vector3(), nm = new THREE.Matrix3(), rel = new THREE.Matrix4(), c = new THREE.Color(), hide = [];
+    m.chassis.traverse((o) => {
+      if (!o.isMesh || !o.visible || o.userData.dynamic) return;
+      let p = o.parent, vis = true; while (p && p !== m.chassis) { if (!p.visible) vis = false; p = p.parent; } if (!vis) return;
+      const mat = o.material; if (Array.isArray(mat) || mat.transparent || mat.blending !== THREE.NormalBlending || (mat.emissiveIntensity > 0.3 && mat.emissive && mat.emissive.getHex() !== 0)) return;
+      rel.multiplyMatrices(inv, o.matrixWorld); nm.getNormalMatrix(rel);
+      const g = o.geometry.index ? o.geometry.toNonIndexed() : o.geometry; if (!g.attributes.normal) g.computeVertexNormals();
+      const P2 = g.attributes.position, N = g.attributes.normal, C = mat.vertexColors ? g.attributes.color : null, base = mat.color || c.set('#888888');
+      for (let i = 0; i < P2.count; i++) {
+        v.fromBufferAttribute(P2, i).applyMatrix4(rel); pos.push(v.x, v.y, v.z);
+        v.fromBufferAttribute(N, i).applyMatrix3(nm).normalize(); nor.push(v.x, v.y, v.z);
+        col.push(base.r * (C ? C.getX(i) : 1), base.g * (C ? C.getY(i) : 1), base.b * (C ? C.getZ(i) : 1));
+      }
+      if (g !== o.geometry) g.dispose();
+      hide.push(o);
+    });
+    if (!pos.length) return;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3)); geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    W3.carLodMaterial = W3.carLodMaterial || new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.45, metalness: 0.25 });
+    const lod = new THREE.Mesh(geo, W3.carLodMaterial); lod.visible = false; lod.castShadow = true; lod.receiveShadow = true; m.chassis.add(lod);
+    m.lod = { mesh: lod, hide, on: false }; m.ownGeometry.push(geo);
+  } catch (e) { m.lod = null; }
+}
+function setCarLod(m, far) {
+  const L = m.lod; if (!L || L.on === far) return;
+  L.on = far; L.mesh.visible = far; for (const o of L.hide) o.visible = !far;
+}
 function mergeStatic(m, P) {
   const merged = [...(m.rake ? mergeStaticIn(m, P, m.rake) : []), ...mergeStaticIn(m, P, m.chassis)];
   const used = new Set(); m.chassis.traverse((o) => { if (o.isMesh) used.add(o.geometry); });
@@ -8564,6 +8600,8 @@ function updateCarModel(car, dt) {
   m.mats.tail.emissiveIntensity = car.brake > 0 ? 7 : environment === 'RAIN' && raceTime % 0.6 < 0.3 ? 4 : 0.6 + light * 1.2;
   m.mats.head.emissiveIntensity = 0.5 + light * 6;
   m.cone.material.opacity = light * (car.isGhost ? 0.18 : car === player ? 0.3 : 0.4);   // 6.0: 내 차는 진짜 스포트라이트가 있어 바닥 빛은 옅게
+  m.cone.visible = m.cone.material.opacity > 0.01;   // 7.9.2: 낮엔 바닥 빛을 아예 안 그려요
+  if (m.lod) setCarLod(m, car !== player && !m.ghost && W3.camera.position.distanceTo(m.root.position) > (CAR_LOD_DIST_OVERRIDE || CAR_LOD_DIST) && (car.boostTransform || 0) < 0.05);   // 7.9.2: 멀면 한 덩어리 (부스트 변신 중엔 원래 모형)
   const tf = car.boostTransform || 0, boosting = car.boostTime > 0;
   m.lift = 0;
   m.root.updateMatrixWorld(true);
@@ -8574,6 +8612,7 @@ function updateCarModel(car, dt) {
   for (const g of m.rimGlows) g.visible = tf > 0.04;
   m.mats.rimGlow.opacity = tf * 0.95 * (m.ghost ? 0.4 : 1);
   const spr = boosting && car.sprint ? 1 : 0, fxK = boosting ? (spr ? 3.2 : 2.4) : 1;   // 6.0: 부스트 연출 배율 (임계점 부스트 3배)
+  m.under.visible = m.designId === 'glacier' || tf > 0.01;   // 7.9.2 (글레이셔는 평소에도 얼음 빛)
   if (m.designId !== 'glacier') { m.mats.under.opacity = Math.min(1, tf * 0.55 * fxK * 0.6) * (m.ghost ? 0.4 : 1); m.under.scale.set(140 * CAR_SCALE * (1 + 0.5 * tf * (fxK - 1)), 1, 74 * CAR_SCALE * (1 + 0.4 * tf * (fxK - 1))); }
   m.aura.visible = tf > 0.03;
   if (m.aura.visible) { const pulse = 0.85 + 0.15 * Math.sin(t * 38 + car.x); m.aura.material.opacity = tf * (spr ? 0.55 : 0.38) * pulse * (m.ghost ? 0.4 : 1); m.aura.scale.setScalar((spr ? 105 : 78) * CAR_SCALE * pulse * (0.6 + 0.4 * tf)); }
@@ -9908,32 +9947,6 @@ function buildCrowd() {
   W3.scene.add(flagMesh); W3.scene.add(pole);
   W3.flashes = makePointCloud(64, true);
 }
-/* 7.8.4: 부스트 바람 줄기 — 차 앞쪽 공중에 가는 빛줄기를 뿌려 두면 차가 지나치며 휙휙 뒤로 흘러가요 (진짜 시차라 속도감이 커요)
-   체이스 시점에서만 · 일반 부스트 조금, 임계점 부스트 많이 · 차 바로 둘레는 비워서 시야를 가리지 않아요 */
-function buildWindStreaks() {
-  const a = new THREE.PlaneGeometry(1, 1), b = new THREE.PlaneGeometry(1, 1).rotateX(Math.PI / 2), g = mergeGeometries([a, b]);
-  const pos = g.attributes.position, col = new Float32Array(pos.count * 3);
-  for (let i = 0; i < pos.count; i++) { const k = Math.pow(pos.getX(i) + 0.5, 1.6); col[i * 3] = col[i * 3 + 1] = col[i * 3 + 2] = k; }   // 앞은 밝고 꼬리는 사라지게
-  g.setAttribute('color', new THREE.BufferAttribute(col, 3));
-  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, color: '#dff4ff', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
-  const mesh = new THREE.InstancedMesh(g, mat, 80); mesh.frustumCulled = false; mesh.count = 0; mesh.renderOrder = 4; W3.scene.add(mesh);
-  W3.wind = { mesh, list: [], m4: new THREE.Matrix4(), q: new THREE.Quaternion(), up: new THREE.Vector3(0, 1, 0), v: new THREE.Vector3(), s: new THREE.Vector3() };
-}
-function updateWindStreaks(dt) {
-  const W = W3.wind; if (!W) return;
-  const p = player, on = gameMode === 'race' && p.boostTime > 0 && settings.cameraMode !== 'tv', spr = on && p.sprint, sp = Math.abs(p.speed);
-  const want = on ? (spr ? 70 : 26) : 0, h = p.heading, cs = Math.cos(h), sn = Math.sin(h);
-  if (!isPaused) while (W.list.length < want) {
-    const f = 280 + Math.random() * 1100, side = (Math.random() < 0.5 ? -1 : 1) * (60 + Math.random() * 300), y = 8 + Math.random() * 120;
-    if (Math.abs(side) < 110 && y < 50) continue;   // 차 바로 옆 · 앞 낮은 곳은 비워요
-    W.list.push({ x: p.x + cs * f - sn * side, z: p.y + sn * f + cs * side, y, yaw: h, w: 0.8 + Math.random() * 0.8 });
-  }
-  for (let i = W.list.length - 1; i >= 0; i--) { const o = W.list[i], ahead = (o.x - p.x) * cs + (o.z - p.y) * sn; if (ahead < -260 || ahead > 1600 || W.list.length > want + (on ? 0 : -1e9)) W.list.splice(i, 1); }
-  const len = 30 + sp * (spr ? 0.3 : 0.18);
-  W.list.forEach((o, k) => { W.q.setFromAxisAngle(W.up, -o.yaw); W.m4.compose(W.v.set(o.x, o.y, o.z), W.q, W.s.set(len, (spr ? 5 : 3.6) * o.w, (spr ? 5 : 3.6) * o.w)); W.mesh.setMatrixAt(k, W.m4); });
-  W.mesh.count = W.list.length; W.mesh.instanceMatrix.needsUpdate = true;
-  W.mesh.material.opacity = lerp(W.mesh.material.opacity, on ? (spr ? 0.85 : 0.5) * clamp((sp - 250) / 300, 0, 1) : 0, smoothFactor(6, dt));
-}
 function updateCrowd(dt, focus) {
   if (!W3.crowdUniforms) return;
   W3.crowdUniforms.time.value = nowSeconds() % 1000;
@@ -10364,7 +10377,7 @@ function renderWorld3D(dt) {
   W3.headlight.target.position.set(p.x + Math.cos(ph) * 420, 0, p.y + Math.sin(ph) * 420);
   const lit = gameMode === 'lights' ? Math.min(5, Math.floor(lightsTimer)) : 0;
   for (const g of W3.gantryLights) g.material.emissiveIntensity = g.column < lit ? 8 : 0;
-  updateCrowd(dt, focus); if (!W3.wind && typeof mergeGeometries === 'function') buildWindStreaks(); updateWindStreaks(dt);
+  updateCrowd(dt, focus);   // 7.9.2: 부스트 바람 줄기는 뺐어요 (요청)
   if (!isPaused) updateCourseScenery(dt);
   let nearStand = 1e9; const camP = W3.camera.position, standFar = settings.cameraMode === 'tv' || gameMode === 'menu' || gameMode === 'replay' ? 12000 : 8000;
   for (const s of W3.stands) { const dd = Math.hypot(s.position.x - focus.x, s.position.z - focus.z); nearStand = Math.min(nearStand, dd); s.visible = Math.hypot(s.position.x - camP.x, s.position.z - camP.z) < standFar; }   // 7.9.1: 아주 먼 관중석은 그리지 않아요
@@ -13450,7 +13463,8 @@ const HEADPHONE_SVG = '<svg viewBox="0 0 120 110" fill="none" stroke="#E59B26" s
    다 되면 '눌러서 시작'. 그 뒤로는 메뉴에서 코스를 바꿔도 로딩 없이 바로 교체돼요.
    기다리는 동안 재미있는 문구가 돌아가요 (타이어 교체 · 세차 …). 아주 느린 망이면 20초 뒤엔 기다리지 않고 시작할 수 있어요. */
 const introPrep = { total: 1, done: 0, finished: false, task: '', stop: false };
-const introReady = () => (musicLoad.finished && introPrep.finished) || introSkipOK;
+const introReady = () => (introPrep.finished && (musicLoad.finished || introSkipOK)) || introPrepTimeout;   // 7.9.2: 코스 준비는 기기 안에서 하는 일이라 끝까지 기다려요 (20초 건너뛰기는 음악 받기에만)
+let introPrepTimeout = false;
 let introSkipOK = false, introFunIndex = 0;
 const INTRO_FUN = ['🛞 피트 인 한 차량 타이어 교체 중', '🧽 카트 세차 중', '⛽ 연료 채우는 중', '🚦 출발 신호등 점검 중', '🎨 연석 페인트 칠하는 중', '🏆 트로피 닦는 중', '🔧 엔진 볼트 조이는 중', '📣 관중 입장 중', '🧤 드라이버 장갑 끼는 중', '🌬 리어 윙 각도 맞추는 중'];
 function introProgress() {
@@ -13485,7 +13499,7 @@ function introPrepareCourses(onStep) {
       introPrep.task = label; onStep();
       await new Promise((r) => setTimeout(r, 30));
       if (introPrep.stop || !introOpen) break;
-      try { await fn(); } catch (e) { console.error(e); }
+      try { await Promise.race([fn(), new Promise((r) => setTimeout(r, 10000))]); } catch (e) { console.error(e); }   // 한 단계가 10초 넘게 걸리면 다음으로
       introPrep.done++; onStep();
     }
     if (introPrep.dirty && W3.worldCourse === introPrep.mine && gameMode === 'menu') { try { useCourse(home); } catch (e) { /* 무시 */ } introPrep.dirty = false; }   // 중간에 멈췄어도 원래 코스로
@@ -13506,7 +13520,8 @@ function showIntro() {
   musicLoad.listeners.push(refresh); refresh();
   introPrepareCourses(refresh);
   const funTimer = setInterval(() => { if (!introOpen) { clearInterval(funTimer); return; } introFunIndex++; refresh(); }, 1300);   // 재미있는 문구 바꾸기
-  setTimeout(() => { introSkipOK = true; refresh(); }, 20000);   // 아주 느린 망: 20초 뒤엔 기다리지 않고 시작 가능
+  setTimeout(() => { introSkipOK = true; refresh(); }, 20000);   // 아주 느린 망: 20초 뒤엔 음악을 기다리지 않고 시작 가능
+  setTimeout(() => { introPrepTimeout = true; refresh(); }, 90000);   // 안전장치: 무슨 일이 있어도 90초 뒤엔 시작 가능
   const go = (e) => {
     if (e && e.target && e.target.closest && e.target.closest('[data-lang]')) return;
     if (!introOpen || !introReady()) return; introOpen = false; introPrep.stop = true;   // 다 못 만든 코스는 고를 때 만들어요
