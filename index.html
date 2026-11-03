@@ -19,7 +19,7 @@
 :root{--ink:#11141A;--panel:#1B202A;--line:#2C3340;--text:#FFFFFF;--muted:#8F9CAE;--red:#D31111;--red-deep:#7A0909;--teal:#E59B26;--gold:#E59B26;--carbon:#1B202A;--charcoal:#11141A;--font:"Titillium Web","Segoe UI","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif}
 html,body{margin:0;height:100%;overflow:hidden;background:#0b0f12;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #world{pointer-events:none}#game{z-index:1}
-canvas{position:fixed;top:0;left:env(safe-area-inset-left,0px);display:block;width:calc(100vw - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));height:100%;height:100dvh;touch-action:none}
+canvas{position:fixed;top:0;left:env(safe-area-inset-left,0px);display:block;width:calc(100vw - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));height:100%;height:100dvh;height:var(--appH,100dvh);touch-action:none}
 #intro{position:fixed;inset:0;z-index:20;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#f2f5f8;font-family:var(--font);text-align:center;padding:24px;box-sizing:border-box;cursor:pointer;transition:opacity .7s}
 #intro.out{opacity:0;pointer-events:none}#intro svg{width:min(120px,22vh);height:auto;opacity:.95;animation:introPulse 2.4s ease-in-out infinite}
 #intro h1{margin:6px 0 0;font:900 clamp(18px,4.2vh,30px) var(--font);letter-spacing:.5px}#intro p{margin:0;color:#8a97a6;font:700 clamp(12px,2.4vh,16px) var(--font)}
@@ -34,6 +34,9 @@ canvas{position:fixed;top:0;left:env(safe-area-inset-left,0px);display:block;wid
 #busy .bbar{position:relative;align-self:stretch;height:8px;border-radius:999px;background:#3a4552;overflow:hidden}#busy .bbar i{position:absolute;left:0;top:0;bottom:0;width:4%;background:linear-gradient(90deg,#B30D0D,#E59B26);border-radius:999px}
 #busy .bbar s{position:absolute;top:0;bottom:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:busyShine 1.1s linear infinite;will-change:transform}#busy small{color:#8a97a6;font:800 12px var(--font);letter-spacing:1px;min-height:14px}
 @keyframes busyShine{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
+#rotate{display:none;position:fixed;inset:0;z-index:50;background:#06090d;color:#fff;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;font-family:var(--font)}#rotate b{font:900 20px var(--font)}#rotate small{color:#8a97a6;font:700 13px var(--font)}#rotate svg{animation:rotHint 2.2s ease-in-out infinite}
+@media (orientation:portrait) and (pointer:coarse) and (max-width:820px){#rotate{display:flex}}
+@keyframes rotHint{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
 @keyframes introBlink{50%{opacity:.25}}@keyframes introPulse{50%{transform:scale(1.05)}}
 .tut h3{margin:12px 0 10px;font:900 20px var(--font);color:#fff}.tutmedia{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
 .tutmedia img{display:block;width:100%;height:auto}.tutpair{display:flex;align-items:center;gap:8px;justify-content:center}.tutpair figure{margin:0;flex:1;max-width:46%}.tutpair img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}.tutpair figcaption{text-align:center;font:900 12px var(--font);color:var(--teal);margin-top:4px}.tutpair span{font:900 22px var(--font);color:var(--muted)}
@@ -286,12 +289,15 @@ input.codein{font-family:"Titillium Web",ui-monospace,Menlo,Consolas,monospace}
 .menv button{font-size:12px;padding:7px 2px;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:940px),(max-height:500px){.menv button .nm{display:none}.menv button{font-size:15px}.mcourse .mcourses{display:grid;grid-template-columns:1fr 1fr}.mcourse .mcourses button{border-left:0;border-top:1px solid var(--line)}}
 .mcourse .mopt.sm{grid-template-columns:1fr;gap:2px}.mcourse .mopt.sm>span{font-size:10px}.mcourse .menv button{font-size:12px;padding:5px 0;text-overflow:clip}
+/* 7.8.2: 아이폰은 화면을 돌린 뒤 높이를 늦게 알려줘서 아래가 비어 보일 때가 있어요 → 실제 보이는 높이(--appH, 19_main.js)로 맞춰요 */
+#intro,.ov,#busy,#rotate{bottom:auto;height:var(--appH,100%)}
 </style>
 </head>
 <body>
 <canvas id="world"></canvas>
 <div id="safeProbe"></div>
 <canvas id="game"></canvas>
+<div id="rotate"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#E59B26" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="8" width="24" height="40" rx="4"/><path d="M50 30a20 20 0 0 1-18 26M34 52l-3 4 4 3"/></svg><b>가로 모드로 돌려주세요</b><small>Rotate your phone to landscape</small></div>
 <div id="boot" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#8A97A6;font:800 16px var(--font);letter-spacing:2px">LOADING 3D…</div>
 <div id="overlay" class="ov hidden"><div id="overlayCard" class="card"></div></div>
 <script type="text/plain" id="three-lib">/**
@@ -410,7 +416,7 @@ addStrings({
 });
 addStrings({
   'touch.steer': ['누른 채 좌우로 밀어 조향', 'Hold & slide to steer', '押したまま左右にスライドで操作', '按住左右滑动转向'],
-  'touch.driftSub': ['가속+드리프트', 'gas + drift', 'アクセル+ドリフト', '加速+漂移'],
+  'touch.driftSub': ['드리프트', 'drift', 'ドリフト', '漂移'],   // 7.8.6: 기능 그대로 짧게
   'touch.brakeSub': ['감속', 'slow', '減速', '减速'],
   'touch.gasSub': ['가속', 'gas', 'アクセル', '加速'],
 });
@@ -513,6 +519,12 @@ addStrings({
 /* 00_strings_src.js — 화면에 보이는 한국어 원문 → [English, 日本語, 简体中文] (6.0)
    화면에 그릴 때 L() 이 원문을 찾아 바꿔요. 원문을 고치면 여기 키도 같이 고쳐야 번역돼요. */
 const I18N_SRC = {
+"사진 준비 중": ["preparing pictures", "画像を準備中", "正在准备图片"],
+"📡 호스트 연결이 느려요": ["📡 Slow connection to the host", "📡 ホストとの接続が遅いです", "📡 与房主的连接较慢"],
+"화려하게": ["Vivid", "華やか", "绚丽"],
+"은은하게": ["Soft", "控えめ", "柔和"],
+"끄기": ["Off", "オフ", "关闭"],
+"💡 빛 효과": ["💡 Lighting effects", "💡 光の効果", "💡 光照效果"],
 "필요한 리소스 불러오는 중": ["LOADING RESOURCES", "リソースを読み込み中", "正在载入资源"],
 "남은 리소스는 받는 대로 준비돼요": ["the rest will be ready as it loads", "残りは読み込み次第準備されます", "其余资源载入后即可使用"],
 "코스 정리 중": ["tidying the track", "コースを整備中", "正在整理赛道"],
@@ -2530,7 +2542,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '7.8.0';
+const GAME_VERSION = '7.9.1';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -4030,6 +4042,7 @@ const settings = {
   lang: null,               // 6.0: 언어 (null = 기기 언어 따라)
   tutorialSeen: false,      // 6.0: 튜토리얼을 봤거나 건너뛴 적 있음
   graphicsQuality: 'auto',  // 'auto' | 'high' | 'medium' | 'low'
+  lightFx: 'normal',        // 7.8.3 빛 효과: 'off' | 'soft' | 'normal' | 'vivid' (예전 모습 = vivid)
   cameraMode: 'chase',
   course: 'apex',          // 7.4: 솔로 코스
   difficulty: 'normal',     // 6.4: AI 난이도 'easy' | 'normal' | 'hard' | 'pro'      // 'chase' = 차 뒤 3인칭 · 'tv' = 위에서 보는 쿼터뷰
@@ -4042,6 +4055,7 @@ function loadSettings() {
     const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
     Object.assign(settings, saved);
     if (saved.masterVolume == null && saved.volumeIndex != null) settings.masterVolume = VOLUME_STEPS[saved.volumeIndex] ?? 1;   // 예전 단계식 볼륨 이어받기
+    if (!saved.gfx783) { settings.graphicsQuality = 'auto'; settings.gfx783 = true; }   // 7.8.3: 자동 품질이 해상도까지 맞춰 주도록 바뀌어서, 한 번 '자동'으로
     if (!saved.vol74) { if (saved.masterVolume == null || +saved.masterVolume === 1) settings.masterVolume = 0.7; settings.vol74 = true; }   // 7.4: 기본 볼륨 70% (예전 기본값 100% 그대로인 경우만 한 번)
     if ((saved.audioDefaults || 0) < 2) Object.assign(settings, { musicVolume: 1, sfxVolume: 0.35, engineVolume: 0.2, audioDefaults: 2 });   // 5.3 새 기본값 적용
     if (!saved.steerModeReset681) { Object.assign(settings, { keyboardSteerMode: 'car', steerModeReset681: true }); setTimeout(() => { try { saveSettings(); } catch (e) { /* 무시 */ } }, 0); }   // 6.8.1: C 키로 실수로 바뀐 '화면 방향(자동 조향)'을 한 번 '차 기준'으로 되돌려요
@@ -6033,7 +6047,7 @@ function startReplayRecording() {
   R.data = new Int16Array(REPLAY_HZ * REPLAY_MAX_SECONDS * cars.length * REPLAY_FIELDS);
   R.meta = {
     format: REPLAY_FORMAT, track: replayTrackKey(), course: currentCourseId, version: GAME_VERSION, raceType, environment, timeOfDay, weatherLevel,
-    cars: cars.map((c) => ({ id: c.id, designId: c.designId || 'aero', ghost: !!c.isGhost,
+    cars: cars.map((c) => ({ id: c.id, designId: c.designId || 'aero', ghost: !!c.isGhost, human: c === player || !!c.mpHuman || !!c.isGhost,   // 7.8.2: 사람이 몬 차인지 (리플레이 이름표)
       name: c === player ? (settings.playerName || 'YOU') : c.isGhost ? (duel.opponentName || 'RIVAL') : c.team.driver })),
   };
 }
@@ -6183,6 +6197,10 @@ async function playReplay(recordId, mode) {
     if (!name || (M.raceType !== 'multi' && car !== player)) return;   // 솔로 리플레이의 AI 는 원래 이름 그대로
     car.team = { ...car.team, driver: name, code: nameCode(name, car.team.code) };
   });
+  // 7.8.2: 사람이 몬 차 표시 (예전 기록엔 표시가 없어서, AI 이름이 아니면 사람으로 봐요)
+  const aiNames = new Set(Object.values(TEAMS).map((t) => t && t.driver));
+  for (const car of allCars) car.replayHuman = false;
+  P.cars.forEach((car, i) => { const c = M.cars[i]; if (i === 0 || car.isGhost || !c || M.raceType !== 'multi') return; car.replayHuman = c.human != null ? !!c.human : !aiNames.has(c.name); });
   for (const car of P.cars) { car.prevX = null; car.trackPos = undefined; }
   Object.assign(P, { active: true, rec, data: new Int16Array(rec.data), time: 0, duration: (rec.frames - 1) / rec.hz, speedIndex: 0, paused: false, ended: false, camMode: 'auto', camCar: -1, endTimer: 0 });
   P.results = replayResults(P);   // 7.0: 각 차가 결승선을 지난 시각 (기록의 '완주' 표시로 계산)
@@ -6242,6 +6260,7 @@ function exitReplay() {
   Object.assign(settings, { carDesign: P.saved.carDesign, cameraMode: P.saved.cameraMode });
   environment = P.saved.environment; timeOfDay = P.saved.timeOfDay; weatherLevel = P.saved.weatherLevel;
   rivalGhost.active = false; raceType = 'solo';
+  for (const car of allCars) car.replayHuman = false;
   if (P.saved.playerTeam) player.team = P.saved.playerTeam;   // 7.7.1: 내 차 이름 원래대로
   assignCarDesigns();
   returnToMenu();
@@ -6288,6 +6307,14 @@ function drawReplayHUD() {
     ctx.fillStyle = 'rgba(9,13,19,.78)'; ctx.beginPath(); ctx.roundRect(-w / 2, 0, w, 28, 14); ctx.fill();
     ctx.fillStyle = P.focusCar.team.primary || '#fff'; ctx.fillRect(-w / 2 + 14, 7, 4, 14);
     drawText('CAM', -w / 2 + 26, 19, 10, COLORS.dim, 900, 'left', false); drawText(name, -w / 2 + 56, 19, 14, '#fff', 900, 'left', false);
+  }
+  // 7.8.2: 함께 달린 사람들 이름표 — 풀네임 · 하늘색 띠 (노란 띠는 우승자 = 기록 주인)
+  for (const car of P.cars) {
+    if (!car.replayHuman) continue;
+    const t2 = worldToScreen(car.x, car.y, 34); if (!t2.visible || t2.x < -80 || t2.x > screenW + 80) continue;
+    applyScreenTransform(); ctx.font = `900 12px ${UI_FONT}`; const lb = `👤 ${car.team.driver}`, w2 = ctx.measureText(lb).width + 20;
+    ctx.fillStyle = 'rgba(0,22,38,.85)'; ctx.beginPath(); ctx.roundRect(t2.x - w2 / 2, t2.y - 25, w2, 20, 10); ctx.fill();
+    ctx.strokeStyle = '#38c6ff'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(lb, t2.x, t2.y - 15);
   }
   // 기록 주인 이름표 (차 위)
   const top = worldToScreen(player.x, player.y, 34);
@@ -6750,7 +6777,7 @@ function backToDuelLobby() {
    테스트: 주소에 ?net=local → 같은 브라우저의 탭끼리 BroadcastChannel 로 연결, 방 목록은 localStorage.
    ===================================================================== */
 
-const MP_PROTOCOL = 4;   // 7.6: 새 코스 모양 다듬음   // 7.4: 코스 · AI 난이도   // 7.3: 재연결(resume) 메시지
+const MP_PROTOCOL = 5;   // 7.9: 위치 정보를 짧은 배열로 · 호스트가 묶어서   // 7.6: 새 코스 모양 다듬음   // 7.4: 코스 · AI 난이도   // 7.3: 재연결(resume) 메시지
 const MP_MAX_PLAYERS = 8;
 const MP_PEER_PREFIX = 'apexgp-mp1-';
 const MP_SEND_INTERVAL = 1 / 20;
@@ -6834,8 +6861,51 @@ addEventListener('pagehide', () => { if (mp.role === 'host' && mp.isPublic) mpRe
 /* ---------- 전송 (호스트 중심 별 구조) ---------- */
 const mpIce = () => [...ICE_SERVERS, ...MP_EXTRA_ICE];
 function mpSetStatus(status, text) { mp.status = status; mp.statusText = text || ''; mpRefreshUI(); }
+/* 7.9.1: 위치 전용 '버려도 되는' 채널 — 순서 보장 · 재전송 없음 (maxRetransmits 0).
+   예전엔 모든 메시지가 꼭 도착해야 하는 채널 하나로 가서, 패킷 하나를 잃으면 다시 보낼 때까지 뒤 메시지가 전부 줄 서서 기다렸어요 (약한 망에서 몇 초씩 멈춤).
+   위치는 1초에 여러 번 새로 오니까 잃어버려도 괜찮아요. 결승 · 리타이어 · 방 정보는 그대로 기존 채널로.
+   양쪽이 같은 번호(negotiated id)로 만들면 따로 협상 없이 열려요. 안 열리면 기존 채널로 보내요. */
+const MP_FAST_ID = 9;
+function mpAttachFast(conn, fromOf) {
+  try {
+    const pc = conn.peerConnection; if (!pc || conn._fast || typeof pc.createDataChannel !== 'function') return;
+    const dc = pc.createDataChannel('apexgp-pos', { negotiated: true, id: MP_FAST_ID, ordered: false, maxRetransmits: 0 });
+    dc.onmessage = (e) => { const from = fromOf(); if (!from) return; let msg; try { msg = JSON.parse(e.data); } catch (err) { return; } if (msg && (msg.type === 'S' || msg.type === 's')) mpOnMessage(from, msg); };
+    conn._fast = dc;
+  } catch (e) { /* 지원 안 하면 기존 채널로 */ }
+}
+/* 7.9: 레이스 중 위치 정보 — 이름표 없는 짧은 배열(약 380 → 110바이트)로. 호스트는 모든 차를 한 묶음으로 보내요 (예전엔 게스트마다 따로 중계해서 8인 방이면 호스트 업로드가 수 Mbps) */
+const MP_STATE_KEYS = ['x', 'y', 'heading', 'slip', 'speed', 'progress', 'trackPos', 'lateral', 'boostTime', 'sprint', 'transform', 'miniTurbo', 'drift', 'brake', 'steer', 'rpm', 'laps', 'drs', 'boostsUsed', 'raceTime', 'bestLap', 'fin'];
+const MP_STATE_DIGITS = { x: 0, y: 0, heading: 3, slip: 2, speed: 0, progress: 1, trackPos: 1, lateral: 0, boostTime: 1, transform: 2, miniTurbo: 1, steer: 2, rpm: -1, raceTime: 3 };   // 7.9.1: 꼭 필요한 자릿수만 (더 짧게)
+const mpQ = (k, v) => { const d = MP_STATE_DIGITS[k]; if (d == null || typeof v !== 'number') return v; if (d < 0) return Math.round(v / 10) * 10; const f = 10 ** d; return Math.round(v * f) / f; };
+const mpPack = (st) => [st.id, ...MP_STATE_KEYS.map((k) => (st[k] == null ? null : mpQ(k, st[k])))];
+function mpUnpack(a) { if (!Array.isArray(a)) return null; const st = { type: 'state', id: a[0] }; MP_STATE_KEYS.forEach((k, i) => { if (a[i + 1] != null) st[k] = a[i + 1]; }); return st; }
+/** 7.9: 보내기 줄이 밀려 있으면 위치 정보는 이번엔 건너뛰어요 (밀린 걸 다 보내느라 몇 초씩 늦어지는 것보다, 최신 것만 가는 게 나아요) */
+/* 7.9.1: 보내는 횟수 자동 조절 — 받는 사람마다 따로. 줄이 밀리면 1초 20번 → 최저 8번으로, 2초 동안 괜찮으면 다시 올려요 */
+const MP_RATE_MAX = 20, MP_RATE_MIN = 8;
+function mpRate(id) { const R = mp.rates || (mp.rates = new Map()); if (!R.has(id)) R.set(id, { hz: MP_RATE_MAX, next: 0, okSince: 0, sentAt: 0 }); return R.get(id); }
+function mpNoteBusy(id) { const r = mpRate(id); r.hz = Math.max(MP_RATE_MIN, r.hz * 0.7); r.okSince = nowSeconds(); mp.skipped = (mp.skipped || 0) + 1; }
+function mpNoteOk(id) { const r = mpRate(id), t = nowSeconds(); if (r.hz < MP_RATE_MAX && t - r.okSince > 2) { r.hz = Math.min(MP_RATE_MAX, r.hz * 1.25); r.okSince = t; } }
+function mpChannelBusy(id) {
+  if (mp.local) return false;
+  const c = mp.role === 'host' ? mp.conns.get(id) : mp.hostConn; if (!c) return true;
+  const dc = c.dataChannel || c._dc;
+  return (dc && dc.bufferedAmount > 32000) || (c.bufferSize || 0) > 4;
+}
 function mpSendTo(id, msg) {
   if (mp.__drop) return;   // 테스트용: 연결 끊김 흉내
+  if (mp.__dropS && msg.type === 'S') return;   // 테스트용: 호스트 → 게스트 위치만 막힘 흉내
+  const pos = msg.type === 'S' || msg.type === 's';
+  if (pos && !mp.local) {   // 7.9.1: 위치는 버려도 되는 채널이 열려 있으면 그쪽으로
+    const c = mp.role === 'host' ? mp.conns.get(id) : mp.hostConn, dc = c && c._fast;
+    if (dc && dc.readyState === 'open') {
+      if (dc.bufferedAmount > 12000) { mpNoteBusy(id); return; }
+      try { dc.send(JSON.stringify(msg)); mpNoteOk(id); } catch (e) { /* 다음 번에 */ }
+      return;
+    }
+  }
+  if (pos && mpChannelBusy(id)) { mpNoteBusy(id); return; }
+  if (pos) mpNoteOk(id);
   try {
     if (mp.local) mp.local.postMessage({ from: mp.myId, to: id, kind: 'data', payload: msg });
     else { const c = mp.role === 'host' ? mp.conns.get(id) : mp.hostConn; if (c && c.open) c.send(msg); }
@@ -6878,6 +6948,7 @@ async function mpHost({ name, isPublic = true, aiFill = true, max = MP_MAX_PLAYE
   peer.on('open', () => { mpSetStatus('lobby', '방이 열렸어요. 다른 플레이어를 기다리는 중…'); mpPublish(); });
   peer.on('connection', (conn) => {
     conn.on('open', () => {
+      mpAttachFast(conn, () => (conn.__pending ? null : conn.__pid || null));   // 7.9.1
       if (mp.status === 'racing') {   // 7.3: 레이스 중엔 '재연결(resume)' 인사만 받아요
         conn.__pending = true;
         setTimeout(() => { if (conn.__pending) { try { conn.send({ type: 'reject', reason: 'racing' }); } catch (e) { /* 무시 */ } setTimeout(() => conn.close(), 300); } }, 5000);
@@ -6925,7 +6996,7 @@ async function mpJoin(code) {
       peer.on('open', () => {
         const conn = peer.connect(MP_PEER_PREFIX + code, { reliable: true, serialization: 'json' });
         mp.hostConn = conn;
-        conn.on('open', () => { mp.lastHeard.set('host', nowSeconds()); conn.send(mpHello()); });
+        conn.on('open', () => { mp.lastHeard.set('host', nowSeconds()); mpAttachFast(conn, () => 'host'); conn.send(mpHello()); });
         conn.on('data', (data) => mpOnMessage('host', data));
         conn.on('close', () => mpOnPeerGone('host'));
         conn.on('error', () => mpOnPeerGone('host'));
@@ -7038,6 +7109,7 @@ function mpOnMessage(from, msg) {
         break;
       }
       case 'lobby': { const s = mp.room.slots.find((x) => x.id === from); if (s) Object.assign(s, { name: String(msg.name || s.name).slice(0, 16), car: CAR_DESIGNS[msg.car] ? msg.car : s.car, ready: !!msg.ready, streak: Math.max(0, +msg.streak || 0) }); mpSendRoom(); break; }
+      case 's': { const st = mpUnpack(msg.d); if (st) { st.id = from; mpOnState(st); const R = mp.relay || (mp.relay = new Map()), a = msg.d.slice(0); a[0] = from; R.set(from, { a, at: mp.netClock || 0 }); } break; }   // 7.9: 다음 묶음에 넣어 다른 게스트에게
       case 'state': mpOnState({ ...msg, id: from }); mpBroadcast({ ...msg, id: from }, from); break;
       case 'finish': mpOnFinish({ ...msg, id: from }); mpBroadcast({ ...msg, id: from }, from); break;
       case 'retire': mpOnRetire(from); mpBroadcast({ type: 'retire', id: from }, from); break;
@@ -7054,6 +7126,7 @@ function mpOnMessage(from, msg) {
       case 'start': mpBeginRace(msg); break;
       case 'state': mpOnState(msg); break;
       case 'states': for (const s of msg.list || []) mpOnState(s); break;
+      case 'S': mp.lastStatesAt = nowSeconds(); for (const a of msg.l || []) { const st = mpUnpack(a); if (st) mpOnState(st); } break;   // 7.9
       case 'finish': mpOnFinish(msg); break;
       case 'retire': mpOnRetire(msg.id); break;
       case 'left': mpOnRemoteLeft(msg.id); break;
@@ -7111,7 +7184,7 @@ function mpReconnectTry() {
     peer.on('open', () => {
       if (mp.peer !== peer || !mp.reconn) return;
       const conn = peer.connect(MP_PEER_PREFIX + mp.code, { reliable: true, serialization: 'json' });
-      conn.on('open', () => { if (mp.peer !== peer) return; mp.hostConn = conn; conn.send(hello); });
+      conn.on('open', () => { if (mp.peer !== peer) return; mp.hostConn = conn; mpAttachFast(conn, () => (mp.peer === peer ? 'host' : null)); conn.send(hello); });
       conn.on('data', (data) => { if (mp.peer === peer) mpOnMessage('host', data); });
       const gone = () => { if (mp.peer === peer && mp.hostConn === conn) mpOnPeerGone('host'); };
       conn.on('close', gone); conn.on('error', gone);
@@ -7121,7 +7194,7 @@ function mpReconnectTry() {
 }
 function mpOnResumed() {
   if (!mp.reconn) return;
-  mp.reconn = null; mp.lastHeard.set('host', nowSeconds());
+  mp.reconn = null; mp.lastHeard.set('host', nowSeconds()); mp.lastStatesAt = nowSeconds();
   showMessage('다시 연결됐어요', '#2bff88', 1.6);
   pushFeed('✅ 호스트와 다시 연결됐어요', '#2bff88');
   if (player.finished) mpSendTo('host', { type: 'finish', id: mp.myId, totalTime: player.finishTime || raceTime, bestLap: player.bestLapTime });
@@ -7161,6 +7234,7 @@ function mpBeginRace(cfg) {
   environmentPreRolled = true;
   mp.roster = cfg.roster || []; mp.aiDifficulty = cfg.aiDifficulty || 'normal'; mp.ghost = !!cfg.ghost;
   mp.buffers = new Map(); mp.results = new Map(); mp.sendTimer = 0; mp.countdown = 0; mp.me.ready = false; mp.finishClock = null;
+  mp.relay = new Map(); mp.rates = new Map(); mp.lastStatesAt = nowSeconds(); mp.slowWarned = false; mp.raceStartedAt = nowSeconds();
   mp.status = 'racing'; mp.statusText = ''; mpPublish();
   closeOverlay();
   startRace({ type: 'multi', lightsOutAt: cfg.lightsOutAt });
@@ -7389,6 +7463,13 @@ function updateMulti(dt) {
     if (t >= mp.reconn.next) { mp.reconn.next = t + (USE_LOCAL_TRANSPORT ? 1 : 5); mpReconnectTry(); }
     return;
   }
+  if (mp.role === 'guest' && racingNow && mp.lastStatesAt && (gameMode === 'race' || gameMode === 'lights')) {   // 7.9: 호스트 연결은 살아 있는데 위치가 안 오면
+    const quiet = t - mp.lastStatesAt;
+    if (quiet > 2.5 && !mp.slowWarned) { mp.slowWarned = true; pushFeed('📡 호스트 연결이 느려요', '#ffb347'); }
+    if (quiet < 1) mp.slowWarned = false;
+    if (quiet > 2.5) for (const car of mp.cars.values()) if (car !== player && car.remote && !car.finished && !car.mpLeft && !(mp.buffers.get(car.mpId) || []).length) { car.mpLost = true; car.ghostTime = 1e9; }   // 한 번도 못 받은 차는 📡 표시 · 고스트
+    if (quiet > 7) { mp.lastStatesAt = t; mpStartReconnect(); return; }   // 오래 막혀 있으면 새로 연결 (밀린 줄을 버려요)
+  }
   if (mp.role === 'host') {
     for (const [id, until] of mp.lost) if (t > until || mp.status !== 'racing') { const car = mp.cars.get(id); if (car) pushFeed(`⚠ ${car.team.driver} 재연결 실패 · DNF`, '#ff8a8a'); mpDropPlayer(id); }
     mp.heartbeat -= dt; if (mp.heartbeat <= 0) { mp.heartbeat = MP_HEARTBEAT; mpPublish(); }
@@ -7402,13 +7483,17 @@ function updateMulti(dt) {
   } else if (mp.countdown > 0) mp.countdown = Math.max(0, mp.countdown - dt);
   if (raceType === 'multi' && (gameMode === 'lights' || gameMode === 'race' || gameMode === 'finish')) {
     mpFinishClock();
-    mp.sendTimer -= dt;
-    if (mp.sendTimer <= 0) {
-      mp.sendTimer = MP_SEND_INTERVAL;
+    // 7.9.1: 받는 사람마다 자기 속도로 (밀리는 사람에겐 덜 자주) · 게스트 위치는 받은 시각 이후 것만 묶어서
+    const targets = mp.role === 'host' ? [...mp.conns.keys()] : ['host'], nt = (mp.netClock = (mp.netClock || 0) + dt);   // 프레임 시간으로 세요
+    let mine = null;
+    for (const id of targets) {
+      const r = mpRate(id); if (nt < r.next) continue;
+      r.next = Math.max(r.next + 1 / r.hz, nt - 0.1);
       if (mp.role === 'host') {
-        const list = raceField.filter((c) => c === player || (c.isAI && !c.remote)).map(mpCaptureState);
-        mpBroadcast({ type: 'states', list });
-      } else mpSendTo('host', mpCaptureState(player));
+        if (!mine) mine = raceField.filter((c) => c === player || (c.isAI && !c.remote)).map((c) => mpPack(mpCaptureState(c)));
+        const extra = []; for (const [gid, e] of mp.relay || []) if (gid !== id && e.at > r.sentAt) extra.push(e.a);   // e.at = 받은 프레임 시각
+        r.sentAt = nt; mpSendTo(id, { type: 'S', l: mine.concat(extra) });
+      } else mpSendTo('host', { type: 's', d: mpPack(mpCaptureState(player)) });
     }
   }
 }
@@ -8395,7 +8480,8 @@ function updateTrails(car, m, tf, fxK = 1) {
     const e = m.emitters[k];
     if (tf > 0.02 && !isPaused) {
       v.set(e.x, e.y, e.z); m.chassis.localToWorld(v);
-      tr.points.unshift(v.x, v.y, v.z); if (tr.points.length > tr.N * 3) tr.points.length = tr.N * 3;
+      const cap = fxK >= 3 ? tr.N : Math.ceil(tr.N * 0.5);   // 7.8.4: 일반 부스트 궤적은 절반 길이 (임계점은 그대로)
+      tr.points.unshift(v.x, v.y, v.z); if (tr.points.length > cap * 3) tr.points.length = cap * 3;
     } else if (tr.points.length) tr.points.length = Math.max(0, tr.points.length - 6);
     tr.mesh.visible = tr.points.length >= 6;
     if (!tr.mesh.visible) return;
@@ -8495,7 +8581,7 @@ function updateCarModel(car, dt) {
   const plumeOn = boosting, flick = 0.88 + Math.random() * 0.24;
   for (const pl of m.plumes) {
     pl.visible = plumeOn && tf > 0.05; if (!pl.visible) continue;
-    const len = (spr ? 240 : 165) * CAR_SCALE * tf * flick, rad = (spr ? 13 : 10) * CAR_SCALE * pl.userData.r * (0.9 + 0.1 * flick);
+    const len = (spr ? 150 : 100) * CAR_SCALE * tf * flick, rad = (spr ? 13 : 9) * CAR_SCALE * pl.userData.r * (0.9 + 0.1 * flick);   // 7.8.4: 일반 부스트는 짧게(165 → 100, 뒤차 시야) · 임계점 150 (7.8.5)
     pl.scale.set(len, rad, rad); pl.material.uniforms.time.value = t; pl.material.uniforms.opacity.value = (spr ? 0.6 : 0.45) * (pl.userData.r < 1 ? 0.55 : 1) * tf * (m.ghost ? 0.4 : 1);
   }
   // 소닉붐: 임계점 부스트 시작 순간 큰 고리 3겹 + 수증기 원뿔, 이어지는 동안 작은 고리(마하 다이아몬드)가 계속 뒤로
@@ -8515,7 +8601,7 @@ function updateCarModel(car, dt) {
   for (const f of m.flames) {
     f.mesh.visible = boosting || (car.miniTurboTime > 0 && f.length > 22);
     if (!f.mesh.visible) continue;
-    const len = f.length * (boosting ? fxK : 0.55) * (0.85 + Math.random() * 0.35);
+    const len = f.length * (boosting ? (spr ? 3.4 : 1.6) : 0.55) * (0.85 + Math.random() * 0.35);   // 7.8.4: 일반 부스트 불꽃 짧게 (2.4 → 1.6배)
     f.mesh.scale.set(len, f.radius * (boosting ? 1 + 0.45 * (fxK - 1) : 1), f.radius * (boosting ? 1 + 0.45 * (fxK - 1) : 1));   // 6.1.1: 더 굵게
     f.mesh.material = boosting ? f.base : m.mats.mini;
   }
@@ -8941,7 +9027,7 @@ function renderPost(scene, camera, fx) {
   }
   // 블룸 (듀얼 필터)
   let bloomTex = P.white;
-  if (preset.bloom) {
+  if (preset.bloom && fx.bloom > 0.001) {   // 7.8.3: 빛 효과 '끄기'면 블룸 계산을 건너뛰어요
     P.bright.uniforms.tex.value = P.sceneRT.texture; P.bright.uniforms.threshold.value = fx.bloomThreshold; blit(P.bright, P.brightRT);
     let src = P.brightRT;
     for (const t of P.down) { P.downPass.uniforms.tex.value = src.texture; P.downPass.uniforms.hp.value.set(0.5 / src.width, 0.5 / src.height); blit(P.downPass, t); src = t; }
@@ -8954,7 +9040,7 @@ function renderPost(scene, camera, fx) {
   }
   const u = P.composite.uniforms;
   u.scene.value = P.sceneRT.texture; u.bloomTex.value = bloomTex; u.aoTex.value = useAO ? P.aoRT2.texture : P.white; u.useAO.value = useAO;
-  u.bloom.value = preset.bloom ? fx.bloom : 0; u.exposure.value = fx.exposure; u.vignette.value = fx.vignette; u.flash.value = fx.flash;
+  u.bloom.value = preset.bloom && fx.bloom > 0.001 ? fx.bloom : 0; u.exposure.value = fx.exposure; u.vignette.value = fx.vignette; u.flash.value = fx.flash;
   u.speedBlur.value = preset.motionFx ? fx.speedBlur : 0; u.aberration.value = preset.motionFx ? fx.aberration : 0; u.grain.value = preset.motionFx ? 0.018 : 0;
   u.time.value = nowSeconds() % 100;
   if (preset.fxaa) { blit(P.composite, P.ldrRT); P.fxaa.uniforms.tex.value = P.ldrRT.texture; P.fxaa.uniforms.texel.value.set(1 / P.width, 1 / P.height); blit(P.fxaa, null); }
@@ -8997,6 +9083,14 @@ const QUALITY_PRESETS = {
   medium: { pixelRatio: 1.5, shadows: 2048, post: true,  ssao: false, bloom: true,  fxaa: true,  motionFx: true,  msaa: 0, lampLights: 4, precip: 0.7,  crowd: 0.55 },
   low:    { pixelRatio: 1,   shadows: 0,    post: false, ssao: false, bloom: false, fxaa: false, motionFx: false, msaa: 0, lampLights: 2, precip: 0.45, crowd: 0.3 },
 };
+/* 7.8.3: 빛 효과 — 너무 밝다는 의견이 있어서 기본을 '보통'으로 한 단계 낮췄어요 (예전 = 화려하게). 값만 바꾸면 돼서 바로 적용돼요 */
+const LIGHT_FX = {
+  off:    { exposure: 0.86, bloom: 0,    threshold: 0,    lamp: 0.5,  glow: 0.55 },
+  soft:   { exposure: 0.9,  bloom: 0.45, threshold: 0.15, lamp: 0.65, glow: 0.7 },
+  normal: { exposure: 0.95, bloom: 0.72, threshold: 0.06, lamp: 0.82, glow: 0.85 },
+  vivid:  { exposure: 1,    bloom: 1,    threshold: 0,    lamp: 1,    glow: 1 },
+};
+const lightFx = () => LIGHT_FX[settings.lightFx] || LIGHT_FX.normal;
 const resolvedQuality = () => (settings.graphicsQuality === 'auto' || !QUALITY_PRESETS[settings.graphicsQuality]
   ? (useTouchUI ? 'medium' : 'high') : settings.graphicsQuality);
 const qualityPreset = () => QUALITY_PRESETS[resolvedQuality()];
@@ -9580,21 +9674,39 @@ function treeGeometry(kind, rand) {
   }
   return mergeParts(parts);
 }
+/** 7.9.1: 멀리 있는 나무용 단순한 모양 (약 270 → 30~70 삼각형) — 멀리선 차이가 거의 안 보여요 */
+function treeGeometryLow(kind) {
+  const parts = [], trunk = (h, r, color = '#5d4027') => { const g = new THREE.CylinderGeometry(r * 0.7, r, h, 4); g.translate(0, h / 2, 0); parts.push({ geometry: g, color }); };
+  const blob = (r, x, y, z, color) => { const g = new THREE.IcosahedronGeometry(r, 0); g.translate(x, y, z); parts.push({ geometry: g, color }); };
+  const cone = (r, h, y, color) => { const g = new THREE.ConeGeometry(r, h, 5); g.translate(0, y + h / 2, 0); parts.push({ geometry: g, color }); };
+  if (kind === 'oak') { trunk(48, 6); blob(46, 0, 76, 0, '#3f8f37'); }
+  else if (kind === 'tree') { trunk(36, 4.5); blob(32, 0, 62, 0, '#4a9a3d'); }
+  else if (kind === 'pine' || kind === 'snowPine') { trunk(26, 4, '#4a3220'); const c = kind === 'snowPine' ? ['#e9f0f6', '#2f6a4c'] : ['#1f5a35', '#2f7a46']; cone(36, 70, 18, c[0]); cone(22, 56, 70, c[1]); }
+  else if (kind === 'palm') { trunk(160, 4.4, '#a5814f'); for (let k = 0; k < 5; k++) { const g = new THREE.BoxGeometry(60, 1.5, 11); g.translate(30, 0, 0); g.rotateZ(-0.45); g.rotateY((k / 5) * TAU); g.translate(0, 160, 0); parts.push({ geometry: g, color: k % 2 ? '#2f8a36' : '#4caf45' }); } }
+  else { trunk(70, 5, '#4b3524'); blob(12, 0, 74, 0, '#f4f8fc'); }
+  return mergeParts(parts);
+}
+/* 7.9.1 최적화: 나무를 구역(격자)마다 따로 묶어서 화면 밖 · 그림자 범위 밖 구역은 아예 그리지 않아요.
+   예전엔 코스 전체 나무가 한 덩어리라 늘 전부 그렸어요 (언덕 숲 = 120만 삼각형 + 그림자 계산 때 한 번 더).
+   트랙에서 먼 나무는 단순한 모양 · 그림자 없음 */
+const TREE_FAR = 1500, TREE_CHUNK_NEAR = 4000, TREE_CHUNK_FAR = 8000;
 function buildTrees() {
   W3.treeSets = {};
   const trees = sceneryObjects.filter((o) => o.kind === 'tree'), rand = seededRandom(5150);
   const material = new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 0.9 });
-  const geometries = {};
-  for (const kind of ['oak', 'tree', 'pine', 'snowPine', 'palm', 'bare']) geometries[kind] = treeGeometry(kind, rand);
+  const geometries = {}, lowGeo = {};
+  for (const kind of ['oak', 'tree', 'pine', 'snowPine', 'palm', 'bare']) { geometries[kind] = treeGeometry(kind, rand); lowGeo[kind] = treeGeometryLow(kind); }
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), up = new THREE.Vector3(0, 1, 0), sc = new THREE.Vector3();
+  const dist = W3.distField || ((x, y) => nearestCenterIndex(x, y).distance);
+  for (const t of trees) { t._far = dist(t.x, t.y) > TREE_FAR; const C = t._far ? TREE_CHUNK_FAR : TREE_CHUNK_NEAR; t._chunk = (t._far ? 'f' : 'n') + Math.floor(t.x / C) + ',' + Math.floor(t.y / C); }
   for (const env of ENVIRONMENT_KEYS) {
-    const group = new THREE.Group(), byKind = {};
+    const group = new THREE.Group(), buckets = {};
     const theme = courseTheme(), kinds = theme === 'desert' ? COURSE_TREE_KINDS.desert : env === 'SNOW' ? TREE_KINDS_BY_ENV.SNOW : COURSE_TREE_KINDS[theme] || TREE_KINDS_BY_ENV[env];   // 7.5: 눈이면 눈 덮인 나무   // 7.4: 코스 테마별 나무
-    trees.forEach((t, i) => { const kind = t.kind2 || kinds[t.variant]; (byKind[kind] = byKind[kind] || []).push(t); });
-    for (const kind in byKind) {
-      const list = byKind[kind], mesh = new THREE.InstancedMesh(geometries[kind], material, list.length);
-      list.forEach((t, k) => { q.setFromAxisAngle(up, ((t.x * 13.1 + t.y * 7.7) % TAU)); const s = t.scale * 1.05; m4.compose(v3(t.x, W3.terrain ? W3.terrain.heightAt(t.x, t.y) - 2 : 0, t.y), q, sc.set(s, s, s)); mesh.setMatrixAt(k, m4); });   // 7.5: 언덕 위
-      mesh.castShadow = true; mesh.receiveShadow = true; group.add(mesh);
+    for (const t of trees) { const kind = t.kind2 || kinds[t.variant], key = kind + '|' + t._chunk; (buckets[key] = buckets[key] || { kind, far: t._far, list: [] }).list.push(t); }
+    for (const B of Object.values(buckets)) {
+      const mesh = new THREE.InstancedMesh(B.far ? lowGeo[B.kind] : geometries[B.kind], material, B.list.length);
+      B.list.forEach((t, k) => { q.setFromAxisAngle(up, ((t.x * 13.1 + t.y * 7.7) % TAU)); const s = t.scale * 1.05; m4.compose(v3(t.x, W3.terrain ? W3.terrain.heightAt(t.x, t.y) - 2 : 0, t.y), q, sc.set(s, s, s)); mesh.setMatrixAt(k, m4); });   // 7.5: 언덕 위
+      mesh.computeBoundingSphere(); mesh.castShadow = !B.far; mesh.receiveShadow = !B.far; group.add(mesh);
     }
     group.visible = false; W3.scene.add(group); W3.treeSets[env] = group;
   }
@@ -9725,7 +9837,7 @@ function buildGrandstand(obj) {
   const led = new THREE.Mesh(new THREE.BoxGeometry(L + 44, 1.6, 1.6), W3.standLedMaterial); led.position.set(0, frontEdgeY - 5.5, roofCZ - roofD / 2 + 1); g.add(led);
   const scr = standScreenTexture(), screen = new THREE.Mesh(new THREE.PlaneGeometry(166, 62), new THREE.MeshStandardMaterial({ map: scr, emissiveMap: scr, emissive: '#ffffff', emissiveIntensity: 0.9, roughness: 0.3 }));
   screen.rotation.y = Math.PI; screen.position.set(0, scrY, scrZ + 1.8); g.add(screen);
-  for (let x = -L / 2 + 50; x < L / 2; x += 105) { const f = new THREE.Mesh(new THREE.BoxGeometry(16, 5, 7), W3.floodMaterial); f.position.set(x, frontEdgeY - 6, 22); g.add(f); }
+  { const fl = []; for (let x = -L / 2 + 50; x < L / 2; x += 105) { const b = new THREE.BoxGeometry(16, 5, 7); b.translate(x, frontEdgeY - 6, 22); fl.push(b); } if (fl.length) g.add(new THREE.Mesh(mergeGeometries(fl), W3.floodMaterial)); }   // 7.9.1: 조명 상자를 한 덩어리로 (관중석마다 그리기 5~6번 → 1번)
   S.add(g); g.updateMatrixWorld(true); W3.stands.push(g);
   const rand = seededRandom(Math.floor(obj.x * 7 + obj.y * 3)), v = new THREE.Vector3();
   for (let k = 0; k < TIERS; k++) for (let x = -L / 2 + 6; x < L / 2 - 6; x += 7.2) {
@@ -9733,7 +9845,7 @@ function buildGrandstand(obj) {
     if (inSec < AISLE / 2 + 2 || inSec > secW - AISLE / 2 - 2) continue;              // 통로엔 사람 없음
     if (rand() < 0.1) continue;
     v.set(x + (rand() - 0.5) * 2, 6 + k * STEP_H, FRONT + k * STEP_D + 7 + (rand() - 0.5) * 2).applyMatrix4(g.matrixWorld);
-    W3.crowdSpots.push({ x: v.x, y: v.y, z: v.z, shirt: Math.floor(rand() * 12), skin: Math.floor(rand() * 5), s: 0.92 + rand() * 0.18 });
+    W3.crowdSpots.push({ x: v.x, y: v.y, z: v.z, shirt: Math.floor(rand() * 12), skin: Math.floor(rand() * 5), s: 0.92 + rand() * 0.18, st: W3.stands.length - 1 });
   }
   // 지붕 깃발 (나중에 한 번에 인스턴싱) — 트러스 끝마다
   W3.flagSpots = W3.flagSpots || [];
@@ -9758,18 +9870,26 @@ function buildCrowd() {
     mat.customProgramCacheKey = () => 'crowd';
     return mat;
   };
-  const body = new THREE.CapsuleGeometry(2.5, 4.4, 2, 7); body.translate(0, 5, 0);
-  const head = new THREE.SphereGeometry(2.1, 8, 6); head.translate(0, 10.6, 0);
-  const n = spots.length, bodies = new THREE.InstancedMesh(body, animate(new THREE.MeshStandardMaterial({ roughness: 0.85 })), n);
-  const heads = new THREE.InstancedMesh(head, animate(new THREE.MeshStandardMaterial({ roughness: 0.7 })), n);
-  const m4 = new THREE.Matrix4(), c = new THREE.Color(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
-  spots.forEach((p, k) => {
-    m4.compose(new THREE.Vector3(p.x, p.y, p.z), q, sc.set(p.s, p.s, p.s)); bodies.setMatrixAt(k, m4); heads.setMatrixAt(k, m4);
-    bodies.setColorAt(k, c.set(SHIRTS[p.shirt])); heads.setColorAt(k, c.set(SKINS[p.skin]));
-  });
-  bodies.castShadow = false; bodies.receiveShadow = true; heads.receiveShadow = true;
-  // 섞어서 저장 → 품질이 낮을 때 앞쪽 일부만 그려도 고르게 분포
-  W3.crowdMeshes = [bodies, heads]; W3.scene.add(bodies); W3.scene.add(heads);
+  /* 7.8.3 최적화: 관중을 단순한 모양(몸 ≈ 20 · 머리 20 삼각형, 예전 ≈ 150)으로, 관중석마다 따로 묶어서
+     화면 밖 · 아주 먼 관중석은 아예 그리지 않아요 (모든 코스에 관중석이 30개쯤 되면서 관중이 수백만 삼각형이었어요) */
+  const body = new THREE.CylinderGeometry(2.1, 2.7, 8.4, 6, 1); body.translate(0, 5, 0);
+  const head = new THREE.IcosahedronGeometry(2.1, 0); head.translate(0, 10.6, 0);
+  const bodyMat = animate(new THREE.MeshStandardMaterial({ roughness: 0.85, flatShading: true })), headMat = animate(new THREE.MeshStandardMaterial({ roughness: 0.7, flatShading: true }));
+  const m4 = new THREE.Matrix4(), c = new THREE.Color(), q = new THREE.Quaternion(), sc = new THREE.Vector3(), byStand = new Map();
+  for (const p of spots) { const k = p.st ?? -1; if (!byStand.has(k)) byStand.set(k, []); byStand.get(k).push(p); }
+  W3.crowdMeshes = [];
+  for (const list of byStand.values()) {
+    const rnd = seededRandom(list.length * 31 + 7);   // 섞어서 → 품질이 낮을 때 앞쪽 일부만 그려도 고르게
+    for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
+    const n = list.length, bodies = new THREE.InstancedMesh(body, bodyMat, n), heads = new THREE.InstancedMesh(head, headMat, n);
+    let cx = 0, cz = 0;
+    list.forEach((p, k) => {
+      m4.compose(new THREE.Vector3(p.x, p.y, p.z), q, sc.set(p.s, p.s, p.s)); bodies.setMatrixAt(k, m4); heads.setMatrixAt(k, m4);
+      bodies.setColorAt(k, c.set(SHIRTS[p.shirt])); heads.setColorAt(k, c.set(SKINS[p.skin])); cx += p.x; cz += p.z;
+    });
+    for (const m of [bodies, heads]) { m.computeBoundingSphere(); m.receiveShadow = true; m.castShadow = false; W3.scene.add(m); }
+    W3.crowdMeshes.push({ bodies, heads, n, x: cx / n, z: cz / n });
+  }
   // 깃발
   const flags = W3.flagSpots || [], flagGeo = new THREE.PlaneGeometry(30, 18, 10, 4); flagGeo.translate(15, 0, 0);
   const flagMat = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, roughness: 0.8 });
@@ -9788,13 +9908,43 @@ function buildCrowd() {
   W3.scene.add(flagMesh); W3.scene.add(pole);
   W3.flashes = makePointCloud(64, true);
 }
+/* 7.8.4: 부스트 바람 줄기 — 차 앞쪽 공중에 가는 빛줄기를 뿌려 두면 차가 지나치며 휙휙 뒤로 흘러가요 (진짜 시차라 속도감이 커요)
+   체이스 시점에서만 · 일반 부스트 조금, 임계점 부스트 많이 · 차 바로 둘레는 비워서 시야를 가리지 않아요 */
+function buildWindStreaks() {
+  const a = new THREE.PlaneGeometry(1, 1), b = new THREE.PlaneGeometry(1, 1).rotateX(Math.PI / 2), g = mergeGeometries([a, b]);
+  const pos = g.attributes.position, col = new Float32Array(pos.count * 3);
+  for (let i = 0; i < pos.count; i++) { const k = Math.pow(pos.getX(i) + 0.5, 1.6); col[i * 3] = col[i * 3 + 1] = col[i * 3 + 2] = k; }   // 앞은 밝고 꼬리는 사라지게
+  g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, color: '#dff4ff', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+  const mesh = new THREE.InstancedMesh(g, mat, 80); mesh.frustumCulled = false; mesh.count = 0; mesh.renderOrder = 4; W3.scene.add(mesh);
+  W3.wind = { mesh, list: [], m4: new THREE.Matrix4(), q: new THREE.Quaternion(), up: new THREE.Vector3(0, 1, 0), v: new THREE.Vector3(), s: new THREE.Vector3() };
+}
+function updateWindStreaks(dt) {
+  const W = W3.wind; if (!W) return;
+  const p = player, on = gameMode === 'race' && p.boostTime > 0 && settings.cameraMode !== 'tv', spr = on && p.sprint, sp = Math.abs(p.speed);
+  const want = on ? (spr ? 70 : 26) : 0, h = p.heading, cs = Math.cos(h), sn = Math.sin(h);
+  if (!isPaused) while (W.list.length < want) {
+    const f = 280 + Math.random() * 1100, side = (Math.random() < 0.5 ? -1 : 1) * (60 + Math.random() * 300), y = 8 + Math.random() * 120;
+    if (Math.abs(side) < 110 && y < 50) continue;   // 차 바로 옆 · 앞 낮은 곳은 비워요
+    W.list.push({ x: p.x + cs * f - sn * side, z: p.y + sn * f + cs * side, y, yaw: h, w: 0.8 + Math.random() * 0.8 });
+  }
+  for (let i = W.list.length - 1; i >= 0; i--) { const o = W.list[i], ahead = (o.x - p.x) * cs + (o.z - p.y) * sn; if (ahead < -260 || ahead > 1600 || W.list.length > want + (on ? 0 : -1e9)) W.list.splice(i, 1); }
+  const len = 30 + sp * (spr ? 0.3 : 0.18);
+  W.list.forEach((o, k) => { W.q.setFromAxisAngle(W.up, -o.yaw); W.m4.compose(W.v.set(o.x, o.y, o.z), W.q, W.s.set(len, (spr ? 5 : 3.6) * o.w, (spr ? 5 : 3.6) * o.w)); W.mesh.setMatrixAt(k, W.m4); });
+  W.mesh.count = W.list.length; W.mesh.instanceMatrix.needsUpdate = true;
+  W.mesh.material.opacity = lerp(W.mesh.material.opacity, on ? (spr ? 0.85 : 0.5) * clamp((sp - 250) / 300, 0, 1) : 0, smoothFactor(6, dt));
+}
 function updateCrowd(dt, focus) {
   if (!W3.crowdUniforms) return;
   W3.crowdUniforms.time.value = nowSeconds() % 1000;
   const target = gameMode === 'finish' ? 1.5 : gameMode === 'lights' ? 0.9 : gameMode === 'race' ? 0.65 : 0.4;
   W3.crowdUniforms.excite.value = lerp(W3.crowdUniforms.excite.value, target + (audio.crowdCheer || 0) * 2, smoothFactor(2, dt));
-  const count = Math.floor(W3.crowdSpots.length * qualityPreset().crowd);
-  for (const m of W3.crowdMeshes) m.count = count;
+  const share = qualityPreset().crowd, cam = W3.camera.position, far = settings.cameraMode === 'tv' ? 9000 : 7000;
+  for (const C of W3.crowdMeshes) {   // 7.8.3: 아주 먼 관중석은 그리지 않아요 (화면 밖은 three.js 가 알아서 빼요)
+    const on = Math.hypot(C.x - cam.x, C.z - cam.z) < far, cnt = Math.floor(C.n * share);
+    C.bodies.visible = C.heads.visible = on; C.bodies.count = C.heads.count = cnt;
+  }
+  const count = Math.floor(W3.crowdSpots.length * share);
   // 카메라 플래시
   const g = W3.flashes.geometry, rate = gameMode === 'finish' ? 40 : gameMode === 'race' ? 10 : 3; let k = 0;
   W3.flashList = (W3.flashList || []).filter((f) => (f.life -= dt) > 0);
@@ -9922,11 +10072,12 @@ function updatePrecipitation3D(dt) {
    =================================================================== */
 function applyQualitySettings(keepMaterials = false) {   // 7.8: 코스만 바꿀 땐 기존 재질을 다시 컴파일하지 않아요 (keepMaterials)
   const preset = qualityPreset(), r = W3.renderer;
-  r.setPixelRatio(Math.min(window.devicePixelRatio || 1, preset.pixelRatio));
+  if (settings.graphicsQuality !== 'auto') W3.resScale = 1;
+  r.setPixelRatio(Math.min(window.devicePixelRatio || 1, preset.pixelRatio) * (W3.resScale || 1));   // 7.8.3: 자동 품질이면 느릴 때 해상도를 조금 낮춰요 (resScale)
   r.shadowMap.enabled = preset.shadows > 0;
   W3.sun.castShadow = preset.shadows > 0;
   if (preset.shadows) { W3.sun.shadow.mapSize.set(preset.shadows, preset.shadows); if (W3.sun.shadow.map) { W3.sun.shadow.map.dispose(); W3.sun.shadow.map = null; } }
-  W3.lampLights.forEach((l, i) => { l.userData.enabled = i < preset.lampLights; });
+  W3.lampLights.forEach((l, i) => { l.userData.enabled = i < preset.lampLights; l.visible = l.userData.enabled; });   // 7.8.3: 안 쓰는 가로등 빛은 아예 빼서 모든 재질의 계산을 줄여요
   if (!keepMaterials) W3.scene.traverse((o) => { if (o.material) [].concat(o.material).forEach((m) => { m.needsUpdate = true; }); });
   W3.qualityKey = resolvedQuality();
   resizeWorld3D();
@@ -10005,7 +10156,7 @@ const CHASE_CAMERA = { distance: 205, height: 84, lookAhead: 170, lookHeight: 12
    1) 쇼케이스 (켜고 ~1.4초): 주행 시점 그대로 화각을 좁혀 줌인해서 차가 변신하는 모습을 크게 보여줘요 (5.1.1)
    2) 전방 주시 (그 뒤 부스트 동안): 카메라를 높이고 시선을 멀리 앞에 둬서 다가오는 코너가 미리 보여요 */
 /* 전방 주시 값은 '내 차가 화면에서 평소와 비슷한 높이에 남도록' 맞췄어요 (높이·거리를 같이 늘려 계기판 뒤로 숨지 않게) */
-const BOOST_CAMERA = { showIn: 0.2, showHold: 0.85, showOut: 1.4, closeDist: 0.22, closeHeight: 0.22, orbit: 0, zoomFov: 20, zoomCenter: 0.6, aheadLook: 30, aheadHeight: 40, aheadDist: 55, aheadFov: 6 };   // 5.1.1: 쇼케이스 = 같은 시점에서 줌인
+const BOOST_CAMERA = { showIn: 0.2, showHold: 0.85, showOut: 1.4, closeDist: 0.22, closeHeight: 0.22, orbit: 0, zoomFov: 20, zoomCenter: 0.6, aheadLook: 30, aheadHeight: 26, aheadDist: 28, aheadFov: 4 };   // 7.8.4: 부스트 때 카메라가 덜 물러나요 (차가 화면에서 멀어 보인다는 의견)   // 5.1.1: 쇼케이스 = 같은 시점에서 줌인
 const smoothStep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 function boostCameraWeights(dt) {
   const p = player, boosting = p.boostTime > 0 && gameMode === 'race';
@@ -10138,7 +10289,7 @@ function updateCamera3D(dt) {
     // 출발 그리드: 바로 뒤 차에 가려지지 않게 높고 가까이서 내려다보다가 출발 후 2초간 평소 위치로
     const grid = gameMode === 'lights' ? 1 : gameMode === 'race' ? clamp(1 - raceTime / 2, 0, 1) : 0;
     const speedK = clamp(Math.abs(p.speed) / 720, 0, 1.5);
-    let dist = lerp(C.distance + speedK * 45, 120, grid) + 34 * sk, height = lerp(C.height + speedK * 6, 118, grid) * (1 - 0.24 * sk);
+    let dist = lerp(C.distance + speedK * 45, 120, grid) + 8 * sk, height = lerp(C.height + speedK * 6, 118, grid) * (1 - 0.18 * sk);   // 7.8.4: 임계점 때 차가 너무 멀어 보이지 않게 (뒤로 34 → 8)
     dist = dist * (1 - BC.closeDist * show) + BC.aheadDist * aheadK;           // 쇼케이스: 가까이 / 전방 주시: 살짝 뒤로
     height = height * (1 - BC.closeHeight * show) + BC.aheadHeight * aheadK;   // 쇼케이스: 낮게 / 전방 주시: 높게
     const side = (W3.boostOrbitSide || 1) * BC.orbit * show, yaw = W3.camYaw + side; // 쇼케이스 때 옆으로 살짝 돌아 변신 모습이 보이게
@@ -10146,7 +10297,7 @@ function updateCamera3D(dt) {
     desiredPos.set(p.x - Math.cos(yaw) * dist, height, p.y - Math.sin(yaw) * dist);
     const ahead = lerp(C.lookAhead, 95, grid) * (1 - BC.zoomCenter * show) + BC.aheadLook * aheadK;   // 줌 중심을 살짝 차 쪽으로 → 차가 평소와 같은 높이에 남아요
     lookAt.set(p.x + Math.cos(W3.camYaw) * ahead, C.lookHeight, p.y + Math.sin(W3.camYaw) * ahead);
-    fov = C.fov + speedK * 7 + (p.boostTransform || 0) * 8 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show) + 16 * sk;
+    fov = C.fov + speedK * 7 + (p.boostTransform || 0) * 5 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show) + 6 * sk + 10 * sprintFlash;   // 7.8.4: 화각은 켜는 순간만 확 벌어졌다가(킥) 6도만 유지 — 대신 바람 줄기로 속도감
     lerpRate = 12 + 18 * show;   // 부스트 속도에서도 쇼케이스 거리를 유지하도록 더 빨리 따라붙어요
   }
   if (W3.snap) { W3.camPos.copy(desiredPos); W3.camTarget.copy(lookAt); W3.snap = false; }
@@ -10193,9 +10344,10 @@ function renderWorld3D(dt) {
   W3.sun.position.copy(focus).addScaledVector(W3.sunDir, 1800); W3.sun.target.position.copy(focus);
   const tvExtra = settings.cameraMode === 'tv' && gameMode !== 'menu' ? 900 : 0;
   W3.scene.fog.near = Math.min(2600, W3.fogFar * 0.25) + tvExtra; W3.scene.fog.far = W3.fogFar + tvExtra;
-  W3.bulbMaterial.emissiveIntensity = light > 0 ? 3 + 5 * light : 0.15;
-  W3.poolMaterial.opacity = light * (environment === 'RAIN' ? 0.75 : 0.55);
-  W3.floodMaterial.emissiveIntensity = light * 6;
+  const LF = lightFx();
+  W3.bulbMaterial.emissiveIntensity = (light > 0 ? 3 + 5 * light : 0.15) * LF.glow;
+  W3.poolMaterial.opacity = light * (environment === 'RAIN' ? 0.75 : 0.55) * LF.lamp;
+  W3.floodMaterial.emissiveIntensity = light * 6 * LF.glow;
   W3.trackMaterials.ads.emissiveIntensity = light * 0.35;
   if (light > 0) {
     const nearest = streetLamps.map((l) => [l, (l.headX - focus.x) ** 2 + (l.headY - focus.z) ** 2]).sort((a, b) => a[1] - b[1]);
@@ -10203,7 +10355,7 @@ function renderWorld3D(dt) {
     W3.lampLights.forEach((l, i) => {
       const lamp = nearest[i] && nearest[i][0];
       if (!lamp || !l.userData.enabled) { l.intensity = 0; return; }
-      l.position.set(lamp.headX, LAMP_POLE_H - 14, lamp.headY); l.intensity = 2800 * light * bright;
+      l.position.set(lamp.headX, LAMP_POLE_H - 14, lamp.headY); l.intensity = 2800 * light * bright * LF.lamp;
     });
   } else W3.lampLights.forEach((l) => { l.intensity = 0; });
   const p = player, ph = p.heading;
@@ -10212,16 +10364,17 @@ function renderWorld3D(dt) {
   W3.headlight.target.position.set(p.x + Math.cos(ph) * 420, 0, p.y + Math.sin(ph) * 420);
   const lit = gameMode === 'lights' ? Math.min(5, Math.floor(lightsTimer)) : 0;
   for (const g of W3.gantryLights) g.material.emissiveIntensity = g.column < lit ? 8 : 0;
-  updateCrowd(dt, focus);
+  updateCrowd(dt, focus); if (!W3.wind && typeof mergeGeometries === 'function') buildWindStreaks(); updateWindStreaks(dt);
   if (!isPaused) updateCourseScenery(dt);
-  let nearStand = 1e9; for (const s of W3.stands) nearStand = Math.min(nearStand, Math.hypot(s.position.x - focus.x, s.position.z - focus.z));
+  let nearStand = 1e9; const camP = W3.camera.position, standFar = settings.cameraMode === 'tv' || gameMode === 'menu' || gameMode === 'replay' ? 12000 : 8000;
+  for (const s of W3.stands) { const dd = Math.hypot(s.position.x - focus.x, s.position.z - focus.z); nearStand = Math.min(nearStand, dd); s.visible = Math.hypot(s.position.x - camP.x, s.position.z - camP.z) < standFar; }   // 7.9.1: 아주 먼 관중석은 그리지 않아요
   audio.crowdNearness = Math.max(audio.crowdNearness * 0.9, clamp(1 - nearStand / 1400, 0, 1));
   writeParticles(); writeSkidMarks(); if (!isPaused) updatePrecipitation3D(dt);
   const pr = W3.renderer.getPixelRatio(), pixelScale = (screenH * pr) / (2 * Math.tan((W3.camera.fov * Math.PI) / 360));
   for (const pts of [W3.glowPoints, W3.dustPoints, W3.snow, W3.flashes]) if (pts) pts.material.uniforms.pixelScale.value = pixelScale;
   const racing = gameMode === 'race' ? 1 : 0, tf = (p.boostTransform || 0) * racing, speedK = clamp((Math.abs(p.speed) - 450) / 400, 0, 1) * racing;
   renderPost(W3.scene, W3.camera, {
-    exposure: W3.exposure * (1 + tf * 0.1 + sprintFlash * 0.08), bloom: W3.bloomStrength + tf * 0.22 + (player.sprint && player.boostTime > 0 ? 0.15 : 0) + sprintFlash * 0.15, bloomThreshold: W3.bloomThreshold * (1 - 0.12 * tf),
+    exposure: W3.exposure * LF.exposure * (1 + tf * 0.1 + sprintFlash * 0.08), bloom: (W3.bloomStrength + tf * 0.22 + (player.sprint && player.boostTime > 0 ? 0.15 : 0) + sprintFlash * 0.15) * LF.bloom, bloomThreshold: (W3.bloomThreshold + LF.threshold) * (1 - 0.12 * tf),
     vignette: 0.3 + tf * 0.25, flash: lightningFlash * lightningFlash * 0.35,
     speedBlur: ((settings.cameraMode === 'tv' ? 0.02 : 0.05) * speedK + 0.14 * tf + 0.16 * (W3.sprintK || 0)) * (1 - 0.85 * (W3.boostShow || 0)), aberration: (0.004 * speedK + 0.014 * tf + 0.018 * (W3.sprintK || 0)) * (1 - 0.7 * (W3.boostShow || 0)),
     aoRadius: 22, aoIntensity: 1.5,
@@ -10247,7 +10400,7 @@ function drawCarLabels() {
       }
       continue;
     }
-    if (!car.trait && !car.isGhost && !car.mpHuman) continue;
+    if (car.replayHuman || (!car.trait && !car.isGhost && !car.mpHuman)) continue;   // 7.8.2: 리플레이의 사람 차는 리플레이 화면이 따로 그려요
     if (dist > (settings.cameraMode === 'tv' ? 1100 : compact ? 1000 : 1500)) continue;
     if (compact && ++shown > 3) continue;
     const label = car.isGhost ? `${duel.collide ? '⚔' : '👻'} ${compact ? car.team.driver.slice(0, 8) : car.team.driver}${car.disconnected ? ' (끊김)' : ''}`
@@ -10448,24 +10601,35 @@ function trackDistanceField(cell) {
  * opt: near(평지 반경) · ramp · amp · scale(언덕 크기) · farStart · farAmp · farScale · mesa(0~1 평평한 꼭대기) · flats([{x,y,r}] 호수 · 마을 자리)
  *      palette(h, slope, n) → 색 · snowPalette (눈 환경일 때)
  */
+/** 7.8.3: 산 모양 — 울퉁불퉁함(옥타브 · 능선 날카로움)과 다듬기 횟수. 줄무늬는 색 경계 탓이었어서 모양은 적당히 살려요 */
+const TERRAIN_LOOK = { farOct: 5, nearOct: 4, sharp: 0.85, blur: 1 };
 function buildTerrain(opt) {
   const B = TRACK_BOUNDS, cx = (B.minX + B.maxX) / 2, cy = (B.minY + B.maxY) / 2, span = Math.max(B.maxX - B.minX, B.maxY - B.minY) + 2 * (opt.extent || 12000);
-  const segs = opt.segs || 180, noise = makeValueNoise(opt.seed), dist = W3.distField || (W3.distField = trackDistanceField(260));
+  const segs = opt.segs || 220, noise = makeValueNoise(opt.seed), dist = W3.distField || (W3.distField = trackDistanceField(260));
   const heightAt = (x, y) => {
     const d = dist(x, y);
-    let h = smooth01(opt.near, opt.near + opt.ramp, d) * opt.amp * Math.pow(noise(x / opt.scale, y / opt.scale, 4), 1.35) * 1.6;
-    if (opt.farAmp) { const ridge = 1 - Math.abs(noise(x / opt.farScale + 40, y / opt.farScale - 20, 5) * 2 - 1); h += smooth01(opt.farStart, opt.farStart + 4500, d) * opt.farAmp * Math.pow(ridge, 1.6) * 1.3; }
+    let h = smooth01(opt.near, opt.near + opt.ramp, d) * opt.amp * Math.pow(noise(x / opt.scale, y / opt.scale, TERRAIN_LOOK.nearOct), 1.35) * 1.6;
+    if (opt.farAmp) { const q = noise(x / opt.farScale + 40, y / opt.farScale - 20, TERRAIN_LOOK.farOct) * 2 - 1, ridge = 1 - Math.min(1, Math.abs(q) * TERRAIN_LOOK.sharp + q * q * (1 - TERRAIN_LOOK.sharp)); /* 7.8.2: 능선을 둥글게 (뾰족한 골이 세로 줄무늬처럼 보였어요) */ h += smooth01(opt.farStart, opt.farStart + 4500, d) * opt.farAmp * Math.pow(ridge, 1.6) * 1.3; }
     if (opt.mesa) h = Math.min(h, (opt.amp + opt.farAmp) * opt.mesa) + Math.max(0, h - (opt.amp + opt.farAmp) * opt.mesa) * 0.08;
     for (const f of opt.flats || []) { const fd = Math.hypot(x - f.x, y - f.y); if (fd < f.r + 900) h *= smooth01(f.r, f.r + 900, fd); }
     return h;
   };
   const g = new THREE.PlaneGeometry(span, span, segs, segs); g.rotateX(-Math.PI / 2); g.translate(cx, 0, cy);
-  const p = g.attributes.position, hs = new Float32Array(p.count);
-  for (let i = 0; i < p.count; i++) { const h = heightAt(p.getX(i), p.getZ(i)); hs[i] = h; p.setY(i, h > 2 ? h : -7); }
+  const p = g.attributes.position, hs = new Float32Array(p.count), N = segs + 1;
+  for (let i = 0; i < p.count; i++) hs[i] = heightAt(p.getX(i), p.getZ(i));
+  // 7.8.2: 높이를 두 번 부드럽게 — 능선이 격자 모양으로 꺾여 산에 세로 줄무늬가 보이던 것을 없애요
+  for (let pass = 0; pass < TERRAIN_LOOK.blur; pass++) {
+    const src = hs.slice();
+    for (let j = 1; j < N - 1; j++) for (let i = 1; i < N - 1; i++) {
+      const k = j * N + i; if (src[k] <= 2) continue;
+      hs[k] = (src[k] * 4 + src[k - 1] + src[k + 1] + src[k - N] + src[k + N]) / 8;
+    }
+  }
+  for (let i = 0; i < p.count; i++) p.setY(i, hs[i] > 2 ? hs[i] : -7);
   g.computeVertexNormals();
   const n = g.attributes.normal, colA = new Float32Array(p.count * 3), colB = new Float32Array(p.count * 3), c = new THREE.Color(), r = seededRandom(opt.seed + 1);
   for (let i = 0; i < p.count; i++) {
-    const slope = 1 - n.getY(i), jitter = 0.92 + r() * 0.14;
+    const slope = 1 - n.getY(i), jitter = 0.97 + r() * 0.06;   // 7.8.2: 점마다 색 흔들림을 줄여 멀리서 줄무늬처럼 보이지 않게
     c.set(opt.palette(hs[i], slope)).multiplyScalar(jitter); colA[i * 3] = c.r; colA[i * 3 + 1] = c.g; colA[i * 3 + 2] = c.b;
     c.set((opt.snowPalette || opt.palette)(hs[i], slope)).multiplyScalar(jitter); colB[i * 3] = c.r; colB[i * 3 + 1] = c.g; colB[i * 3 + 2] = c.b;
   }
@@ -10480,6 +10644,8 @@ function applyTerrainSnow() {
   const T = W3.terrain; if (!T) return;
   const a = T.mesh.geometry.attributes.color; a.array.set(environment === 'SNOW' ? T.colB : T.colA); a.needsUpdate = true;
 }
+/** 7.8.2: 높이 띠(풀 → 바위 → 눈) 사이를 부드럽게 섞어요 — 예전엔 딱 잘려서 산에 톱니 · 세로 줄무늬처럼 보였어요. bands = [[경계 높이, 섞는 폭]] */
+const bandMix = (h, bands, cols) => { let c = cols[0]; bands.forEach(([at, w], k) => { c = mixHex(c, cols[k + 1], smooth01(at - w / 2, at + w / 2, h)); }); return c; };
 const mixHex = (a, b, t) => '#' + new THREE.Color(a).lerp(new THREE.Color(b), clamp(t, 0, 1)).getHexString();
 /** 지형 위 빈자리 찾기: 트랙에서 dMin~dMax · 경사 완만 · 다른 것과 겹치지 않게 */
 function findSpots(rand, count, dMin, dMax, gapTo = [], minGap = 400, tries = 4000) {
@@ -10496,13 +10662,13 @@ function findSpots(rand, count, dMin, dMax, gapTo = [], minGap = 400, tries = 40
 /* ---------- 테마별 지형 (높이 · 색) ---------- */
 const THEME_TERRAIN = {
   classic: { seed: 501, near: 1300, ramp: 2400, amp: 430, scale: 2600, farStart: 5200, farAmp: 2500, farScale: 5600,
-    palette: (h, s) => (h > 2300 ? mixHex('#e9eef2', '#aab3bb', s * 2) : h > 1400 ? mixHex('#6f7c6b', '#8b8f8c', s * 2) : mixHex(mixHex('#5aa64a', '#3c7d36', h / 900), '#7c826b', s * 1.8)),
+    palette: (h, s) => bandMix(h, [[1400, 450], [2300, 450]], [mixHex(mixHex('#5aa64a', '#3c7d36', h / 900), '#7c826b', s * 1.8), mixHex('#6f7c6b', '#8b8f8c', s * 2), mixHex('#e9eef2', '#aab3bb', s * 2)]),
     snowPalette: (h, s) => mixHex('#eef3f8', '#b8c3cf', s * 1.6) },
   mountain: { seed: 701, near: 950, ramp: 1700, amp: 980, scale: 2000, farStart: 3600, farAmp: 3100, farScale: 4000,
-    palette: (h, s) => (h > 2900 ? mixHex('#f2f6f9', '#b9c3cc', s * 2) : h > 1900 ? mixHex('#646e76', '#80888e', s * 2) : mixHex(mixHex('#3f8a3d', '#1f532c', h / 1100), '#5d6158', s * 1.9)),
+    palette: (h, s) => bandMix(h, [[1900, 500], [2900, 500]], [mixHex(mixHex('#3f8a3d', '#1f532c', h / 1100), '#5d6158', s * 1.9), mixHex('#646e76', '#80888e', s * 2), mixHex('#f2f6f9', '#b9c3cc', s * 2)]),
     snowPalette: (h, s) => mixHex('#eef3f8', '#9aa6b2', s * 1.4) },
   desert: { seed: 801, near: 650, ramp: 1500, amp: 300, scale: 1400, farStart: 4600, farAmp: 1800, farScale: 3600, mesa: 0.6,
-    palette: (h, s) => (h > 800 ? mixHex('#c07443', '#8f4f2f', s * 2.2) : mixHex(mixHex('#e2bf7f', '#d5a764', h / 320), '#b98552', s * 2)),
+    palette: (h, s) => bandMix(h, [[800, 350]], [mixHex(mixHex('#e2bf7f', '#d5a764', h / 320), '#b98552', s * 2), mixHex('#c07443', '#8f4f2f', s * 2.2)]),
     snowPalette: (h, s) => mixHex('#f2ebe1', '#c9b8a3', s * 1.5) },
   city: { seed: 601, near: 7200, ramp: 2600, amp: 160, scale: 3000, farStart: 7600, farAmp: 2300, farScale: 4300,
     palette: (h, s) => mixHex(mixHex('#7d6457', '#56404a', h / 2200), '#3d3036', s * 2), snowPalette: (h, s) => mixHex('#e6ebf2', '#a0aab8', s * 1.5) },
@@ -10951,9 +11117,10 @@ function applyCourseEnvironment() {
   W3.fogFar = Math.max(W3.fogFar, ENVIRONMENTS[environment].precipitation ? far * 0.72 : far);   // 7.5: 먼 지형이 보이게 (비 · 눈이면 조금 흐리게)
   if (theme === 'city' && timeOfDay === 'NIGHT') W3.scene.fog.color.set('#1a2236');
   const key = timeOfDay === 'NIGHT' ? 'night' : timeOfDay === 'DUSK' ? 'dusk' : 'day';
+  const glow = lightFx().glow;   // 7.8.3: 빛 효과 설정
   for (const e of COURSE_FX.emissive) {
-    if (e.basic) { e.base ? e.mat.color.set(e.base).multiplyScalar(e[key]) : e.mat.color.setScalar(e[key]); }
-    else e.mat.emissiveIntensity = e[key];
+    if (e.basic) { e.base ? e.mat.color.set(e.base).multiplyScalar(e[key] * glow) : e.mat.color.setScalar(e[key] * glow); }
+    else e.mat.emissiveIntensity = e[key] * glow;
   }
 }
 function updateCourseScenery(dt) { for (const f of COURSE_FX.updaters) f(dt); }
@@ -11245,9 +11412,9 @@ function drawConditionsCard() {
   const alpha = conditionsCardAlpha();
   if (alpha <= 0) { conditionsCardBottom = 0; return; }
   const env = ENVIRONMENTS[environment], info = describeConditions(), w = CONDITIONS_CARD_WIDTH, onMenu = gameMode === 'menu';
-  const tagRows = [[]]; let rowWidth = 0;
-  for (const tag of info.tags) { const tw = measureText(tag, 11, 800) + 22; if (rowWidth + tw > w - 40 && tagRows[tagRows.length - 1].length) { tagRows.push([]); rowWidth = 0; } tagRows[tagRows.length - 1].push([tag, tw]); rowWidth += tw + 6; }
-  const h = 176 + tagRows.length * 26 + 22;
+  const tagRows = []; let rowWidth = 0;   // 7.8.2: 설명 꼬리표(드라이 노면 등)는 빼고 수치 막대만
+  for (const tag of []) { const tw = measureText(tag, 11, 800) + 22; if (rowWidth + tw > w - 40 && tagRows[tagRows.length - 1].length) { tagRows.push([]); rowWidth = 0; } tagRows[tagRows.length - 1].push([tag, tw]); rowWidth += tw + 6; }
+  const h = 176 + tagRows.length * 26 + 8;
   const rightLimit = devMode && devPanelOpen ? topBarRight() - (DEV_PANEL_WIDTH + 10) * uiScale : screenW - 18 * uiScale;
   let scale, x0, y0;
   if (onMenu) {   // 레이스 환경 패널 바로 아래, 남은 높이에 맞춰 축소
@@ -11769,12 +11936,6 @@ function drawTitleScreen() {
   const pulse = 0.35 + 0.65 * Math.pow(0.5 + 0.5 * Math.sin(t * 4.2), 0.6);
   ctx.globalAlpha = intro * pulse;
   drawText(useTouchUI ? 'TAP TO START' : 'PRESS ENTER', screenW / 2, pressY, size, THEME.text, 900, 'center', true);
-  ctx.globalAlpha = intro * 0.8;
-  drawText(useTouchUI ? '화면을 터치하세요' : 'ENTER · 클릭으로 시작', screenW / 2, pressY + size * 0.95, size * 0.48, THEME.muted, 800, 'center', false);
-  if (soundBlocked()) {   // 브라우저 자동재생 제한: 첫 입력 전에는 소리를 낼 수 없어요
-    ctx.globalAlpha = intro * (0.6 + 0.3 * Math.sin(t * 3));
-    drawText(useTouchUI ? '🔊 화면을 누르면 음악이 켜져요' : '🔊 아무 키나 누르거나 클릭하면 음악이 켜져요', screenW / 2, pressY + size * 1.75, size * 0.42, '#F2C46D', 800, 'center', false);
-  }
   ctx.globalAlpha = 1;
   const small = clamp(screenH * 0.024, 11, 15);
   drawText(`${courseOf(currentCourseId).name}  ·  ${(TRACK_LENGTH_M / 1000).toFixed(2)} KM  ·  ${RACE_LAPS} LAPS`, screenW / 2, screenH - bar / 2 + small * 0.35, small, THEME.muted, 700, 'center', false);
@@ -11913,7 +12074,6 @@ function drawRaceSetupPanel() {
   ctx.strokeStyle = menuFocus === 'setup' ? THEME.teal : THEME.line; ctx.lineWidth = 1.5; ctx.stroke();
   ctx.fillStyle = THEME.red; ctx.beginPath(); ctx.roundRect(0, 0, 6, h, [16, 0, 0, 16]); ctx.fill();
   drawText('RACE SETUP', 22, 31, 20, THEME.text, 900, 'left', true);
-  drawText('레이스 환경', 178, 30, 14, THEME.muted, 800, 'left', false);
   if (hasRandomCondition()) {
     const bw = 116, bx = w - bw - 14;
     ctx.strokeStyle = THEME.line; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.roundRect(bx, 11, bw, 28, 14); ctx.stroke();
@@ -12146,9 +12306,24 @@ function drawHUD() {
   }
   if (fadeAlpha > 0) { applyScreenTransform(); ctx.fillStyle = `rgba(0,0,0,${fadeAlpha})`; ctx.fillRect(0, 0, screenW, screenH); }
 }
+/* 7.8.3: 자동 품질 — 3초마다 프레임을 보고, 느리면 해상도를 10%씩 낮추고(최저 60%) 넉넉하면 다시 올려요 */
+const dynRes = { t: 0, n: 0, slow: 0, good: 0 };
+function updateDynamicResolution(dt) {
+  if (settings.graphicsQuality !== 'auto' || !W3.renderer || busyUI.active || dt <= 0) { dynRes.t = dynRes.n = dynRes.slow = 0; return; }
+  dynRes.t += dt; dynRes.n++; if (dt > 1 / 42) dynRes.slow++;
+  if (dynRes.t < 3) return;
+  const slowShare = dynRes.slow / dynRes.n, cur = W3.resScale || 1; let next = cur;
+  if (slowShare > 0.5 && cur > 0.6) { next = Math.max(0.6, cur - 0.1); dynRes.good = 0; }
+  else if (slowShare < 0.05) { dynRes.good += dynRes.t; if (dynRes.good >= 9 && cur < 1) { next = Math.min(1, cur + 0.1); dynRes.good = 0; } }
+  else dynRes.good = 0;
+  dynRes.t = dynRes.n = dynRes.slow = 0;
+  if (Math.abs(next - cur) > 0.01) { W3.resScale = next; W3.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, qualityPreset().pixelRatio) * next); resizeWorld3D(); }
+}
 function renderFrame(dt) {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
-  renderWorld3D(dt);
+  // 7.8.3: 시작 화면 · 전체 화면 창(멀티플레이)에 가려져 있으면 3D 는 그리지 않아요 (배터리 · 발열)
+  const covered = introOpen || (overlayOpen && overlayElement.classList.contains('fullov'));
+  if (!covered) { renderWorld3D(dt); updateDynamicResolution(dt); }
   applyScreenTransform(); drawCarLabels(); drawWeather(); applyScreenTransform(); drawScreenEffects(dt); drawHUD();
 }
 function applyScreenTransform() { ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0); }
@@ -12333,74 +12508,74 @@ function openSettings(tab) {
   const inRace = gameMode !== 'menu' && gameMode !== 'replay';
   if (settingsTab === 'race' && !inRace) settingsTab = 'sound';
   const T = settingsTab, pct = (v) => Math.round(v * 100);
-  const slider = (key, icon, title, desc, value, test) => `<div class="srow"><div class="ico">${icon}</div><div><b>${title}</b><small>${desc}</small></div>
+  const slider = (key, icon, title, desc, value, test) => `<div class="srow"><div class="ico">${icon}</div><div><b>${title}</b>${desc ? `<small>${desc}</small>` : ''}</div>
     <div class="val" id="val_${key}">${pct(value)}%</div><input type="range" min="0" max="100" step="5" value="${pct(value)}" data-vol="${key}" style="--fill:${pct(value)}%">
     ${test ? `<button class="mini" data-test="${key}">▶ 듣기</button>` : '<span></span>'}</div>`;
-  const toggle = (id, icon, title, desc, on) => `<div class="srow sw"><div class="ico">${icon}</div><div><b>${title}</b><small>${desc}</small></div><button class="switch${on ? ' on' : ''}" id="${id}" aria-pressed="${on}"></button></div>`;
-  const choice = (group, value, title, desc, extra = '') => `<button class="choice${settings[group] === value ? ' on' : ''}" data-group="${group}" data-value="${value}">${title}<small>${desc}</small>${extra}</button>`;
+  const toggle = (id, icon, title, desc, on) => `<div class="srow sw"><div class="ico">${icon}</div><div><b>${title}</b>${desc ? `<small>${desc}</small>` : ''}</div><button class="switch${on ? ' on' : ''}" id="${id}" aria-pressed="${on}"></button></div>`;
+  const choice = (group, value, title, desc, extra = '') => `<button class="choice${settings[group] === value ? ' on' : ''}" data-group="${group}" data-value="${value}">${title}${desc ? `<small>${desc}</small>` : ''}${extra}</button>`;
   const seg = (group, items) => `<div class="seg">${items.map(([value, label]) => `<button class="${settings[group] === value ? 'on' : ''}" data-group="${group}" data-value="${value}">${label}</button>`).join('')}</div>`;
   const keys = (list) => `<span class="keys"><span class="kg">${list.slice(0, 4).map(([k]) => `<span class="kc">${k}</span>`).join('')}</span>${list.slice(4).map(([k, cls, lab]) => `<span class="kg"><span class="kc ${cls || ''}">${k}</span><span class="kl">${lab}</span></span>`).join('')}</span>`;   // 주행 4키 · 액션 키는 설명과 함께 줄바꿈 없이
   let body = '';
   if (T === 'race') {   // 5.3: 레이스 화면 위쪽 버튼들을 이 탭으로 옮겼어요
     const solo = raceType === 'solo';
     body = `<div class="sect">🏁 레이스</div><div class="cards">
-        ${solo ? `<button class="choice" id="rcResume">${isPaused ? '▶ 계속 달리기' : '❚❚ 일시정지'}<small>P 키 · 창을 닫으면 일시정지 화면으로 돌아가요</small></button>` : `<button class="choice danger" id="rcForfeit">🏳 ${tr('duel.forfeitBtn')}<small>${tr('duel.forfeitDesc')}</small></button>`}
+        ${solo ? `<button class="choice" id="rcResume">${isPaused ? '▶ 계속 달리기' : '❚❚ 일시정지'}<small>P</small></button>` : `<button class="choice danger" id="rcForfeit">🏳 ${tr('duel.forfeitBtn')}<small>${tr('duel.forfeitDesc')}</small></button>`}
         <button class="choice" id="rcConditions">🌦 노면 · 날씨 보기<small>${escapeHtml(conditionsLabel())}</small></button>
-        ${solo ? `<button class="choice" id="rcRestart">↻ 재시작<small>R 키 · 같은 조건으로 처음부터</small></button>` : ''}
+        ${solo ? `<button class="choice" id="rcRestart">↻ 재시작<small>R</small></button>` : ''}
         ${solo ? '<button class="choice" id="rcMenu">⏏ 메뉴로 나가기<small>ESC</small></button>' : ''}</div>
       ${solo ? `<div class="sect">🤖 AI 난이도</div>${seg('difficulty', [['easy', '쉬움'], ['normal', '보통'], ['hard', '어려움'], ['pro', '프로']])}` : ''}
       <div class="sect">📷 카메라 (T)</div><div class="cards">
-        ${choice('cameraMode', 'chase', '3인칭 (체이스)', '차 뒤에서 따라가는 시점')}
-        ${choice('cameraMode', 'tv', 'TV 뷰', '위에서 내려다보는 쿼터뷰')}</div>
+        ${choice('cameraMode', 'chase', '3인칭 (체이스)', '')}
+        ${choice('cameraMode', 'tv', 'TV 뷰', '')}</div>
       <div class="sect">🔊 빠른 소리</div>
-      ${slider('masterVolume', '🔊', '전체 볼륨', 'M 키로 단계 조절 · 자세한 건 소리 탭', masterVolume(), false)}
-      ${toggle('optMusic', '🎶', '배경 음악', settings.musicOn ? '켜져 있어요 (B)' : '꺼져 있어요 (B)', settings.musicOn)}
+      ${slider('masterVolume', '🔊', '전체 볼륨', 'M', masterVolume(), false)}
+      ${toggle('optMusic', '🎶', '배경 음악', settings.musicOn ? 'ON · B' : 'OFF · B', settings.musicOn)}
       <div class="sect">🎮 조작</div>
-      <button class="choice" id="rcHelp" style="width:100%">조작법 · 키 배치 보기<small>키보드 · 터치 조작 안내</small></button>`;
+      <button class="choice" id="rcHelp" style="width:100%">조작법 · 키 배치 보기</button>`;
   } else if (T === 'sound') {
     body = `<div class="sect">볼륨</div>
-      ${slider('masterVolume', '🔊', '전체', '모든 소리 (M 키로 빠르게 끄고 켜기)', masterVolume(), false)}
-      ${slider('musicVolume', '🎵', '음악', '메뉴 · 레이스 · 결과 음악', musicVolume(), false)}
-      ${slider('sfxVolume', '💥', '효과음', '드리프트 · 부스트 · 충돌 · 관중 · 메뉴 소리', sfxVolume(), true)}
-      ${slider('engineVolume', '🏎', '엔진', '내 차 · 상대 차 · 출발 그리드 엔진 소리', engineVolume(), true)}
+      ${slider('masterVolume', '🔊', '전체', 'M', masterVolume(), false)}
+      ${slider('musicVolume', '🎵', '음악', '', musicVolume(), false)}
+      ${slider('sfxVolume', '💥', '효과음', '', sfxVolume(), true)}
+      ${slider('engineVolume', '🏎', '엔진', '', engineVolume(), true)}
       <div class="sect">음악</div>
-      ${toggle('optMusic', '🎶', '배경 음악', settings.musicOn ? '켜져 있어요' : '꺼져 있어요 (B 키로도 바꿀 수 있어요)', settings.musicOn)}`;
+      ${toggle('optMusic', '🎶', '배경 음악', settings.musicOn ? 'ON · B' : 'OFF · B', settings.musicOn)}`;
   } else if (T === 'controls') {
     body = `<div class="sect">🤖 AI 난이도</div><div class="cards">
-        ${choice('difficulty', 'easy', '쉬움', '편하게 즐기기 · AI가 조금 느려요')}
-        ${choice('difficulty', 'normal', '보통', '추천 · 실수하면 바로 따라잡혀요')}
-        ${choice('difficulty', 'hard', '어려움', '깔끔한 레코드 라인과 부스트가 필요해요')}
-        ${choice('difficulty', 'pro', '프로', '드리프트 · 임계점 부스트까지 완벽해야 해요')}</div>
-      <div class="seghint">솔로 레이스에 적용돼요 (레이스 중 바꾸면 바로 반영)</div>
+        ${choice('difficulty', 'easy', '쉬움', '')}
+        ${choice('difficulty', 'normal', '보통', '')}
+        ${choice('difficulty', 'hard', '어려움', '')}
+        ${choice('difficulty', 'pro', '프로', '')}</div>
       <div class="sect">⌨️ 키보드 배치 (PC)</div><div class="cards">
-        ${choice('keyLayout', 'wasd', '왼손 주행 · 오른손 액션', '가장 많이 쓰는 배치', keys([['W'], ['A'], ['S'], ['D'], ['J', 'd', '드리프트'], ['K', 'b', '부스트']]))}
-        ${choice('keyLayout', 'arrows', '오른손 주행 · 왼손 액션', '방향키로 운전', keys([['↑'], ['←'], ['↓'], ['→'], ['F', 'd', '드리프트'], ['D', 'b', '부스트']]))}</div>
+        ${choice('keyLayout', 'wasd', '왼손 주행 · 오른손 액션', '', keys([['W'], ['A'], ['S'], ['D'], ['J', 'd', '드리프트'], ['K', 'b', '부스트']]))}
+        ${choice('keyLayout', 'arrows', '오른손 주행 · 왼손 액션', '', keys([['↑'], ['←'], ['↓'], ['→'], ['F', 'd', '드리프트'], ['D', 'b', '부스트']]))}</div>
       <div class="sect">⌨️ 키보드 조향 방식</div><div class="cards">
-        ${choice('keyboardSteerMode', 'car', '차 기준', '← → = 차가 보는 방향 기준으로 꺾기')}
-        ${choice('keyboardSteerMode', 'screen', '화면 방향 (자동 조향 보조)', '누른 방향(화면 기준)으로 · 도로를 따라 저절로 꺾여요')}</div>
+        ${choice('keyboardSteerMode', 'car', '차 기준', '')}
+        ${choice('keyboardSteerMode', 'screen', '화면 방향 (자동 조향 보조)', '')}</div>
       <div class="sect">📱 모바일</div>
-      <div class="cards">${choice('touchHand', 'right', '오른손 액션', '왼손 조향 · 오른손 드리프트/브레이크/부스트')}${choice('touchHand', 'left', '왼손 액션', '오른손 조향 · 왼손 드리프트/브레이크/부스트')}</div>
-      ${toggle('optAutoGas', '⛽', '자동 가속', settings.autoGas ? '항상 가속 · BRAKE 누를 때만 감속 (추천)' : 'GAS 버튼을 직접 눌러요', settings.autoGas)}
-      <div class="seghint" style="margin:10px 0 6px">조향 민감도</div>${seg('steerSensitivity', [['low', '낮음 · 크게 밀기'], ['normal', '보통'], ['high', '높음 · 살짝 밀기']])}`;
+      <div class="cards">${choice('touchHand', 'right', '오른손 액션', '')}${choice('touchHand', 'left', '왼손 액션', '')}</div>
+      ${toggle('optAutoGas', '⛽', '자동 가속', settings.autoGas ? 'ON' : 'OFF', settings.autoGas)}
+      <div class="seghint" style="margin:10px 0 6px">조향 민감도</div>${seg('steerSensitivity', [['low', '낮음'], ['normal', '보통'], ['high', '높음']])}`;
   } else {
     body = `<div class="sect" data-raw>🌐 Language · 언어 · 言語 · 语言</div><div class="seg">${LANGUAGES.map(([code, name]) => `<button class="${currentLang === code ? 'on' : ''}" data-lang="${code}">${name}</button>`).join('')}</div>
       <div class="sect">🖥 화면 모드</div><div class="cards">
-        <button class="choice${!useTouchUI ? ' on' : ''}" id="optUiPc">PC 화면<small>키보드 조작 안내 · 큰 계기판</small></button>
-        <button class="choice${useTouchUI ? ' on' : ''}" id="optUiTouch">모바일 화면<small>터치 버튼 · 작은 글씨</small></button></div>
-      <div class="seghint">자동 감지: ${escapeHtml(DEVICE_INFO.reason)}</div>
+        <button class="choice${!useTouchUI ? ' on' : ''}" id="optUiPc">PC 화면</button>
+        <button class="choice${useTouchUI ? ' on' : ''}" id="optUiTouch">모바일 화면</button></div>
       <div class="sect">📷 카메라</div><div class="cards">
-        ${choice('cameraMode', 'chase', '3인칭 (체이스)', '차 뒤에서 따라가는 시점 (T 키로 전환)')}
-        ${choice('cameraMode', 'tv', 'TV 뷰', '위에서 내려다보는 쿼터뷰')}</div>
+        ${choice('cameraMode', 'chase', '3인칭 (체이스)', 'T')}
+        ${choice('cameraMode', 'tv', 'TV 뷰', '')}</div>
       <div class="sect">✨ 그래픽 품질</div>
       ${seg('graphicsQuality', [['auto', '자동'], ['high', '높음'], ['medium', '보통'], ['low', '낮음']])}
-      <div class="seghint">${L('자동 = 지금')} ${L({ high: '높음', medium: '보통', low: '낮음' }[resolvedQuality()])} · ${L('느리면 보통이나 낮음을 골라 보세요')}</div>
-      ${isInstalledApp() ? '' : `<div class="sect">📲 앱 설치</div><button class="choice" id="optInstall" style="width:100%">홈 화면에 앱 설치<small>주소창 없이 전체 화면으로 실행</small></button>`}`;
+      <div class="seghint">${L('자동 = 지금')} ${L({ high: '높음', medium: '보통', low: '낮음' }[resolvedQuality()])}</div>
+      <div class="sect">💡 빛 효과</div>
+      ${seg('lightFx', [['off', '끄기'], ['soft', '은은하게'], ['normal', '보통'], ['vivid', '화려하게']])}
+      ${isInstalledApp() ? '' : `<div class="sect">📲 앱 설치</div><button class="choice" id="optInstall" style="width:100%">홈 화면에 앱 설치</button>`}`;
   }
   const scroll = overlayOpen && overlayKind === 'settings' ? overlayCard.scrollTop : 0;
   openOverlay('settings', `<div class="hd blue"><h2>⚙ 설정</h2><button class="x" data-close>닫기</button></div>
     <div class="stabs">${[...(inRace ? [['race', '🏁 레이스']] : []), ['sound', '🔊 소리'], ['controls', '🎮 조작 · AI'], ['screen', '🖥 화면']].map(([k, l]) => `<button class="stab${T === k ? ' on' : ''}" data-stab="${k}">${l}</button>`).join('')}</div>
     <div class="bd">${body}</div>
-    <div class="ft"><span>바꾸면 바로 적용되고 자동 저장돼요</span><button class="btn" data-close>완료</button></div>`);
+    <div class="ft"><span></span><button class="btn" data-close>완료</button></div>`);
   overlayCard.scrollTop = scroll;
   const on = (id, fn) => { const el = byId(id); if (el) el.onclick = () => { sfx.uiClick(true); fn(); }; };
   overlayCard.querySelectorAll('[data-stab]').forEach((b) => { b.onclick = () => { sfx.menuMove(); overlayCard.scrollTop = 0; openSettings(b.dataset.stab); }; });
@@ -12428,6 +12603,7 @@ function openSettings(tab) {
       const prevQ = resolvedQuality();
       settings[group] = raw === 'true' ? true : raw === 'false' ? false : raw;
       saveSettings(); sfx.uiClick(true); openSettings();
+      if (group === 'lightFx' && W3.renderer) W3.envKey = '';   // 7.8.3: 빛 효과 — 값만 바뀌어서 로딩 없이 바로 (코스 조명 다시 적용)
       if (group === 'graphicsQuality' && W3.renderer && resolvedQuality() !== prevQ)   // 7.8: 그래픽 품질 — 로딩 막대를 띄우고 바꿔요
         runBusy(L('그래픽 품질') + ' · ' + L({ high: '높음', medium: '보통', low: '낮음' }[resolvedQuality()]), [['설정 적용 중', () => { applyQualitySettings(); if (!keepWorlds()) dropWorldCache(); }], ['그래픽 준비 중', () => warmGPU()]]);
     };
@@ -12642,10 +12818,12 @@ function drawTrackPreview() {
   return c.toDataURL('image/png');
 }
 /** 코스 한 줄 설명: 길이 · 랩 · 환경(고정이면 그 환경) */
+/** 7.8.5: 대기실 위쪽에 굳이 안 띄워도 되는 상태 문구 */
+const MP_QUIET_STATUS = ['방이 열렸어요. 다른 플레이어를 기다리는 중…', '방에 들어왔어요! 차를 고르고 READY 를 눌러 주세요.', '다음 레이스를 준비하세요.'];
 function courseInfoLine(id) {
   const C = courseOf(id), km = withTrackData(C.id, () => (TRACK_LENGTH_M / 1000).toFixed(2));
   const env = C.fixedEnv ? '🔒 ' + conditionsLabel(C.fixedEnv.environment, C.fixedEnv.timeOfDay, C.fixedEnv.weatherLevel) : L('날씨 · 시간대 선택');
-  return `${km} km · ${RACE_LAPS} ${L('랩')} · ${env}`;
+  return C.fixedEnv ? `${km} km · ${RACE_LAPS} ${L('랩')} · ${env}` : `${km} km · ${RACE_LAPS} ${L('랩')}`;   // 7.8.5: 설명 문구 줄이기
 }
 const AI_LEVELS = [['easy', '쉬움'], ['normal', '보통'], ['hard', '어려움'], ['pro', '프로']];
 /** 7.5: 날씨 · 시간대 · 강도 버튼 줄 (attr = data 속성 이름, cur = { raceEnv, raceTime, raceWeather }) */
@@ -12733,7 +12911,6 @@ function renderMultiMenu() {
       ${envSegRows('mpenv', mpDraft.env, false)}
       <label class="mchk${mpDraft.max === 2 ? ' off' : ''}"><input type="checkbox" id="mpAiFill" ${mpDraft.aiFill && mpDraft.max !== 2 ? 'checked' : ''} ${mpDraft.max === 2 ? 'disabled' : ''}> 🤖 ${L('빈 자리는 AI 로 채우기')}</label>
       ${mpDraft.max === 2 || !mpDraft.aiFill ? '' : `<div class="mopt"><span>${L('AI 난이도')}</span><div class="seg sm">${AI_LEVELS.map(([v, l]) => `<button class="${mpDraft.difficulty === v ? 'on' : ''}" data-mpdiff="${v}">${L(l)}</button>`).join('')}</div></div>`}
-      <small class="mnote">${mpDraft.max === 2 ? L('1:1 대전 — 사람끼리만 달려요') : mpDraft.ghost ? L('👻 고스트: 다른 사람 차와 부딪히지 않아요') : L('⚔ 충돌: 다른 사람 차와 부딪혀요')}${mpDraft.isPublic ? '' : ' · ' + L('🔒 비공개 방은 코드로만 들어와요')}</small>
       <div class="row mbft"><button class="btn ghost" id="mpModalCancel">${L('취소')}</button><button class="btn go" id="mpCreate" ${busy ? 'disabled' : ''}>${L('방 만들기')}</button></div>
     </div></div>` : '';
   keepScroll(() => openOverlay('multi', `<div class="hd teal">${mpBackBtn('mpBack', L('돌아가기'))}<h2>👥 ${L('멀티플레이')}</h2></div><div class="bd mfull">
@@ -12741,16 +12918,14 @@ function renderMultiMenu() {
     <div class="mmenu">
       <div class="mside">
         <label for="mpName">${L('내 이름')}</label><input id="mpName" maxlength="16" placeholder="${L('예: SpeedRacer')}" value="${escapeHtml(mpDraft.name)}">
-        ${reg ? `<button class="btn go mquick" id="mpQuick" ${busy ? 'disabled' : ''}>⚡ ${L('빠른 대전')}</button><small class="mnote">${L('열린 방에 바로 들어가요 · 없으면 새 방을 열어요')}</small>` : ''}
+        ${reg ? `<button class="btn go mquick" id="mpQuick" ${busy ? 'disabled' : ''}>⚡ ${L('빠른 대전')}</button>` : ''}
         <button class="btn mcreate" id="mpOpenCreate" ${busy ? 'disabled' : ''}>➕ ${L('방 만들기')}</button>
         <div class="mjoin"><b>🔑 ${L('코드로 참가')}</b>
-          <div class="mjrow"><input id="mpCode" class="codein" maxlength="6" placeholder="ABC123" value="${escapeHtml(mpDraft.code)}" autocapitalize="characters" autocomplete="off" spellcheck="false"><button class="btn ghost" id="mpJoinCode" ${busy ? 'disabled' : ''}>${L('참가')}</button></div>
-          <small class="mnote">${L('친구에게 받은 6자리 코드')}</small></div>
+          <div class="mjrow"><input id="mpCode" class="codein" maxlength="6" placeholder="ABC123" value="${escapeHtml(mpDraft.code)}" autocapitalize="characters" autocomplete="off" spellcheck="false"><button class="btn ghost" id="mpJoinCode" ${busy ? 'disabled' : ''}>${L('참가')}</button></div></div>
       </div>
       <div class="mlist">
         ${reg ? `<div class="sect">🔍 ${L('열린 방')} <button class="tab sm" id="mpRefresh">↻ ${L('새로고침')}</button></div>
         <div class="mrooms">${mpRoomsError ? `<div class="mempty err">${mpRoomsError}</div>` : list}</div>` : howTo}
-        <p class="src">${L('방마다 코스를 골라요 · 사람 2명 이상 레이스에서 우승하면 명예의 전당(멀티 · 1:1)에 남길 수 있어요')}</p>
       </div>
     </div>
     ${modal}
@@ -12819,7 +12994,7 @@ function renderMultiLobby() {
   }
   const stats = mpDraft.view === 'stats';
   const slotHtml = (s, i) => {
-    if (s.kind === 'empty') return `<div class="mslot empty"><div class="msn">${L('빈 자리')}</div><div class="mshot"><div class="ghostcar">+</div></div><div class="msf"><small>${L('초대 코드를 보내 주세요')}</small></div></div>`;
+    if (s.kind === 'empty') return `<div class="mslot empty"><div class="msn">${L('빈 자리')}</div><div class="mshot"><div class="ghostcar">+</div></div><div class="msf"></div></div>`;
     const D = CAR_DESIGNS[s.car] || CAR_DESIGNS.aero;
     return `<div class="mslot ${s.kind}${s.me ? ' me' : ''}${s.ready ? ' ready' : ''}" style="--c:${D.uiColor}">
       <div class="msn">${s.host ? '👑 ' : s.kind === 'ai' ? '🤖 ' : ''}<span data-raw>${escapeHtml(s.name)}</span>${s.me ? ` <small>(${tr('lobby.you')})</small>` : ''}</div>
@@ -12829,7 +13004,7 @@ function renderMultiLobby() {
   };
   const allReady = humans.every((s) => s.ready), counting = mp.countdown > 0;
   const hint = counting ? `<p class="countdown">${tr('lobby.starting', { s: Math.ceil(mp.countdown) })}</p>`
-    : `<p class="sub mhint">${host ? (allReady && (humans.length >= 2 || R.aiFill) ? L('모두 준비됐어요!') : humans.length < 2 && !R.aiFill ? L('2명 이상이거나 AI 채우기를 켜면 출발할 수 있어요') : L('모두 READY 를 누르면 3초 뒤 출발해요')) : L('모두 READY 를 누르면 호스트가 출발시켜요')}</p>`;
+    : host && humans.length < 2 && !R.aiFill ? `<p class="sub mhint">${L('2명 이상이거나 AI 채우기를 켜면 출발할 수 있어요')}</p>` : '';   // 7.8.5: 꼭 필요한 안내만
   const lenKm = (TRACK_LENGTH_M / 1000).toFixed(2);
   mpLobbySounds(humans, allReady && humans.length >= 2);
   keepScroll(() => openOverlay('mlobby', `<div class="hd teal">${mpBackBtn('mlClose', L('나가기'))}<h2>👥 <span data-raw>${escapeHtml(R.name || L('멀티플레이'))}</span></h2></div><div class="bd mlobby mfull">
@@ -12838,11 +13013,11 @@ function renderMultiLobby() {
       <div class="lacts"><button class="btn ghost sm" id="mlCopy">📋 ${tr('lobby.copy')}</button><button class="btn ghost sm" id="mlShare">🔗 ${tr('lobby.share')}</button></div>
       <span class="mlcount">${MAX === 2 ? '⚔ 1:1 · ' : ''}${R.ghost ? '👻 ' + L('고스트') + ' · ' : ''}${humans.length}/${MAX} · ${mp.role === 'guest' ? `${L('핑')} ${mp.pingMs}ms` : mp.isPublic ? '🌐 ' + L('공개') : '🔒 ' + L('비공개')}</span>
     </div>
-    ${mp.statusText ? `<p class="sub ok" style="font-weight:800;margin:4px 0">${escapeHtml(mp.statusText)}</p>` : ''}
+    ${mp.statusText && !MP_QUIET_STATUS.includes(mp.statusText) ? `<p class="sub ok" style="font-weight:800;margin:4px 0">${escapeHtml(mp.statusText)}</p>` : ''}
     <div class="mlmain">
       <div class="mcourse"><img src="${trackPreviewURL(R.course)}" alt=""><div><b>${courseOf(R.course).flag} ${escapeHtml(courseOf(R.course).name)}</b><small>${courseInfoLine(R.course)}</small><small><span class="drsdot"></span> DRS · ⬜ ${L('출발선')}</small></div>
         ${host ? `<div class="seg sm mcourses">${COURSE_ORDER.map((id) => `<button class="${courseOf(R.course).id === id ? 'on' : ''}" data-mlcourse="${id}">${COURSES[id].short}</button>`).join('')}</div>${envSegRows('mlenv', R.env || {}, true)}` : `<small>🌤 ${envSummary(R.env)}</small>`}
-        <div class="mopts">${MAX === 2 ? `<small>⚔ ${L('1:1 대전 — 사람끼리만 달려요')}</small>` : host ? `<label class="mchk"><input type="checkbox" id="mlAiFill" ${R.aiFill ? 'checked' : ''}> 🤖 ${L('빈 자리 AI 채우기')}</label>` : `<small>${R.aiFill ? '🤖 ' + L('빈 자리는 AI 가 달려요') : L('사람끼리만 달려요')}</small>`}
+        <div class="mopts">${MAX === 2 ? '' : host ? `<label class="mchk"><input type="checkbox" id="mlAiFill" ${R.aiFill ? 'checked' : ''}> 🤖 ${L('빈 자리 AI 채우기')}</label>` : (R.aiFill ? `<small>🤖 AI</small>` : '')}
         ${MAX === 2 ? '' : host && R.aiFill ? `<div class="mdiff"><small>${L('AI 난이도')}</small><div class="seg sm">${AI_LEVELS.map(([v, l]) => `<button class="${(R.aiDifficulty || 'normal') === v ? 'on' : ''}" data-mldiff="${v}">${L(l)}</button>`).join('')}</div></div>` : R.aiFill ? `<small>${L('AI 난이도')}: ${L((AI_LEVELS.find(([v]) => v === (R.aiDifficulty || 'normal')) || AI_LEVELS[1])[1])}</small>` : ''}</div></div>
       <div class="mgridwrap"><div class="mviewtabs"><button class="tab sm${stats ? '' : ' on'}" data-mview="car">🚗 ${L('차량')}</button><button class="tab sm${stats ? ' on' : ''}" data-mview="stats">📊 ${L('성능 비교')}</button>${stats ? `<small>${L('▲ = 내 차보다 좋음')}</small>` : ''}</div>
         <div class="mgrid${MAX === 2 ? ' duo' : MAX === 4 ? ' quad' : ''}">${slots.map(slotHtml).join('')}</div></div>
@@ -13085,7 +13260,14 @@ function updateCamera(dt) {
 }
 
 /* ---------- 입력 이벤트 ---------- */
+/** 7.8.2: 실제로 보이는 화면 높이를 CSS 에 알려줘요 (아이폰 사파리가 화면을 돌린 뒤 옛 높이를 쓰는 문제) */
+function syncAppHeight() {
+  const vv = window.visualViewport, h = Math.round(vv && vv.height > 100 && (!vv.scale || vv.scale <= 1.01) ? vv.height : window.innerHeight);
+  if (h > 100) document.documentElement.style.setProperty('--appH', h + 'px');
+  if (window.scrollY || window.scrollX) window.scrollTo(0, 0);   // 돌리면서 페이지가 살짝 밀려 있으면 제자리로
+}
 function resize() {
+  syncAppHeight();
   pixelRatio = Math.min(window.devicePixelRatio || 1, useTouchUI ? 1.5 : 2);
   const rect = canvas.getBoundingClientRect();
   screenW = Math.max(1, rect.width); screenH = Math.max(1, rect.height); canvasLeft = rect.left; canvasTop = rect.top;
@@ -13099,7 +13281,7 @@ function resize() {
 }
 addEventListener('resize', resize);
 if (window.visualViewport) window.visualViewport.addEventListener('resize', () => resize());
-addEventListener('orientationchange', () => setTimeout(resize, 250));
+addEventListener('orientationchange', () => { for (const ms of [60, 250, 600, 1200]) setTimeout(resize, ms); });   // 7.8.2: 아이폰은 높이를 늦게 알려줘서 몇 번 다시 재요
 const BROWSER_SHORTCUTS_TO_BLOCK = ['Tab', 'F2', 'Backquote', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'ShiftLeft', 'ShiftRight'];
 addEventListener('keydown', (e) => {
   if (introOpen) return;   // 6.0: 시작 화면은 자체 처리
@@ -13115,12 +13297,19 @@ addEventListener('keydown', (e) => {
 addEventListener('keyup', (e) => keysDown.delete(e.code));
 addEventListener('blur', () => { keysDown.clear(); releaseAllTouches(); });
 
+/** 7.8.1: 휴대폰 — 전체 화면 + 가로 고정 (안드로이드 크롬 · 삼성 인터넷 등. 아이폰 사파리는 웹에서 화면 방향을 고정할 수 없어서 '가로로 돌려주세요' 안내만) */
+function goFullscreenLandscape() {
+  const lock = () => { try { const o = screen.orientation; if (o && o.lock && !String(o.type).startsWith('landscape')) o.lock('landscape').catch(() => {}); } catch (e) { /* 지원 안 함 */ } };
+  if (isInstalledApp()) { lock(); return; }   // 홈 화면 앱은 이미 전체 화면 (manifest 에서 가로)
+  const el = document.documentElement;
+  if (el.requestFullscreen && !document.fullscreenElement) el.requestFullscreen({ navigationUI: 'hide' }).then(lock).catch(() => {});
+  else lock();
+}
 canvas.addEventListener('pointerdown', (e) => {
   if (overlayOpen) return;
   initAudio();
   const x = e.clientX - canvasLeft, y = e.clientY - canvasTop;
-  if (e.pointerType === 'touch' && useTouchUI && !isInstalledApp() && document.documentElement.requestFullscreen && !document.fullscreenElement)
-    document.documentElement.requestFullscreen().catch(() => {});
+  if (e.pointerType === 'touch' && useTouchUI) goFullscreenLandscape();
   for (let i = uiHitAreas.length - 1; i >= 0; i--) {
     const area = uiHitAreas[i];
     if (x >= area.x && x <= area.x + area.w && y >= area.y && y <= area.y + area.h) { sfx.uiClick(true); area.action(); e.preventDefault(); return; }
@@ -13279,7 +13468,7 @@ function introLoadHTML() {
 /** 코스 준비 순서: 모양 계산 → 3D 풍경 → 그래픽 준비. 마지막에 원래 고른 코스로 돌아와요 */
 function introPrepareCourses(onStep) {
   const home = courseOf(settings.course).id, keep = W3.renderer && keepWorlds();
-  const steps = [];
+  const steps = [[`📸 ${L('사진 준비 중')}`, preloadUiImages]];   // 7.9.1: 튜토리얼 · 차 그림도 미리 (처음에 그림이 안 떠서 오류처럼 보였어요)
   for (const id of COURSE_ORDER) {
     const name = courseOf(id).short;
     if (!TRACK_CACHE[id]) steps.push([`🏁 ${name} · ${L('코스 정리 중')}`, () => withTrackData(id, () => {})]);
@@ -13322,6 +13511,7 @@ function showIntro() {
     if (e && e.target && e.target.closest && e.target.closest('[data-lang]')) return;
     if (!introOpen || !introReady()) return; introOpen = false; introPrep.stop = true;   // 다 못 만든 코스는 고를 때 만들어요
     try { initAudio(); kickMusic(); } catch (err) { /* 소리 없이 계속 */ }
+    if (useTouchUI) goFullscreenLandscape();   // 7.8.1: 첫 터치에 전체 화면 + 가로 고정 (지원하는 폰)
     el.classList.add('out'); setTimeout(() => el.remove(), 750);
     menuStage = 'title'; menuStageTimer = 0;
     if (isFirstVisit && !settings.tutorialSeen) setTimeout(openTutorialPrompt, 900);
@@ -13334,6 +13524,15 @@ function setLanguage(code) {
   currentLang = settings.lang = code; saveSettings(); _lCache = new Map();
   document.documentElement.lang = code;
   if (overlayOpen && overlayKind === 'settings') openSettings();
+}
+/** 7.9.1: 튜토리얼 그림 · 차 그림을 미리 받아서 풀어 둬요 (화면에 바로 뜨게). 실패해도 진행 */
+const PRELOADED_IMAGES = [];
+function preloadUiImages() {
+  const files = new Set();
+  for (const list of Object.values(TUTORIAL_PAGES)) for (const P of list) for (const f of [P.img, P.zoom, ...(P.pair || [])]) if (f) files.add('tutorial/' + f);
+  for (const id of CAR_DESIGN_ORDER) files.add(`cars/${id}.png`);
+  const one = (src) => new Promise((resolve) => { const im = new Image(); PRELOADED_IMAGES.push(im); im.onload = () => { (im.decode ? im.decode() : Promise.resolve()).catch(() => {}).then(resolve); }; im.onerror = () => resolve(); im.src = src; setTimeout(resolve, 8000); });
+  return Promise.all([...files].map(one));
 }
 
 </script>
