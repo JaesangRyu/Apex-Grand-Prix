@@ -26,6 +26,14 @@ canvas{position:fixed;top:0;left:env(safe-area-inset-left,0px);display:block;wid
 #intro .tap{margin-top:18px;color:#E59B26;font:900 clamp(13px,2.6vh,17px) var(--font);letter-spacing:3px;animation:introBlink 1.6s ease-in-out infinite}
 #intro .langs{position:absolute;bottom:max(16px,env(safe-area-inset-bottom));display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
 #intro .langs button{background:transparent;border:1.5px solid #2a3442;color:#8a97a6;border-radius:999px;padding:6px 12px;font:800 12px var(--font);cursor:pointer}#intro .langs button.on{border-color:#E59B26;color:#fff}
+#intro.loading{cursor:progress}#intro .iload-slot{min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;margin-top:14px}#intro .iload-slot .tap{margin-top:4px}
+#intro .iload{display:flex;flex-direction:column;align-items:center;gap:9px;width:min(320px,70vw)}#intro .iload-bar{width:100%;height:6px;border-radius:999px;background:#1c232d;overflow:hidden}#intro .iload-bar i{display:block;height:100%;background:linear-gradient(90deg,#B30D0D,#E59B26);border-radius:999px;transition:width .25s}
+#intro .iload-txt{color:#8a97a6;font:800 clamp(11px,2.1vh,13px) var(--font);letter-spacing:1.5px}#intro .iload-fun{color:#E59B26;font:800 clamp(12px,2.2vh,14px) var(--font);min-height:18px;letter-spacing:.3px}#intro .iload-note{color:#5d6a78;font:700 11px var(--font)}
+#busy{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:rgba(8,10,14,.66)}#busy.on{display:flex}
+#busy .bbox{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 26px;border:1px solid var(--line);border-radius:16px;background:var(--panel);min-width:min(340px,80vw);box-shadow:0 20px 60px rgba(0,0,0,.55)}#busy b{color:#fff;font:900 20px var(--font);letter-spacing:.5px}
+#busy .bbar{position:relative;align-self:stretch;height:8px;border-radius:999px;background:#3a4552;overflow:hidden}#busy .bbar i{position:absolute;left:0;top:0;bottom:0;width:4%;background:linear-gradient(90deg,#B30D0D,#E59B26);border-radius:999px}
+#busy .bbar s{position:absolute;top:0;bottom:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:busyShine 1.1s linear infinite;will-change:transform}#busy small{color:#8a97a6;font:800 12px var(--font);letter-spacing:1px;min-height:14px}
+@keyframes busyShine{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
 @keyframes introBlink{50%{opacity:.25}}@keyframes introPulse{50%{transform:scale(1.05)}}
 .tut h3{margin:12px 0 10px;font:900 20px var(--font);color:#fff}.tutmedia{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
 .tutmedia img{display:block;width:100%;height:auto}.tutpair{display:flex;align-items:center;gap:8px;justify-content:center}.tutpair figure{margin:0;flex:1;max-width:46%}.tutpair img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}.tutpair figcaption{text-align:center;font:900 12px var(--font);color:var(--teal);margin-top:4px}.tutpair span{font:900 22px var(--font);color:var(--muted)}
@@ -180,7 +188,7 @@ input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(229,155,38,.18)}
 .mlist{min-width:0}.mlist .sect{margin-top:0}.ov.fullov .mrooms{max-height:none}
 .mhow{padding:18px;border:1.5px dashed var(--line);border-radius:14px;color:var(--text);font:700 14px var(--font)}.mhow b{font:900 16px var(--font);color:#fff}.mhow ol{margin:10px 0 0 20px;padding:0;display:grid;gap:6px;color:var(--muted)}
 .mmodal{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;background:rgba(3,6,10,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);padding:12px;box-sizing:border-box;animation:mfade .15s ease-out}
-.mbox{width:min(420px,100%);max-height:100%;overflow:auto;display:flex;flex-direction:column;gap:9px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 20px 60px rgba(0,0,0,.6);box-sizing:border-box;animation:mpop .18s ease-out}
+.mbox.still{animation:none}.mbox{width:min(420px,100%);max-height:100%;overflow:auto;display:flex;flex-direction:column;gap:9px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 20px 60px rgba(0,0,0,.6);box-sizing:border-box;animation:mpop .18s ease-out}
 .mbox label{margin:0}.mbox input{margin:0}.mbhd{display:flex;align-items:center}.mbhd b{font:italic 900 18px var(--font);color:#fff}.mbhd .x{margin-left:auto;background:none;border:1px solid var(--line);color:var(--text);border-radius:99px;width:30px;height:30px;cursor:pointer;font:900 13px var(--font)}
 .mopt{display:grid;grid-template-columns:64px 1fr;align-items:center;gap:8px}.mopt>span{font:800 12px var(--font);color:var(--muted)}.mopt .seg{margin:0}.mopt .seg.sm button{padding:8px 4px;font-size:13px}
 .mbft{justify-content:flex-end;gap:8px;margin-top:4px}.mbft .btn{min-width:0;flex:0 0 auto;padding:9px 16px}
@@ -505,6 +513,29 @@ addStrings({
 /* 00_strings_src.js — 화면에 보이는 한국어 원문 → [English, 日本語, 简体中文] (6.0)
    화면에 그릴 때 L() 이 원문을 찾아 바꿔요. 원문을 고치면 여기 키도 같이 고쳐야 번역돼요. */
 const I18N_SRC = {
+"필요한 리소스 불러오는 중": ["LOADING RESOURCES", "リソースを読み込み中", "正在载入资源"],
+"남은 리소스는 받는 대로 준비돼요": ["the rest will be ready as it loads", "残りは読み込み次第準備されます", "其余资源载入后即可使用"],
+"코스 정리 중": ["tidying the track", "コースを整備中", "正在整理赛道"],
+"풍경 세우는 중": ["building the scenery", "景色を建設中", "正在搭建场景"],
+"관중석 청소 중": ["cleaning the grandstands", "観客席を掃除中", "正在打扫看台"],
+"그리드 정렬 중": ["lining up the grid", "グリッドに整列中", "正在排列发车格"],
+"🛞 피트 인 한 차량 타이어 교체 중": ["🛞 Changing tyres on a pitting car", "🛞 ピットインした車のタイヤ交換中", "🛞 正在为进站赛车更换轮胎"],
+"🧽 카트 세차 중": ["🧽 Washing the karts", "🧽 カートを洗車中", "🧽 正在清洗赛车"],
+"⛽ 연료 채우는 중": ["⛽ Filling up the fuel", "⛽ 燃料を補給中", "⛽ 正在加油"],
+"🚦 출발 신호등 점검 중": ["🚦 Checking the start lights", "🚦 スタートシグナルを点検中", "🚦 正在检查起跑灯"],
+"🎨 연석 페인트 칠하는 중": ["🎨 Painting the kerbs", "🎨 縁石をペイント中", "🎨 正在粉刷路肩"],
+"🏆 트로피 닦는 중": ["🏆 Polishing the trophy", "🏆 トロフィーを磨き中", "🏆 正在擦亮奖杯"],
+"🔧 엔진 볼트 조이는 중": ["🔧 Tightening engine bolts", "🔧 エンジンのボルトを締め中", "🔧 正在拧紧引擎螺栓"],
+"📣 관중 입장 중": ["📣 Fans are coming in", "📣 観客が入場中", "📣 观众正在入场"],
+"🧤 드라이버 장갑 끼는 중": ["🧤 Drivers putting on gloves", "🧤 ドライバーがグローブを装着中", "🧤 车手正在戴手套"],
+"🌬 리어 윙 각도 맞추는 중": ["🌬 Setting the rear wing angle", "🌬 リアウイングの角度を調整中", "🌬 正在调整尾翼角度"],
+"그래픽 품질": ["Graphics quality", "グラフィック品質", "画面质量"],
+"코스 모양 만드는 중": ["Building track", "コースを作成中", "正在生成赛道"],
+"풍경 만드는 중": ["Building scenery", "景色を作成中", "正在生成场景"],
+"그래픽 준비 중": ["Preparing graphics", "グラフィックを準備中", "正在准备画面"],
+"설정 적용 중": ["Applying settings", "設定を適用中", "正在应用设置"],
+"음악 불러오는 중": ["LOADING MUSIC", "音楽を読み込み中", "正在载入音乐"],
+"음악은 받는 대로 재생돼요": ["music will play as it finishes loading", "音楽は読み込み次第再生されます", "音乐载入后即可播放"],
 "날씨 · 시간대 선택": ["choose weather & time", "天候 · 時間帯を選択", "选择天气 · 时段"],
 "코스": ["Course", "コース", "赛道"],
 "코스 고정": ["Fixed by course", "コース固定", "赛道固定"],
@@ -2499,7 +2530,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '7.5.0';
+const GAME_VERSION = '7.8.0';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -2588,6 +2619,7 @@ function vibrate(ms) {
    ---------------------------------------------------------------------
    design: 화면에서 본 모양(화면 좌표). 새 코스 3개는 실제 서킷 지도를 따라 그렸어요. 02_track.js 가 월드 좌표로 바꾸고 매끈하게 다듬어요.
    새 코스는 '꼭짓점 + 모서리 반경'으로 그려요 (roundedCourse). 코스 둘레가 달라도 한 바퀴 길이를 targetKm 에 맞춰 크기를 정해요.
+   minRadius · smooth (7.6): 실제 지도의 잔 꺾임을 펴서 달리기 매끄럽게 — 최소 코너 반경(월드 단위)과 추가 스무딩 횟수
    fixedEnv: 7.5 부터 모든 코스가 null (날씨 · 시간대를 자유롭게). suggestEnv = 그 코스의 대표 환경 (설명 · 미리보기용)
    recordKey: 명예의 전당 · 리플레이를 코스별로 나누는 열쇠 ('legacy' = 7.3 이전 기록과 같은 열쇠)
    ===================================================================== */
@@ -2634,21 +2666,21 @@ const COURSES = {
   vegas: {
     id: 'vegas', name: 'LAS VEGAS STRIP', short: 'VEGAS', ko: '라스베이거스 스트립', flag: '🌃', real: 'Las Vegas Strip Circuit · 라스베이거스 그랑프리',
     design: [[500, -3880], [-220, -3480], [-420, -3480], [-2140, -2680], [-2460, -2360], [-2620, -2000], [-2820, -1400], [-2820, -920], [-2580, 1760], [-1580, 4000], [-1260, 4320], [-980, 4440], [-140, 3160], [820, 2680], [1460, 2360], [-100, -1320], [420, -1600], [620, -1600], [980, -840], [1100, -760], [1340, -840], [1740, -1080], [1420, -1960], [2820, -2680], [2060, -4440], [1740, -4400]],
-    targetKm: 4.4, minGap: 1150, start: [836, 888], fixedEnv: null, suggestEnv: { environment: 'NORMAL', timeOfDay: 'NIGHT', weatherLevel: 1 }, music: 'marina', theme: 'city', recordKey: 'vegas-v1',
+    targetKm: 4.6, minGap: 1150, minRadius: 650, smooth: 100, minRadius: 650, smooth: 100, start: [836, 888], fixedEnv: null, suggestEnv: { environment: 'NORMAL', timeOfDay: 'NIGHT', weatherLevel: 1 }, music: 'marina', theme: 'city', recordKey: 'vegas-v2',
     tagline: '네온 불빛 아래 스트립을 질주하는 밤의 시가지 서킷',
   },
   /* 스파-프랑코샹 — 비 내리는 숲과 산 (시계 방향) */
   spa: {
     id: 'spa', name: 'SPA-FRANCORCHAMPS', short: 'SPA', ko: '스파-프랑코샹', flag: '⛈️', real: 'Circuit de Spa-Francorchamps · 벨기에 그랑프리',
     design: [[-2540, 2480], [-2180, 2040], [-1700, 1680], [-660, 1240], [-460, 1040], [20, 80], [-20, -320], [-380, -1240], [-380, -2160], [-140, -2360], [-1060, -4160], [-1020, -4400], [-60, -3800], [660, -2880], [1220, -2440], [1300, -1760], [1980, -600], [2180, 200], [2740, 2760], [2500, 2960], [2540, 3640], [1460, 4360], [1180, 4400], [1060, 4120], [1740, 3680], [1740, 3440], [1460, 2480], [1380, 1640], [1300, 1440], [1060, 1280], [500, 1280], [380, 1360], [220, 1520], [-500, 3000], [-700, 3040], [-1220, 2840], [-2020, 3760], [-2260, 3680], [-2700, 3280], [-2740, 3000]],
-    targetKm: 4.75, minGap: 1150, start: [2404, 1224], fixedEnv: null, suggestEnv: { environment: 'RAIN', timeOfDay: 'DUSK', weatherLevel: 2 }, music: 'sierra', theme: 'mountain', recordKey: 'spa-v1',
+    targetKm: 5.1, minGap: 1150, minRadius: 650, smooth: 100, start: [2404, 1224], fixedEnv: null, suggestEnv: { environment: 'RAIN', timeOfDay: 'DUSK', weatherLevel: 2 }, music: 'sierra', theme: 'mountain', recordKey: 'spa-v2',
     tagline: '아르덴 숲과 안개, 바퀴마다 달라지는 빗길 — 전설의 고속 서킷',
   },
   /* 바레인 인터내셔널 서킷 (사키르) — 사막의 노을 (시계 방향) */
   bahrain: {
     id: 'bahrain', name: 'BAHRAIN · SAKHIR', short: 'BAHRAIN', ko: '바레인 사키르', flag: '🏜️', real: 'Bahrain International Circuit · 바레인 그랑프리',
     design: [[-980, 2320], [-500, 2160], [-220, 1880], [140, 1080], [700, 720], [1140, 720], [1620, 960], [2260, 1440], [2340, 1680], [2180, 1960], [1900, 2120], [-2860, 4400], [-3120, 4440], [-3380, 4320], [-3560, 3920], [-3560, 3520], [-2880, -4360], [-2600, -4500], [-1780, -4040], [-780, -4200], [3020, -3280], [3140, -3160], [3100, -2840], [1820, -1720], [1580, -1240], [1420, -1160], [500, -1200], [-80, 40], [-300, -40], [-300, -400], [80, -2560], [20, -2760], [-560, -3200], [-1100, -3000], [-1600, 1560], [-1500, 2160], [-1380, 2240]],
-    targetKm: 4.6, minGap: 1150, start: [-3260, 368], fixedEnv: null, suggestEnv: { environment: 'TROPICAL', timeOfDay: 'DUSK', weatherLevel: 1 }, music: 'dune', theme: 'desert', recordKey: 'bahrain-v1',
+    targetKm: 4.9, minGap: 1150, minRadius: 650, smooth: 100, start: [-3260, 368], fixedEnv: null, suggestEnv: { environment: 'TROPICAL', timeOfDay: 'DUSK', weatherLevel: 1 }, music: 'dune', theme: 'desert', recordKey: 'bahrain-v2',
     tagline: '사막 위 금빛 오아시스 — 긴 직선과 급제동 헤어핀의 승부',
   },
 };
@@ -2742,13 +2774,39 @@ function courseScale(course) {
 /** 7.4: 실제 서킷 모양은 계산이 1~2초 걸려서, 한 번 만든 중심선은 브라우저에 저장해 두고 다음부터 바로 써요 */
 function buildCenterline(course) {
   if (!course.minGap) return computeCenterline(course);
-  const key = 'apexgp_track_' + course.id + '_' + hashText(JSON.stringify([course.design, course.targetKm, course.minGap, course.start, SAMPLE_SPACING, MIN_CORNER_RADIUS, 'v1']));
+  const key = 'apexgp_track_' + course.id + '_' + hashText(JSON.stringify([course.design, course.targetKm, course.minGap, course.start, SAMPLE_SPACING, MIN_CORNER_RADIUS, course.minRadius, course.smooth, 'v2']));
   try { const hit = JSON.parse(localStorage.getItem(key) || 'null'); if (hit && hit.length > 100) return hit.map(([x, y]) => ({ x, y })); } catch (e) { /* 무시 */ }
   const pts = computeCenterline(course);
   try {
     for (let i = localStorage.length - 1; i >= 0; i--) { const k = localStorage.key(i); if (k && k.startsWith('apexgp_track_' + course.id + '_') && k !== key) localStorage.removeItem(k); }
     localStorage.setItem(key, JSON.stringify(pts.map((p) => [Math.round(p.x * 100) / 100, Math.round(p.y * 100) / 100])));
   } catch (e) { /* 저장 못 해도 괜찮아요 */ }
+  return pts;
+}
+/** 최소 코너 반경 보장: 너무 급한 곳만 국소적으로 완화 */
+function enforceMinRadius(pts, R) {
+  for (let it = 0; it < 1500; it++) {
+    let moved = false;
+    const m = pts.length;
+    const next = pts.map((p) => ({ x: p.x, y: p.y }));
+    for (let i = 0; i < m; i++) {
+      const a = pts[(i - 1 + m) % m], b = pts[i], c = pts[(i + 1) % m];
+      const turn = Math.abs(angleDiff(Math.atan2(c.y - b.y, c.x - b.x), Math.atan2(b.y - a.y, b.x - a.x)));
+      const halfSpan = Math.hypot(c.x - a.x, c.y - a.y) / 2;
+      if (turn > 1e-6 && halfSpan / turn < R) {
+        moved = true;
+        for (let k = -3; k <= 3; k++) {
+          const j = (i + k + m) % m, weight = 0.25 * (1 - Math.abs(k) / 4);
+          const pa = pts[(j - 1 + m) % m], pb = pts[(j + 1) % m];
+          next[j].x += weight * ((pa.x + pb.x) / 2 - pts[j].x);
+          next[j].y += weight * ((pa.y + pb.y) / 2 - pts[j].y);
+        }
+      }
+    }
+    pts = next;
+    if (it % 25 === 24) pts = resamplePolyline(pts, SAMPLE_SPACING);
+    if (!moved) break;
+  }
   return pts;
 }
 function computeCenterline(course) {
@@ -2768,35 +2826,19 @@ function computeCenterline(course) {
     }
   }
   let pts = resamplePolyline(dense, SAMPLE_SPACING);
-  for (let it = 0; it < 60; it++) { pts = taubinSmoothStep(pts, 0.5); pts = taubinSmoothStep(pts, -0.53); }
+  for (let it = 0; it < 60 + (course.smooth || 0); it++) { pts = taubinSmoothStep(pts, 0.5); pts = taubinSmoothStep(pts, -0.53); }
   pts = resamplePolyline(pts, SAMPLE_SPACING);
 
-  // 최소 코너 반경 보장: 너무 급한 곳만 국소적으로 완화
-  for (let it = 0; it < 1500; it++) {
-    let moved = false;
-    const m = pts.length;
-    const next = pts.map((p) => ({ x: p.x, y: p.y }));
-    for (let i = 0; i < m; i++) {
-      const a = pts[(i - 1 + m) % m], b = pts[i], c = pts[(i + 1) % m];
-      const turn = Math.abs(angleDiff(Math.atan2(c.y - b.y, c.x - b.x), Math.atan2(b.y - a.y, b.x - a.x)));
-      const halfSpan = Math.hypot(c.x - a.x, c.y - a.y) / 2;
-      if (turn > 1e-6 && halfSpan / turn < MIN_CORNER_RADIUS) {
-        moved = true;
-        for (let k = -3; k <= 3; k++) {
-          const j = (i + k + m) % m, weight = 0.25 * (1 - Math.abs(k) / 4);
-          const pa = pts[(j - 1 + m) % m], pb = pts[(j + 1) % m];
-          next[j].x += weight * ((pa.x + pb.x) / 2 - pts[j].x);
-          next[j].y += weight * ((pa.y + pb.y) / 2 - pts[j].y);
-        }
-      }
-    }
-    pts = next;
-    if (it % 25 === 24) pts = resamplePolyline(pts, SAMPLE_SPACING);
-    if (!moved) break;
-  }
+  const minR = course.minRadius || MIN_CORNER_RADIUS;   // 7.5.1: 새 코스는 더 큰 최소 반경으로 매끄럽게
+  pts = enforceMinRadius(pts, minR);
   pts = resamplePolyline(pts, SAMPLE_SPACING);
 
   if (course.minGap) pts = separateSections(pts, course.minGap);   // 7.4: 실제 서킷 모양 — 가까운 구간끼리 벽이 겹치지 않게 벌려요
+  if (course.minRadius) for (let r = 0; r < 2; r++) {   // 7.5.1: 벌리면서 생긴 꺾임을 다시 다듬고, 다시 간격 확인
+    for (let it = 0; it < 20; it++) { pts = taubinSmoothStep(pts, 0.5); pts = taubinSmoothStep(pts, -0.53); }
+    pts = resamplePolyline(enforceMinRadius(resamplePolyline(pts, SAMPLE_SPACING), minR), SAMPLE_SPACING);
+    pts = separateSections(pts, course.minGap);
+  }
 
   // 출발선이 메인 직선에 오도록 시작 인덱스 회전
   const startPoint = worldFromScreenDesign(course.start[0] * scale, course.start[1] * scale);
@@ -3706,7 +3748,7 @@ function nearestCenterIndex(x, y) {
 /* 7.4: 코스 테마별 장식 밀도 — near: 트랙 옆 나무를 건너뛸 확률 · far: 먼 숲 나무 수 · lamp: 가로등 간격 */
 const SCENERY_DENSITY = {
   classic: { near: 0.42, far: 3200, lamp: 11, farPad: 3000 },
-  city: { near: 0.86, far: 0, lamp: 8 },          // 빌딩이 대신 들어서요
+  city: { near: 0.7, far: 0, lamp: 8 },           // 빌딩이 대신 들어서요 (7.6: 광장 야자수 조금 더)
   mountain: { near: 0.22, far: 5200, lamp: 13, farPad: 4200 },  // 울창한 소나무 숲 (언덕까지)
   desert: { near: 0.9, far: 0, lamp: 11 },        // 오아시스 둘레에만 야자수
 };
@@ -3786,13 +3828,13 @@ function buildScenery() {
     sceneryObjects.push({ kind: 'tree', x, y, variant: Math.floor(sceneryRandom() * 6), scale: 0.85 + sceneryRandom() * 0.5 });
   }
 
-  // 7.5 사막: 달리면서 보이는 트랙 옆 오아시스 2곳 + 둘레 야자수 · 메인 직선 야자수 길
+  // 7.5 사막: 달리면서 보이는 트랙 옆 오아시스 (7.6: 3곳) + 둘레 야자수 · 메인 직선 야자수 길
   if (courseOf(currentCourseId).theme === 'desert' && typeof W3 !== 'undefined') {
     const oases = [];
-    for (let k = 0; k < 3000 && oases.length < 2; k++) {
+    for (let k = 0; k < 3000 && oases.length < 3; k++) {
       const i = Math.floor(sceneryRandom() * SEGMENTS), side = sceneryRandom() < 0.5 ? -1 : 1, r = 300 + sceneryRandom() * 140, off = wallDistance[sideIndex(side)][i] + 260 + r;
       const x = centerX[i] + normalX[i] * off * side, y = centerY[i] + normalY[i] * off * side;
-      if (nearestCenterIndex(x, y).distance < r + ROAD_HALF + 230 || isBlocked(x, y) || oases.some((o) => Math.hypot(o.x - x, o.y - y) < 4000)) continue;
+      if (nearestCenterIndex(x, y).distance < r + ROAD_HALF + 230 || isBlocked(x, y) || oases.some((o) => Math.hypot(o.x - x, o.y - y) < 3200)) continue;
       oases.push({ x, y, r }); blockedAreas.push({ x, y, radius: r + 80 });
     }
     W3.courseOases = oases;
@@ -5666,12 +5708,52 @@ const MUSIC_FILE_LEVEL = 0.55;
 /* 더블클릭(file://) 실행은 브라우저 보안 때문에 음악을 Web Audio 로 보낼 수 없어서, <audio> 를 직접 재생해요 */
 const MUSIC_DIRECT = location.protocol === 'file:';
 const musicFiles = {};
+/* 7.7: 시작 화면에서 음악 파일을 전부 미리 받아 메모리(Blob)에 둬요 → 레이스가 시작되자마자 끊김 없이 재생.
+   예전엔 <audio> 가 재생할 때 조금씩 받아서(스트리밍) 느린 망 · 휴대폰에선 처음 몇 초 · 한 곡 통째로 소리가 안 날 때가 있었어요.
+   진행 상황은 시작 화면 로딩 바에 보여요 (musicLoad). 받기에 실패한 곡은 예전처럼 스트리밍 → 그것도 안 되면 합성 음악 */
+const musicBlobs = {};
+const musicLoad = { started: false, finished: false, loaded: 0, total: 0, files: 0, filesDone: 0, failed: 0, listeners: [] };
+function preloadAllMusic() {
+  if (musicLoad.started) return; musicLoad.started = true;
+  const list = Object.entries({ ...MUSIC_FILES, ...COURSE_MUSIC_FILES });
+  musicLoad.files = list.length;
+  const notify = () => { for (const f of musicLoad.listeners) { try { f(musicLoad); } catch (e) { /* 무시 */ } } };
+  const finishOne = () => {
+    musicLoad.filesDone++;
+    if (musicLoad.filesDone >= musicLoad.files) { musicLoad.finished = true; if (audio.context) prepareMusicFiles(); }
+    notify();
+  };
+  if (location.protocol === 'file:' || !window.fetch) { musicLoad.filesDone = musicLoad.files - 1; finishOne(); return; }   // 더블클릭 실행: 미리 받기 불가 → 바로 진행
+  const sizes = {};   // 파일마다 받은 바이트 · 전체 크기 (전체 크기를 모르면 3.5MB 로 어림)
+  const sum = () => { let a = 0, b = 0; for (const v of Object.values(sizes)) { a += v.got; b += v.size; } musicLoad.loaded = a; musicLoad.total = b; };
+  for (const [name] of list) sizes[name] = { got: 0, size: 3.5e6 }; sum();   // 처음부터 전체를 어림해 둬야 진행 막대가 뒤로 가지 않아요
+  const one = async ([name, url]) => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const len = Number(res.headers.get('content-length')) || 0; if (len) sizes[name].size = len;
+      let blob;
+      if (res.body && res.body.getReader) {
+        const reader = res.body.getReader(), parts = [];
+        for (;;) { const { done, value } = await reader.read(); if (done) break; parts.push(value); sizes[name].got += value.length; if (sizes[name].got > sizes[name].size) sizes[name].size = sizes[name].got; sum(); notify(); }
+        blob = new Blob(parts, { type: 'audio/mpeg' });
+      } else blob = await res.blob();
+      sizes[name].got = sizes[name].size = blob.size; sum();
+      musicBlobs[name] = URL.createObjectURL(blob);
+    } catch (e) { musicLoad.failed++; sizes[name].got = sizes[name].size; sum(); }
+    finishOne();
+  };
+  // 메뉴 음악 → 지금 코스 음악 → 나머지 순서로, 동시에 3개씩
+  const cm = courseOf(settings.course).music, ck = cm === 'race' ? 'race' : 'race_' + cm, order = list.sort((a, b) => (b[0] === 'menu') - (a[0] === 'menu') || (b[0] === ck) - (a[0] === ck));
+  let next = 0; const worker = async () => { while (next < order.length) await one(order[next++]); };
+  for (let k = 0; k < 3; k++) worker();
+}
 function prepareMusicFiles() {
-  if (!audio.context) return;
-  const wanted = { ...MUSIC_FILES }, ck = courseMusicKey(); if (COURSE_MUSIC_FILES[ck]) wanted[ck] = COURSE_MUSIC_FILES[ck];
+  if (!audio.context || (musicLoad.started && !musicLoad.finished)) return;   // 7.7: 미리 받기가 끝난 뒤에 한 번에 준비
+  const wanted = { ...MUSIC_FILES, ...COURSE_MUSIC_FILES };   // 7.7: 코스 음악도 모두 (이미 메모리에 있어요)
   for (const [name, url] of Object.entries(wanted)) {
     if (musicFiles[name]) continue;
-    const el = new Audio(); el.loop = true; el.preload = 'auto'; el.src = url;
+    const el = new Audio(); el.loop = true; el.preload = 'auto'; el.src = musicBlobs[name] || url;
     const M = musicFiles[name] = { el, gain: null, level: 0, failed: false, blocked: false, nextTry: 0 };
     if (MUSIC_DIRECT) el.volume = 0;
     else {
@@ -5697,7 +5779,7 @@ function kickMusic() {
   if (M && M.el.paused) { M.nextTry = 0; tryPlayMusic(M); }
 }
 function updateMusicFiles(track) {
-  if (track && COURSE_MUSIC_FILES[track] && !musicFiles[track]) prepareMusicFiles();   // 7.4: 코스 음악은 처음 필요할 때 받아요
+  if (track && COURSE_MUSIC_FILES[track] && !musicFiles[track]) prepareMusicFiles();   // 7.4: 코스 음악 (7.7: 미리 받기가 끝났으면 이미 준비돼 있어요)
   const c = audio.context, t = c.currentTime, M0 = track && musicFiles[track] && !musicFiles[track].failed ? musicFiles[track] : null, file = M0 ? track : null;
   if (file !== musicPlayer.fileTrack) {
     musicPlayer.fileTrack = file;
@@ -6090,6 +6172,17 @@ async function playReplay(recordId, mode) {
     M.cars.forEach((c, i) => { const car = P.cars[i]; if (!car || car === player) return; car.mpId = 'rp' + i; car.mpDesign = CAR_DESIGNS[c.designId] ? c.designId : 'aero'; car.mpHuman = true; car.team = { ...(TEAMS[car.id] || TEAMS[1]), driver: c.name || 'CAR' }; });
     mpApplyDesigns(); for (const car of P.cars) if (car !== player) car.mpHuman = false;
   }
+  // 7.7.1: 기록에 있는 차만 트랙에 (1:1 · 인원이 적은 멀티 리플레이에 AI 차들이 출발선에 서 있던 문제)
+  raceField = P.cars.filter((c, i) => !c.isGhost && P.cars.indexOf(c) === i);
+  // 7.7.1: 순위표 · 이름표의 약자(code)와 내 차 자리(기록 주인)의 이름도 기록대로 — 예전엔 AI 약자(ZEN 등) · 'YOU' 가 보였어요
+  const nameCode = (n, fb) => String(n || '').replace(/[^A-Za-z0-9가-힣]/g, '').slice(0, 3).toUpperCase() || fb;
+  P.saved.playerTeam = player.team;
+  P.cars.forEach((car, i) => {
+    if (car.isGhost) return;
+    const name = i === 0 ? ((rec.holder && rec.holder.name) || M.cars[0].name) : M.cars[i] && M.cars[i].name;
+    if (!name || (M.raceType !== 'multi' && car !== player)) return;   // 솔로 리플레이의 AI 는 원래 이름 그대로
+    car.team = { ...car.team, driver: name, code: nameCode(name, car.team.code) };
+  });
   for (const car of P.cars) { car.prevX = null; car.trackPos = undefined; }
   Object.assign(P, { active: true, rec, data: new Int16Array(rec.data), time: 0, duration: (rec.frames - 1) / rec.hz, speedIndex: 0, paused: false, ended: false, camMode: 'auto', camCar: -1, endTimer: 0 });
   P.results = replayResults(P);   // 7.0: 각 차가 결승선을 지난 시각 (기록의 '완주' 표시로 계산)
@@ -6149,6 +6242,7 @@ function exitReplay() {
   Object.assign(settings, { carDesign: P.saved.carDesign, cameraMode: P.saved.cameraMode });
   environment = P.saved.environment; timeOfDay = P.saved.timeOfDay; weatherLevel = P.saved.weatherLevel;
   rivalGhost.active = false; raceType = 'solo';
+  if (P.saved.playerTeam) player.team = P.saved.playerTeam;   // 7.7.1: 내 차 이름 원래대로
   assignCarDesigns();
   returnToMenu();
   const id = P.rec && P.rec.id;
@@ -6656,7 +6750,7 @@ function backToDuelLobby() {
    테스트: 주소에 ?net=local → 같은 브라우저의 탭끼리 BroadcastChannel 로 연결, 방 목록은 localStorage.
    ===================================================================== */
 
-const MP_PROTOCOL = 3;   // 7.4: 코스 · AI 난이도   // 7.3: 재연결(resume) 메시지
+const MP_PROTOCOL = 4;   // 7.6: 새 코스 모양 다듬음   // 7.4: 코스 · AI 난이도   // 7.3: 재연결(resume) 메시지
 const MP_MAX_PLAYERS = 8;
 const MP_PEER_PREFIX = 'apexgp-mp1-';
 const MP_SEND_INTERVAL = 1 / 20;
@@ -6666,8 +6760,8 @@ const MP_RACE_TIMEOUT = 6;   // 7.3: 레이스 중 호스트 응답이 이만큼
 const MP_GRACE = 30;         // 7.3: 끊긴 사람을 기다려 주는 시간 (지나면 DNF)
 const MP_STALE_STATE = 0.6;
 const MP_FINISH_GRACE = 10;   // 7.3: 1위가 들어온 뒤 이 시간 안에 못 들어오면 리타이어  // 7.3: 상태가 이만큼 안 오면 원격 차를 트랙 따라 예측 주행
-const MP_HEARTBEAT = 5;
-const MP_STALE_MS = 20000;
+const MP_HEARTBEAT = 12;   // 7.8: 방 목록 갱신 5초 → 12초 (바뀔 때는 바로 올려요 — 사람 들어옴 · 코스 · 레이스 시작 등). DB 쓰기를 줄여요
+const MP_STALE_MS = 35000;   // 7.8: 하트비트가 길어진 만큼 (7.7 이하는 20초라 12초 하트비트도 문제없어요)
 const MP_STATS_KEY = 'apexgp_mp_stats_v1';
 
 const mp = {
@@ -9826,14 +9920,14 @@ function updatePrecipitation3D(dt) {
 /* ===================================================================
    품질 · 환경 적용
    =================================================================== */
-function applyQualitySettings() {
+function applyQualitySettings(keepMaterials = false) {   // 7.8: 코스만 바꿀 땐 기존 재질을 다시 컴파일하지 않아요 (keepMaterials)
   const preset = qualityPreset(), r = W3.renderer;
   r.setPixelRatio(Math.min(window.devicePixelRatio || 1, preset.pixelRatio));
   r.shadowMap.enabled = preset.shadows > 0;
   W3.sun.castShadow = preset.shadows > 0;
   if (preset.shadows) { W3.sun.shadow.mapSize.set(preset.shadows, preset.shadows); if (W3.sun.shadow.map) { W3.sun.shadow.map.dispose(); W3.sun.shadow.map = null; } }
   W3.lampLights.forEach((l, i) => { l.userData.enabled = i < preset.lampLights; });
-  W3.scene.traverse((o) => { if (o.material) [].concat(o.material).forEach((m) => { m.needsUpdate = true; }); });
+  if (!keepMaterials) W3.scene.traverse((o) => { if (o.material) [].concat(o.material).forEach((m) => { m.needsUpdate = true; }); });
   W3.qualityKey = resolvedQuality();
   resizeWorld3D();
 }
@@ -9877,6 +9971,7 @@ function applyEnvironment3D() {
   // 지면 · 노면
   M.grass.map = T.grass[environment]; M.grass.needsUpdate = true;
   M.gravel.map = T.gravel[environment]; M.gravel.needsUpdate = true;
+  M.gravel.color.set(environment === 'TROPICAL' ? (tod === 'DAY' ? '#e6d8c2' : '#b89f86') : '#ffffff');   // 7.6: 노을 · 밤의 열대 모래 자갈이 하얗게 번쩍이지 않게
   const wet = environment === 'RAIN' ? blend : 0;
   if (environment === 'SNOW') {
     M.road.map = T.snowRoad; M.road.roughnessMap = null; M.road.color.set('#ffffff'); M.road.roughness = 0.8; M.road.metalness = 0;
@@ -10104,10 +10199,11 @@ function renderWorld3D(dt) {
   W3.trackMaterials.ads.emissiveIntensity = light * 0.35;
   if (light > 0) {
     const nearest = streetLamps.map((l) => [l, (l.headX - focus.x) ** 2 + (l.headY - focus.z) ** 2]).sort((a, b) => a[1] - b[1]);
+    const bright = courseTheme() === 'desert' || environment === 'TROPICAL' || environment === 'SNOW' ? 0.4 : 1;   // 7.6: 밝은 모래 · 눈 위에서 가로등이 하얗게 번지지 않게
     W3.lampLights.forEach((l, i) => {
       const lamp = nearest[i] && nearest[i][0];
       if (!lamp || !l.userData.enabled) { l.intensity = 0; return; }
-      l.position.set(lamp.headX, LAMP_POLE_H - 14, lamp.headY); l.intensity = 2800 * light;
+      l.position.set(lamp.headX, LAMP_POLE_H - 14, lamp.headY); l.intensity = 2800 * light * bright;
     });
   } else W3.lampLights.forEach((l) => { l.intensity = 0; });
   const p = player, ph = p.heading;
@@ -10441,22 +10537,31 @@ function makeFacade(style, seed) {
   m.fillStyle = '#2a2d33'; m.fillRect(0, 0, W, 6); e.fillStyle = '#000'; e.fillRect(0, 0, W, 6);   // 지붕용 띠 (v ≈ 1)
   return { map: canvasTexture(map), emi: canvasTexture(emi) };
 }
-/** 도시 바닥: 블록 · 도로 · 차선 (낮) + 가로등 · 차 불빛 (밤) */
+/** 도시 바닥 (7.6): 서킷 주변은 도로 없이 광장 — 포장 타일 · 잔디 화단 · 분수대 자리 (낮) + 은은한 가로등 불빛 (밤).
+    예전엔 차선 있는 도로 무늬가 바닥 전체에 반복돼 트랙 안까지 도로가 들어와 보였어요. */
 function makeCityGround() {
-  const S = 512, a = makeCanvas(S, S), b = makeCanvas(S, S), x = a.getContext('2d'), y = b.getContext('2d'), r = seededRandom(77);
-  x.fillStyle = '#34373d'; x.fillRect(0, 0, S, S); y.fillStyle = '#000'; y.fillRect(0, 0, S, S);
-  const road = 46, block = S / 2;
-  for (let by = 0; by < 2; by++) for (let bx = 0; bx < 2; bx++) {   // 블록 (보도 + 건물 마당)
-    const X = bx * block + road / 2, Y = by * block + road / 2, w = block - road;
-    x.fillStyle = '#6a6c70'; x.fillRect(X, Y, w, w); x.fillStyle = r() < 0.4 ? '#3f5238' : r() < 0.7 ? '#4a4c52' : '#55575c'; x.fillRect(X + 10, Y + 10, w - 20, w - 20);
-    for (let k = 0; k < 40; k++) { x.fillStyle = `rgba(0,0,0,${0.05 + r() * 0.08})`; x.fillRect(X + 10 + r() * (w - 30), Y + 10 + r() * (w - 30), 6 + r() * 30, 6 + r() * 30); }
-  }
-  x.strokeStyle = '#d8c46a'; x.lineWidth = 2; x.setLineDash([14, 12]);
-  for (const c of [0, block, S]) { x.beginPath(); x.moveTo(c, 0); x.lineTo(c, S); x.stroke(); x.beginPath(); x.moveTo(0, c); x.lineTo(S, c); x.stroke(); }
-  x.setLineDash([]);
-  for (const c of [0, block, S]) for (let t = 6; t < S; t += 22) {   // 차 불빛 (흰 헤드라이트 · 빨간 미등) + 가로등
-    if (r() < 0.55) { y.fillStyle = r() < 0.5 ? 'rgba(255,245,220,.9)' : 'rgba(255,60,50,.85)'; y.fillRect(c - 8 + r() * 16, t, 3, 7); y.fillRect(t, c - 8 + r() * 16, 7, 3); }
-    if (t % 44 === 6) { const g = y.createRadialGradient(c + road / 2 - 4, t, 0, c + road / 2 - 4, t, 16); g.addColorStop(0, 'rgba(255,205,140,.55)'); g.addColorStop(1, 'rgba(255,205,140,0)'); y.fillStyle = g; y.fillRect(c + road / 2 - 20, t - 16, 32, 32); }
+  const S = 1024, a = makeCanvas(S, S), b = makeCanvas(S, S), x = a.getContext('2d'), y = b.getContext('2d'), r = seededRandom(77), C = S / 4;
+  x.fillStyle = '#5d6066'; x.fillRect(0, 0, S, S); y.fillStyle = '#000'; y.fillRect(0, 0, S, S);
+  for (let cy = 0; cy < 4; cy++) for (let cx = 0; cx < 4; cx++) {   // 칸마다 다른 바닥 (반복 무늬가 덜 보이게)
+    const X = cx * C, Y = cy * C, tone = ['#5a5d63', '#62656b', '#585a5f', '#676a70', '#5e6066'][Math.floor(r() * 5)], tile = [12, 16, 24][Math.floor(r() * 3)];
+    x.fillStyle = tone; x.fillRect(X, Y, C, C);
+    x.strokeStyle = 'rgba(30,32,36,.22)'; x.lineWidth = 1;
+    for (let t = 0; t <= C; t += tile) { x.beginPath(); x.moveTo(X + t, Y); x.lineTo(X + t, Y + C); x.stroke(); x.beginPath(); x.moveTo(X, Y + t); x.lineTo(X + C, Y + t); x.stroke(); }
+    const kind = r();
+    if (kind < 0.35) {   // 잔디 화단 (모양 · 크기 제각각)
+      const w = 50 + r() * 140, h = 40 + r() * 120, bx = X + 20 + r() * (C - w - 40), by = Y + 20 + r() * (C - h - 40);
+      x.fillStyle = '#7f8185'; x.fillRect(bx - 4, by - 4, w + 8, h + 8); x.fillStyle = '#41583a'; x.fillRect(bx, by, w, h);
+      for (let k = 0; k < 40; k++) { x.fillStyle = r() < 0.5 ? 'rgba(80,115,60,.55)' : 'rgba(30,48,28,.45)'; x.beginPath(); x.arc(bx + r() * w, by + r() * h, 2 + r() * 6, 0, 7); x.fill(); }
+      y.fillStyle = 'rgba(120,220,255,.28)'; y.fillRect(bx - 4, by - 4, w + 8, 2); y.fillRect(bx - 4, by + h + 2, w + 8, 2);
+    } else if (kind < 0.55) {   // 둥근 광장 (밝은 돌)
+      const cxp = X + C / 2 + (r() - 0.5) * 60, cyp = Y + C / 2 + (r() - 0.5) * 60, rr = 40 + r() * 50;
+      x.fillStyle = '#7a7d83'; x.beginPath(); x.arc(cxp, cyp, rr, 0, 7); x.fill(); x.strokeStyle = 'rgba(40,40,44,.35)'; x.lineWidth = 2; x.beginPath(); x.arc(cxp, cyp, rr * 0.6, 0, 7); x.stroke();
+    }
+    for (let k = 0; k < 160; k++) { x.fillStyle = `rgba(${r() < 0.5 ? '0,0,0' : '255,255,255'},${0.015 + r() * 0.035})`; x.fillRect(X + r() * C, Y + r() * C, 2 + r() * 14, 2 + r() * 14); }
+    for (let k = 0, n = 1 + Math.floor(r() * 2); k < n; k++) {   // 밤 가로등 불빛
+      const lx = X + 30 + r() * (C - 60), ly = Y + 30 + r() * (C - 60), g = y.createRadialGradient(lx, ly, 0, lx, ly, 40);
+      g.addColorStop(0, 'rgba(255,200,130,.4)'); g.addColorStop(1, 'rgba(255,200,130,0)'); y.fillStyle = g; y.fillRect(lx - 40, ly - 40, 80, 80);
+    }
   }
   return { map: canvasTexture(a), emi: canvasTexture(b) };
 }
@@ -10505,7 +10610,7 @@ function buildCityScenery() {
       building(x, y, w, d, h, grid + (rand() < 0.8 ? 0 : (rand() - 0.5) * 0.6), st); made++;
     }
   };
-  ring(170, ROAD_HALF + 380, 2200, 90, 560, 120, 300);     // 트랙 옆: 낮은 건물 (시야를 가리지 않게)
+  ring(240, ROAD_HALF + 380, 2200, 90, 560, 120, 300);     // 트랙 옆: 낮은 건물 (시야를 가리지 않게)
   ring(260, 2200, 6200, 260, 1500, 180, 380);              // 중간: 호텔 · 오피스
   ring(150, 6200, 11000, 700, 2700, 220, 420);             // 멀리: 스카이라인
   lists.forEach((l, k) => { if (!l.length) return; const m = new THREE.Mesh(mergeGeometries(l), mats[k]); m.castShadow = true; m.receiveShadow = true; S.add(m); });
@@ -10661,7 +10766,7 @@ function buildMountainScenery() {
 function buildDesertScenery() {
   const S = W3.scene, rand = seededRandom(801), plan = W3.coursePlan || {};
   for (const O of plan.oases || []) {   // 트랙 옆 오아시스 (야자수는 06_scenery 가 심어요)
-    const water = new THREE.Mesh(new THREE.CircleGeometry(O.r, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#1d7a8c', roughness: 0.04, metalness: 0.5, emissive: '#0b3a44', emissiveIntensity: 0.25 }));
+    const water = new THREE.Mesh(new THREE.CircleGeometry(O.r, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#1a6f80', roughness: 0.22, metalness: 0.15, emissive: '#0b3a44', emissiveIntensity: 0.2 })   /* 7.6: 햇빛이 하얗게 번쩍이지 않게 */);
     water.position.set(O.x, 1.6, O.y); S.add(water);
     const shore = new THREE.Mesh(new THREE.RingGeometry(O.r, O.r + 120, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#7f9a48', roughness: 1 })); shore.position.set(O.x, 1.3, O.y); S.add(shore);
     const reeds = []; for (let k = 0; k < 40; k++) { const a = rand() * TAU, rr = O.r + rand() * 60, g = paintGeometry(new THREE.ConeGeometry(8, 40 + rand() * 30, 4), '#5e7c34'); g.translate(O.x + Math.cos(a) * rr, 22, O.y + Math.sin(a) * rr); reeds.push(g); }
@@ -10696,6 +10801,43 @@ function buildDesertScenery() {
   // 바위
   const rocks = findSpots(rand, 40, 450, 1800, [...(plan.oases || []), ...camps.map((c) => ({ ...c, r: 250 }))], 250).map((q) => { const g = new THREE.DodecahedronGeometry(30 + rand() * 70, 0); g.scale(1.3, 0.7 + rand() * 0.5, 1); g.translate(q.x, 10, q.y); return paintGeometry(g, ['#a8714a', '#946141', '#b98a5e'][Math.floor(rand() * 3)]); });
   if (rocks.length) { const m = new THREE.Mesh(mergeGeometries(rocks), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 1 })); m.castShadow = true; S.add(m); }
+  // 7.6: 비어 보이지 않게 — 사막 덤불 · 가까운 모래 언덕 · 멀리 마나마 스카이라인 (바레인 세계무역센터)
+  const avoid = [...(plan.oases || []), ...camps.map((c) => ({ ...c, r: 250 }))], Hh = W3.terrain ? W3.terrain.heightAt : () => 0;
+  const bush = findSpots(rand, 320, ROAD_HALF + 260, 2600, avoid, 110).map((q) => {
+    const r = 14 + rand() * 22, g = new THREE.IcosahedronGeometry(r, 0); g.scale(1.4, 0.65, 1.2); g.translate(q.x, Hh(q.x, q.y) + r * 0.45, q.y);
+    return paintGeometry(g, ['#7c7a3c', '#8d8248', '#6a6b34', '#9a8a55'][Math.floor(rand() * 4)]);
+  });
+  if (bush.length) S.add(new THREE.Mesh(mergeGeometries(bush), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 1 })));
+  const dunes = findSpots(rand, 22, 900, 3200, avoid, 700).map((q) => {
+    const r = 260 + rand() * 300, g = new THREE.SphereGeometry(r, 18, 8, 0, TAU, 0, Math.PI / 2); g.scale(1, 0.22 + rand() * 0.12, 0.45 + rand() * 0.25); g.rotateY(rand() * Math.PI); g.translate(q.x, Hh(q.x, q.y) - 4, q.y);
+    return paintGeometry(g, ['#d49a5c', '#c98c50', '#dba868'][Math.floor(rand() * 3)]);
+  });
+  if (dunes.length) { const m = new THREE.Mesh(mergeGeometries(dunes), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1 })); m.receiveShadow = true; S.add(m); }
+  const city = findSpots(rand, 1, 4200, 5200, avoid, 0, 6000)[0];
+  if (city) {
+    const ax = Math.atan2(city.y - (TRACK_BOUNDS.minY + TRACK_BOUNDS.maxY) / 2, city.x - (TRACK_BOUNDS.minX + TRACK_BOUNDS.maxX) / 2), side = [-Math.sin(ax), Math.cos(ax)];
+    const facades = ['glass', 'bronze', 'white'].map((st, k) => { const f = makeFacade(st, 950 + k); return emissiveByTime(new THREE.MeshStandardMaterial({ map: f.map, emissive: '#ffffff', emissiveMap: f.emi, emissiveIntensity: 0, roughness: 0.3, metalness: 0.4 }), 0, 0.35, 1.2); });
+    const lists = facades.map(() => []);
+    for (let k = 0; k < 26; k++) {   // 타워 무리 (옆으로 길게)
+      const t = (rand() - 0.5) * 5200, back = rand() * 1400, x = city.x + side[0] * t + Math.cos(ax) * back, y = city.y + side[1] * t + Math.sin(ax) * back;
+      if (Math.abs(t) < 380) continue;
+      const w = 90 + rand() * 110, h = 260 + rand() * 520 * (1 - Math.abs(t) / 3600), g = rand() < 0.3 ? new THREE.CylinderGeometry(w * 0.55, w * 0.6, h, 12) : new THREE.BoxGeometry(w, h, w * (0.7 + rand() * 0.5));
+      const uv = g.attributes.uv; for (let v = 0; v < uv.count; v++) uv.setXY(v, uv.getX(v) * w / 120, uv.getY(v) * h / 240);
+      g.rotateY(rand() * Math.PI); g.translate(x, h / 2, y); lists[Math.floor(rand() * 3)].push(g);
+    }
+    // 세계무역센터: 돛 모양 쌍둥이 타워 + 사이 다리 3개 (풍력 터빈)
+    const wtc = [];
+    for (const s of [-1, 1]) for (let f = 0; f < 12; f++) {
+      const h0 = f * 60, w = 150 - f * 9, g = new THREE.BoxGeometry(w, 60, 110 - f * 4); const uv = g.attributes.uv; for (let v = 0; v < uv.count; v++) uv.setXY(v, uv.getX(v) * w / 120, uv.getY(v) * 0.25 + f / 12);
+      g.translate(s * (95 + f * 2) + s * (w / 2 - 75), h0 + 30, 0); wtc.push(g);
+    }
+    const wg = new THREE.Mesh(mergeGeometries(wtc), facades[0]); wg.position.set(city.x, 0, city.y); wg.rotation.y = -ax; S.add(wg);
+    const bridges = []; for (const h of [180, 360, 540]) { const b = paintGeometry(new THREE.BoxGeometry(150, 14, 30), '#d8dde2'); b.translate(0, h, 0); bridges.push(b); const t = paintGeometry(new THREE.TorusGeometry(26, 4, 6, 16), '#eef2f5'); t.translate(0, h + 34, 0); bridges.push(t); }
+    const bm = new THREE.Mesh(mergeGeometries(bridges), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.4 })); bm.position.copy(wg.position); bm.rotation.y = -ax; S.add(bm);
+    lists.forEach((L, k) => { if (L.length) S.add(new THREE.Mesh(mergeGeometries(L), facades[k])); });
+    const tip = new THREE.Mesh(new THREE.SphereGeometry(10, 8, 6), new THREE.MeshBasicMaterial({ color: '#ff3b2f' })); tip.position.set(city.x, 740, city.y); S.add(tip);
+    COURSE_FX.emissive.push({ mat: tip.material, basic: true, day: 0.4, dusk: 1.2, night: 1.6, base: '#ff3b2f' });
+  }
   // 트랙 위 호텔 아치 — 양쪽 타워 자리에 다른 구간이 없는 곳만
   const glassF = makeFacade('bronze', 931), glass = emissiveByTime(new THREE.MeshStandardMaterial({ map: glassF.map, emissive: '#ffffff', emissiveMap: glassF.emi, emissiveIntensity: 0.2, roughness: 0.25, metalness: 0.5, color: '#f2e2c4' }), 0, 0.6, 1.3);
   let arch = null;
@@ -10742,7 +10884,7 @@ function planCourse(theme) {
 
 /* ---------- 트랙 묶음 만들기 · 버리기 ---------- */
 function buildTrackWorld() {
-  const real = W3.scene, group = new THREE.Group(), theme = courseTheme();
+  const real = W3.scene, group = new THREE.Group(), theme = courseTheme(), before = { ...W3 };
   COURSE_FX.updaters = []; COURSE_FX.emissive = []; W3.terrain = null;
   W3.distField = trackDistanceField(260);
   W3.coursePlan = planCourse(theme);
@@ -10758,8 +10900,34 @@ function buildTrackWorld() {
     else if (theme === 'desert') buildDesertScenery();
     else buildClassicScenery();
   } finally { W3.scene = real; }
-  real.add(group); W3.trackGroup = group;
+  real.add(group); W3.trackGroup = group; W3.worldCourse = currentCourseId;
+  // 7.8: 이 코스 3D 가 바꾼 W3 항목들 (나중에 미리 만들어 둔 코스로 바꿔 끼울 때 그대로 되돌려요)
+  W3.worldKeys = Object.keys(W3).filter((k) => k !== 'scene' && k !== 'worldKeys' && W3[k] !== before[k]).concat('courseOases');
 }
+/* ---------- 7.8: 코스 3D 미리 만들어 두기 (시작 화면에서) → 메뉴에서 코스를 바꾸면 바로 교체 ----------
+   '낮음' 품질에서는 메모리를 아끼려고 지금 코스 하나만 둬요 (바꿀 때 로딩 막대로 새로 만들어요) */
+const WORLD_CACHE = {};
+const keepWorlds = () => resolvedQuality() !== 'low';
+function stashWorld() {
+  const g = W3.trackGroup, id = W3.worldCourse; if (!g || !id) return;
+  const w3 = {}; for (const k of W3.worldKeys || []) w3[k] = W3[k];
+  WORLD_CACHE[id] = { group: g, w3, fx: { updaters: COURSE_FX.updaters, emissive: COURSE_FX.emissive }, scenery: sceneryObjects.slice(), lamps: streetLamps.slice(), quality: W3.qualityKey };
+  W3.scene.remove(g); W3.trackGroup = null; W3.worldCourse = null;
+}
+function restoreWorld(id) {
+  const C = WORLD_CACHE[id]; if (!C) return false;
+  delete WORLD_CACHE[id];
+  Object.assign(W3, C.w3); W3.worldKeys = Object.keys(C.w3);
+  COURSE_FX.updaters = C.fx.updaters; COURSE_FX.emissive = C.fx.emissive;
+  sceneryObjects.length = 0; sceneryObjects.push(...C.scenery); streetLamps.length = 0; streetLamps.push(...C.lamps);
+  W3.scene.add(C.group); W3.trackGroup = C.group; W3.worldCourse = id;
+  if (C.quality !== W3.qualityKey) C.group.traverse((o) => { if (o.material) [].concat(o.material).forEach((m) => { m.needsUpdate = true; }); });   // 그 사이 그래픽 품질이 바뀌었으면
+  return true;
+}
+function dropWorldCache() {   // '낮음'으로 바꾸면 미리 만든 코스는 버려요
+  for (const id of Object.keys(WORLD_CACHE)) { WORLD_CACHE[id].group.traverse((o) => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach((m) => m.dispose()); }); delete WORLD_CACHE[id]; }
+}
+const worldReady = (id) => W3.worldCourse === courseOf(id).id || !!WORLD_CACHE[courseOf(id).id];
 function disposeTrackWorld() {
   const g = W3.trackGroup; if (!g) return;
   W3.scene.remove(g);
@@ -10774,7 +10942,7 @@ function applyCourseEnvironment() {
   const theme = courseTheme(), M = W3.trackMaterials, T = courseTextures(), span = W3.groundSpan || 40000, snow = environment === 'SNOW';
   // 지면: 눈이 오면 눈 바닥 그대로, 아니면 테마 바닥 (사막 모래 · 도시 거리)
   if (!snow && theme === 'desert') { M.grass.map = T.sand; T.sand.repeat.set(span / 420, span / 420); }
-  if (!snow && theme === 'city') { const G = T.city || (T.city = makeCityGround()); M.grass.map = G.map; M.grass.emissiveMap = G.emi; M.grass.emissive.set('#ffffff'); for (const t of [G.map, G.emi]) t.repeat.set(span / 1100, span / 1100); }
+  if (!snow && theme === 'city') { const G = T.city || (T.city = makeCityGround()); M.grass.map = G.map; M.grass.emissiveMap = G.emi; M.grass.emissive.set('#ffffff'); for (const t of [G.map, G.emi]) t.repeat.set(span / 2000, span / 2000); }
   else { M.grass.emissiveMap = null; M.grass.emissive.set('#000000'); }
   M.grass.emissiveIntensity = theme === 'city' && !snow ? { DAY: 0, DUSK: 0.35, NIGHT: 0.9 }[timeOfDay] : 0;
   M.grass.needsUpdate = true;
@@ -10793,20 +10961,23 @@ function updateCourseScenery(dt) { for (const f of COURSE_FX.updaters) f(dt); }
 /** 7.4: 코스 바꾸기 — 트랙 데이터 · 장식 · 3D 를 새로 (같은 코스면 아무것도 안 해요) */
 function useCourse(id, force = false) {
   const course = courseOf(id);
-  if (!force && currentCourseId === course.id && W3.trackGroup) return false;
+  if (!force && W3.worldCourse === course.id && currentCourseId === course.id && W3.trackGroup) return false;
+  if (!force && W3.worldCourse === course.id && W3.trackGroup) { loadTrackData(course.id); return true; }   // 트랙 데이터만 잠깐 다른 코스였던 경우
+  const cached = W3.renderer && !force && WORLD_CACHE[course.id];
+  if (W3.renderer && W3.trackGroup && W3.worldCourse !== course.id && keepWorlds()) stashWorld();   // 7.8: 지금 코스 3D 는 버리지 않고 보관
   loadTrackData(course.id);
-  sceneryObjects.length = 0; streetLamps.length = 0; W3.courseOases = [];
   for (const car of [...allCars, rivalGhost]) {   // 차마다 기억해 둔 코스 데이터(코너 속도표)를 새 코스로 — 안 그러면 다른 길이의 표를 읽어 NaN
     const tr = car.trait; car._csKey = null; car.cornerSpeedsHi = null;
     car.cornerSpeeds = computeCornerSpeeds(505 * (tr ? tr.cornerSkill : 1), 380 * (tr ? tr.brakeLate : 1), 780);
   }
-  buildScenery();
   minimap = null; _trackPreviewURL = '';
   particles.length = 0; precipitationDrops.length = 0; skidCount = 0;
+  if (cached) restoreWorld(course.id);   // 7.8: 미리 만들어 둔 코스 — 바로 교체
+  else { sceneryObjects.length = 0; streetLamps.length = 0; W3.courseOases = []; buildScenery(); }
   if (W3.renderer) {
-    disposeTrackWorld(); buildTrackWorld();
+    if (!cached) { disposeTrackWorld(); buildTrackWorld(); }
     W3.skidWritten = 0; W3.skidLastHead = 0; if (W3.skids) W3.skids.geometry.setDrawRange(0, 0);
-    W3.envKey = ''; applyQualitySettings();
+    W3.envKey = ''; applyQualitySettings(true);
   }
   if (course.fixedEnv) applyCourseFixedEnv(course);
   if (audio.context) prepareMusicFiles();   // 코스 음악 미리 받기
@@ -11662,7 +11833,7 @@ function drawMainMenu() {
   if (!useTouchUI) drawText(menuFocus === 'list' ? '↑ ↓  선택     ENTER  결정     →  레이스 환경     ESC  타이틀' : '↑ ↓  항목     ← →  변경     ENTER · ESC  메뉴로', screenW / 2, screenH - 16, small, THEME.muted, 800, 'center', false);
   drawVersionLabel(screenW - 18, screenH - 16, small, 'right');
 }
-function drawMenu() { if (menuStage === 'title') drawTitleScreen(); else if (menuStage === 'garage') drawGarage(); else { drawMainMenu(); drawRaceSetupPanel(); } drawCourseLoading(); }
+function drawMenu() { if (menuStage === 'title') drawTitleScreen(); else if (menuStage === 'garage') drawGarage(); else { drawMainMenu(); drawRaceSetupPanel(); } }
 
 /* ---------- 레이스 환경 선택 (메인 메뉴 오른쪽) ----------
    각 줄: [랜덤] + 직접 선택 값들. 빨강 = 내가 고른 값, 청록 테두리 = 이번 레이스에 실제로 적용될 값 */
@@ -11679,12 +11850,18 @@ const RACE_SETUP_ROWS = [
 const RACE_SETUP_WIDTH = 540;
 let raceSetupLayout = null;   // { x, y, scale, bottom } — 아래 컨디션 카드 배치에 사용
 function setRaceSetup(field, value) {
-  if (field === 'fixed') return;
+  if (field === 'fixed' || busyUI.active) return;
   if (settings[field] === value && value !== 'random') return;
   settings[field] = value; saveSettings();
   if (field === 'course') {   // 7.4: 코스를 바꾸면 메뉴 배경도 그 코스로 (처음 한 번은 계산하느라 1~2초)
-    sfx.menuConfirm(); courseLoading = courseOf(value).name;
-    setTimeout(() => { useCourse(value); randomizeEnvironment(); returnToMenu(); menuStage = 'main'; menuStageTimer = 5; menuFocus = 'setup'; setupRow = 0; courseLoading = ''; }, 60);
+    sfx.menuConfirm();
+    const done = () => { randomizeEnvironment(); returnToMenu(); menuStage = 'main'; menuStageTimer = 5; menuFocus = 'setup'; setupRow = 0; };
+    if (worldReady(value)) { useCourse(value); done(); return; }   // 7.8: 시작 화면에서 미리 만들어 둔 코스 — 바로 교체
+    runBusy(courseOf(value).name, [   // 7.8: 로딩 막대 — 코스 모양 → 풍경 → 그래픽 준비 (미리 받아 둔 코스 모양이 있으면 첫 단계는 바로 지나가요)
+      ['코스 모양 만드는 중', () => loadTrackData(value)],
+      ['풍경 만드는 중', () => { useCourse(value); done(); }],
+      ['그래픽 준비 중', () => warmGPU(W3.trackGroup)],
+    ]);
     return;
   }
   if (field === 'difficulty') { sfx.menuConfirm(); return; }
@@ -11698,13 +11875,29 @@ function cycleRaceSetup(rowIndex, step) {
   setRaceSetup(row.field, values[wrapIndex(values.indexOf(String(settings[row.field])) + step, values.length)]);
 }
 function rerollRandomConditions() { randomizeEnvironment(); precipitationDrops.length = 0; environmentPreRolled = true; sfx.menuConfirm(); }
-let courseLoading = '';
-/** 코스 불러오는 동안 화면 가운데 안내 */
-function drawCourseLoading() {
-  if (!courseLoading) return;
-  applyScreenTransform(); ctx.fillStyle = 'rgba(8,10,14,.6)'; ctx.fillRect(0, 0, screenW, screenH);
-  drawText(courseLoading, screenW / 2, screenH / 2 - 6, 30, '#fff', 900, 'center', true);
-  drawText('코스 불러오는 중…', screenW / 2, screenH / 2 + 24, 15, THEME.teal, 800, 'center', false);
+/* 7.8: 로딩 막대 (코스 바꾸기 · 그래픽 품질) — HTML 로 그려서, 계산하느라 화면이 잠깐 멈춰도 막대 무늬는 계속 움직여요 */
+const busyUI = { active: false, el: null };
+function showBusy(title) {
+  let el = busyUI.el; if (!el) { el = busyUI.el = document.createElement('div'); el.id = 'busy'; document.body.appendChild(el); }
+  el.innerHTML = `<div class="bbox"><b data-raw>${escapeHtml(title)}</b><div class="bbar"><i></i><s></s></div><small></small></div>`;
+  el.classList.add('on'); busyUI.active = true;
+}
+function setBusy(p, label) { const el = busyUI.el; if (!el) return; el.querySelector('.bbar i').style.width = `${Math.max(4, Math.round(clamp(p, 0, 1) * 100))}%`; el.querySelector('small').textContent = label ? `${L(label)} · ${Math.round(p * 100)}%` : ''; }
+function hideBusy() { busyUI.active = false; if (busyUI.el) busyUI.el.classList.remove('on'); }
+const nextPaint = () => new Promise((resolve) => setTimeout(resolve, 40));   // 막대가 화면에 그려질 틈
+async function runBusy(title, steps) {
+  if (busyUI.active) return;
+  showBusy(title);
+  try { for (let k = 0; k < steps.length; k++) { setBusy(k / steps.length, steps[k][0]); await nextPaint(); await steps[k][1](); } }
+  catch (e) { console.error(e); }
+  setBusy(1, ''); await nextPaint(); hideBusy();
+}
+/** 새로 만든 3D 물체의 셰이더 · 텍스처를 미리 그래픽 카드로 (안 그러면 첫 화면을 그릴 때 1~2초 멈춰요) */
+async function warmGPU(root) {
+  const r = W3.renderer; if (!r) return;
+  if (root) { const seen = new Set(); root.traverse((o) => { for (const m of [].concat(o.material || [])) for (const k of ['map', 'emissiveMap', 'normalMap', 'roughnessMap']) { const t = m[k]; if (t && !seen.has(t)) { seen.add(t); try { r.initTexture(t); } catch (e) { /* 무시 */ } } } }); }
+  try { if (r.compileAsync) await r.compileAsync(W3.scene, W3.camera); else r.compile(W3.scene, W3.camera); } catch (e) { /* 무시 */ }
+  await nextPaint(); try { renderWorld3D(1 / 60); } catch (e) { /* 무시 */ }   // 첫 화면(버퍼 · 그림자 · 환경맵)도 막대가 떠 있는 동안 그려 둬요
 }
 function drawRaceSetupPanel() {
   const rows = raceSetupRows(), w = RACE_SETUP_WIDTH, ROW_H = 48, HEAD = 46, h = HEAD + rows.length * ROW_H + 18;
@@ -12232,8 +12425,11 @@ function openSettings(tab) {
   overlayCard.querySelectorAll('[data-group]').forEach((button) => {
     button.onclick = () => {
       const group = button.dataset.group, raw = button.dataset.value;
+      const prevQ = resolvedQuality();
       settings[group] = raw === 'true' ? true : raw === 'false' ? false : raw;
       saveSettings(); sfx.uiClick(true); openSettings();
+      if (group === 'graphicsQuality' && W3.renderer && resolvedQuality() !== prevQ)   // 7.8: 그래픽 품질 — 로딩 막대를 띄우고 바꿔요
+        runBusy(L('그래픽 품질') + ' · ' + L({ high: '높음', medium: '보통', low: '낮음' }[resolvedQuality()]), [['설정 적용 중', () => { applyQualitySettings(); if (!keepWorlds()) dropWorldCache(); }], ['그래픽 준비 중', () => warmGPU()]]);
     };
   });
 }
@@ -12487,12 +12683,30 @@ function openMultiMenu() {
   if (!mpDraft.env) mpDraft.env = { raceEnv: settings.raceEnv || 'random', raceTime: settings.raceTime || 'random', raceWeather: String(settings.raceWeather ?? 'random') };
   overlayKind = 'multi';
   renderMultiMenu(); mpLoadRooms();
-  clearInterval(mpListTimer); mpListTimer = setInterval(() => { if (overlayOpen && overlayKind === 'multi') mpLoadRooms(); else clearInterval(mpListTimer); }, 4000);
+  // 7.8: 방 목록은 '목록이 보일 때만' 10초마다 (방 만들기 창이 떠 있거나 · 탭이 뒤에 있거나 · 방에 들어가 있으면 쉬어요) — DB 읽기를 줄여요
+  clearInterval(mpListTimer); mpListTimer = setInterval(() => {
+    if (!overlayOpen || overlayKind !== 'multi') { clearInterval(mpListTimer); return; }
+    if (mpDraft.creating || mp.role || document.visibilityState !== 'visible') return;
+    mpLoadRooms();
+  }, 10000);
 }
+let mpRoomsSig = '';
 async function mpLoadRooms() {
   if (!mpRegistry.available()) { mpRoomsCache = null; return; }
+  const before = mpRoomsSig;
   try { mpRoomsCache = await mpRegistry.list(); mpRoomsError = ''; } catch (e) { mpRoomsError = '방 목록을 불러오지 못했어요.'; }
+  mpRoomsSig = JSON.stringify(mpRoomsCache) + mpRoomsError;
+  // 7.8: 목록이 그대로면 화면을 다시 그리지 않아요 · 방 만들기 창이 떠 있으면 건드리지 않아요 (스크롤이 위로 튀던 문제)
+  if (mpRoomsSig === before || mpDraft.creating) return;
   if (overlayOpen && overlayKind === 'multi' && !mp.role) renderMultiMenu();
+}
+/** 7.8: 다시 그려도 스크롤 위치 · 팝업 애니메이션이 처음으로 돌아가지 않게 */
+function keepScroll(draw, selectors) {
+  const saved = selectors.map((q) => { const el = q === 'card' ? overlayCard : overlayCard && overlayCard.querySelector(q); return el ? el.scrollTop : 0; });
+  const hadModal = !!(overlayCard && overlayCard.querySelector('.mbox'));
+  draw();
+  selectors.forEach((q, k) => { const el = q === 'card' ? overlayCard : overlayCard && overlayCard.querySelector(q); if (el && saved[k]) el.scrollTop = saved[k]; });
+  if (hadModal) { const m = overlayCard && overlayCard.querySelector('.mbox'); if (m) m.classList.add('still'); }
 }
 function mpBackBtn(id, label) { return `<button class="back" id="${id}">← ${label}</button>`; }
 function renderMultiMenu() {
@@ -12522,7 +12736,7 @@ function renderMultiMenu() {
       <small class="mnote">${mpDraft.max === 2 ? L('1:1 대전 — 사람끼리만 달려요') : mpDraft.ghost ? L('👻 고스트: 다른 사람 차와 부딪히지 않아요') : L('⚔ 충돌: 다른 사람 차와 부딪혀요')}${mpDraft.isPublic ? '' : ' · ' + L('🔒 비공개 방은 코드로만 들어와요')}</small>
       <div class="row mbft"><button class="btn ghost" id="mpModalCancel">${L('취소')}</button><button class="btn go" id="mpCreate" ${busy ? 'disabled' : ''}>${L('방 만들기')}</button></div>
     </div></div>` : '';
-  openOverlay('multi', `<div class="hd teal">${mpBackBtn('mpBack', L('돌아가기'))}<h2>👥 ${L('멀티플레이')}</h2></div><div class="bd mfull">
+  keepScroll(() => openOverlay('multi', `<div class="hd teal">${mpBackBtn('mpBack', L('돌아가기'))}<h2>👥 ${L('멀티플레이')}</h2></div><div class="bd mfull">
     ${status}
     <div class="mmenu">
       <div class="mside">
@@ -12540,7 +12754,7 @@ function renderMultiMenu() {
       </div>
     </div>
     ${modal}
-  </div>`);
+  </div>`), ['card', '.bd', '.mbox', '.mrooms', '.mside', '.mlist']);
   const nameIn = byId('mpName'), codeIn = byId('mpCode'), roomIn = byId('mpRoomName');
   nameIn.oninput = () => { mpDraft.name = nameIn.value; };
   codeIn.oninput = () => { codeIn.value = normalizeRoomCode(codeIn.value); mpDraft.code = codeIn.value; };
@@ -12618,7 +12832,7 @@ function renderMultiLobby() {
     : `<p class="sub mhint">${host ? (allReady && (humans.length >= 2 || R.aiFill) ? L('모두 준비됐어요!') : humans.length < 2 && !R.aiFill ? L('2명 이상이거나 AI 채우기를 켜면 출발할 수 있어요') : L('모두 READY 를 누르면 3초 뒤 출발해요')) : L('모두 READY 를 누르면 호스트가 출발시켜요')}</p>`;
   const lenKm = (TRACK_LENGTH_M / 1000).toFixed(2);
   mpLobbySounds(humans, allReady && humans.length >= 2);
-  openOverlay('mlobby', `<div class="hd teal">${mpBackBtn('mlClose', L('나가기'))}<h2>👥 <span data-raw>${escapeHtml(R.name || L('멀티플레이'))}</span></h2></div><div class="bd mlobby mfull">
+  keepScroll(() => openOverlay('mlobby', `<div class="hd teal">${mpBackBtn('mlClose', L('나가기'))}<h2>👥 <span data-raw>${escapeHtml(R.name || L('멀티플레이'))}</span></h2></div><div class="bd mlobby mfull">
     <div class="mltop">
       <div class="codebox"><small>${tr('lobby.code')}</small><div class="code">${escapeHtml(R.code)}</div></div>
       <div class="lacts"><button class="btn ghost sm" id="mlCopy">📋 ${tr('lobby.copy')}</button><button class="btn ghost sm" id="mlShare">🔗 ${tr('lobby.share')}</button></div>
@@ -12637,7 +12851,7 @@ function renderMultiLobby() {
     <div class="carpick">${CAR_DESIGN_ORDER.map((id) => { const D = CAR_DESIGNS[id]; return `<button class="cp${myCar === id ? ' on' : ''}" data-mcar="${id}" style="--c:${D.uiColor}">${mpCarImg(id)}<span>${escapeHtml(D.name)}</span></button>`; }).join('')}</div>
     ${hint}
     <div class="row lobbybtns"><button class="btn ${mp.me.ready ? 'ghost' : 'go'}" id="mlReady">${mp.me.ready ? tr('lobby.cancelReady') : '✔ READY'}</button><button class="btn ghost" id="mlLeave">${host ? tr('lobby.close') : tr('lobby.leave')}</button></div>
-  </div>`);
+  </div>`), ['card', '.bd', '.mlmain', '.mcourse', '.mslots']);
   const on = (id, fn) => { const el = byId(id); if (el) el.onclick = () => { sfx.uiClick(true); fn(); }; };
   on('mlReady', () => { initAudio(); mpSetReady(!mp.me.ready); });
   const leave = () => { mpLeave(); closeOverlay(); openMultiMenu(); };
@@ -12955,6 +13169,7 @@ function showBootError(message) {
   el.style.color = '#ff6b6b'; el.style.textAlign = 'center'; el.style.padding = '20px'; el.textContent = L(message);
 }
 async function bootGame() {
+  try { preloadAllMusic(); } catch (e) { /* 음악 없이 계속 */ }   // 7.7: 3D 엔진을 받는 동안 음악도 함께 받기 시작
   loadOnlineConfig();   // 6.3: 온라인 명예의 전당 주소
   try { await loadThreeLibrary(); } catch (e) { showBootError('3D 엔진을 불러오지 못했어요. 브라우저를 최신 버전으로 업데이트해 주세요.'); return; }
   buildAllSprites();
@@ -13042,17 +13257,70 @@ bootGame();
    ===================================================================== */
 let introOpen = false;
 const HEADPHONE_SVG = '<svg viewBox="0 0 120 110" fill="none" stroke="#E59B26" stroke-width="7" stroke-linecap="round"><path d="M14 70V58a46 46 0 0 1 92 0v12"/><rect x="8" y="64" width="22" height="38" rx="9" fill="#E59B26" stroke="none"/><rect x="90" y="64" width="22" height="38" rx="9" fill="#E59B26" stroke="none"/><path d="M44 84c4-6 4-12 0-18M54 90c8-11 8-23 0-34M76 84c-4-6-4-12 0-18M66 90c-8-11-8-23 0-34" stroke="#f2f5f8" stroke-width="4" opacity=".7"/></svg>';
+/* 7.8: 시작 화면에서 필요한 리소스를 전부 불러와요 — 음악 6곡 + 코스 4개(모양 · 3D 풍경 미리 만들기 · 그래픽 준비)
+   다 되면 '눌러서 시작'. 그 뒤로는 메뉴에서 코스를 바꿔도 로딩 없이 바로 교체돼요.
+   기다리는 동안 재미있는 문구가 돌아가요 (타이어 교체 · 세차 …). 아주 느린 망이면 20초 뒤엔 기다리지 않고 시작할 수 있어요. */
+const introPrep = { total: 1, done: 0, finished: false, task: '', stop: false };
+const introReady = () => (musicLoad.finished && introPrep.finished) || introSkipOK;
+let introSkipOK = false, introFunIndex = 0;
+const INTRO_FUN = ['🛞 피트 인 한 차량 타이어 교체 중', '🧽 카트 세차 중', '⛽ 연료 채우는 중', '🚦 출발 신호등 점검 중', '🎨 연석 페인트 칠하는 중', '🏆 트로피 닦는 중', '🔧 엔진 볼트 조이는 중', '📣 관중 입장 중', '🧤 드라이버 장갑 끼는 중', '🌬 리어 윙 각도 맞추는 중'];
+function introProgress() {
+  const m = musicLoad.finished ? 1 : musicLoad.total ? Math.min(1, musicLoad.loaded / musicLoad.total) : 0;
+  const t = introPrep.finished ? 1 : introPrep.done / Math.max(1, introPrep.total);
+  return 0.5 * m + 0.5 * t;
+}
+function introLoadHTML() {
+  const p = introProgress();
+  if (introReady()) return `<div class="tap">${tr(useTouchUI ? 'intro.tapTouch' : 'intro.tapPc')}</div>${musicLoad.finished && introPrep.finished ? '' : `<small class="iload-note">${L('남은 리소스는 받는 대로 준비돼요')} · ${Math.round(p * 100)}%</small>`}`;
+  const fun = introPrep.task && introFunIndex % 2 === 0 ? introPrep.task : L(INTRO_FUN[Math.floor(introFunIndex / 2) % INTRO_FUN.length]);
+  return `<div class="iload"><div class="iload-bar"><i style="width:${Math.max(3, p * 100).toFixed(1)}%"></i></div>
+    <div class="iload-txt">${L('필요한 리소스 불러오는 중')} ${Math.round(p * 100)}%</div><div class="iload-fun">${escapeHtml(fun)}</div></div>`;
+}
+/** 코스 준비 순서: 모양 계산 → 3D 풍경 → 그래픽 준비. 마지막에 원래 고른 코스로 돌아와요 */
+function introPrepareCourses(onStep) {
+  const home = courseOf(settings.course).id, keep = W3.renderer && keepWorlds();
+  const steps = [];
+  for (const id of COURSE_ORDER) {
+    const name = courseOf(id).short;
+    if (!TRACK_CACHE[id]) steps.push([`🏁 ${name} · ${L('코스 정리 중')}`, () => withTrackData(id, () => {})]);
+    if (keep && id !== home) {
+      steps.push([`🌴 ${name} · ${L('풍경 세우는 중')}`, () => { introPrep.dirty = true; useCourse(id); introPrep.mine = W3.worldCourse; }]);
+      steps.push([`🧹 ${name} · ${L('관중석 청소 중')}`, () => warmGPU(W3.trackGroup)]);
+    }
+  }
+  if (keep) steps.push([`🏁 ${courseOf(home).short} · ${L('그리드 정렬 중')}`, () => { useCourse(home); introPrep.dirty = false; return warmGPU(W3.trackGroup); }]);
+  introPrep.total = steps.length; introPrep.done = 0;
+  const run = async () => {
+    for (const [label, fn] of steps) {
+      if (introPrep.stop || !introOpen) break;   // 시작 화면을 넘겼으면 멈춰요
+      introPrep.task = label; onStep();
+      await new Promise((r) => setTimeout(r, 30));
+      if (introPrep.stop || !introOpen) break;
+      try { await fn(); } catch (e) { console.error(e); }
+      introPrep.done++; onStep();
+    }
+    if (introPrep.dirty && W3.worldCourse === introPrep.mine && gameMode === 'menu') { try { useCourse(home); } catch (e) { /* 무시 */ } introPrep.dirty = false; }   // 중간에 멈췄어도 원래 코스로
+    introPrep.finished = true; introPrep.task = ''; onStep();
+  };
+  setTimeout(run, 300);
+}
 function renderIntro(el) {
-  el.innerHTML = `${HEADPHONE_SVG}<h1>${tr('intro.title')}</h1><p>${tr('intro.sub')}</p><div class="tap">${tr(useTouchUI ? 'intro.tapTouch' : 'intro.tapPc')}</div>
+  el.innerHTML = `${HEADPHONE_SVG}<h1>${tr('intro.title')}</h1><p>${tr('intro.sub')}</p><div class="iload-slot">${introLoadHTML()}</div>
     <div class="langs">${LANGUAGES.map(([code, name]) => `<button data-lang="${code}" class="${code === currentLang ? 'on' : ''}">${name}</button>`).join('')}</div>`;
   el.querySelectorAll('[data-lang]').forEach((b) => { b.onclick = (e) => { e.stopPropagation(); setLanguage(b.dataset.lang); renderIntro(el); }; });
 }
 function showIntro() {
   const el = document.createElement('div'); el.id = 'intro'; document.body.appendChild(el); introOpen = true;
   renderIntro(el);
+  const slot = () => el.querySelector('.iload-slot');
+  const refresh = () => { if (introOpen && slot()) slot().innerHTML = introLoadHTML(); el.classList.toggle('loading', !introReady()); };
+  musicLoad.listeners.push(refresh); refresh();
+  introPrepareCourses(refresh);
+  const funTimer = setInterval(() => { if (!introOpen) { clearInterval(funTimer); return; } introFunIndex++; refresh(); }, 1300);   // 재미있는 문구 바꾸기
+  setTimeout(() => { introSkipOK = true; refresh(); }, 20000);   // 아주 느린 망: 20초 뒤엔 기다리지 않고 시작 가능
   const go = (e) => {
     if (e && e.target && e.target.closest && e.target.closest('[data-lang]')) return;
-    if (!introOpen) return; introOpen = false;
+    if (!introOpen || !introReady()) return; introOpen = false; introPrep.stop = true;   // 다 못 만든 코스는 고를 때 만들어요
     try { initAudio(); kickMusic(); } catch (err) { /* 소리 없이 계속 */ }
     el.classList.add('out'); setTimeout(() => el.remove(), 750);
     menuStage = 'title'; menuStageTimer = 0;
