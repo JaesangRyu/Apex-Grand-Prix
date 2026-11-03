@@ -468,48 +468,28 @@ addStrings({ 'msg.limitBreak': ['엔진 임계점 돌파!', 'ENGINE LIMIT BREAK!
 addStrings({ 'hall.onlineFail': ['온라인 등록 실패 — 이 기기에만 저장됐어요', 'Online save failed — saved on this device only', 'オンライン登録失敗 — この端末にのみ保存', '在线提交失败 — 仅保存在本机'] });
 
 /* ===== 00_strings_cars.js ===== */
-/* 00_cars_lore.js — 차고 차량 소개 (6.0.1) : 별칭 · 콘셉트 · 배경 스토리  [한국어, English, 日本語, 简体中文] */
+/* 00_cars_lore.js — 차고 차량 소개 (8.1.2: 과장 없이 기술 · 강점 · 약점 중심) : 별칭 · 콘셉트 · 배경 스토리  [한국어, English, 日本語, 简体中文] */
 addStrings({
-  /* ---------- AERO-X ---------- */
-  'lore.aero.title': ['바람을 접는 화살', 'The Folding Arrow', '風を折りたたむ矢', '折叠风之箭'],
-  'lore.aero.concept': ['항공기 가변익 기술을 그대로 옮겨 온, 약점 없는 올라운더 머신.', 'An all-rounder with no weak spot, built on aircraft variable-wing technology.', '航空機の可変翼技術をそのまま移した、弱点のないオールラウンダー。', '直接移植飞机可变翼技术、毫无短板的全能型赛车。'],
-  'lore.aero.story': [
-    'NOVA ENERGY 팀이 항공 엔지니어들과 함께 만든 첫 번째 레이스 머신입니다. 평소에는 날개를 접은 채 낮고 매끄러운 차체로 공기를 흘려보내며, 어떤 코스에서도 흔들리지 않는 균형을 보여 줍니다. 하지만 AERO MODE가 켜지는 순간 리어윙이 V자 블레이드로 솟구치고 측면 윙이 날개처럼 펼쳐지며, 차체 전체가 하나의 비행체처럼 기류를 움켜쥡니다. 다섯 대 중 부스트 출력이 가장 강해, 노련한 파일럿에게는 마지막 직선에서 판을 뒤집는 비장의 무기가 됩니다.',
-    'The first race machine Team NOVA ENERGY built with aerospace engineers. Most of the time its wings stay folded, letting air slip over a low, smooth body with a balance no circuit can upset. But the moment AERO MODE engages, the rear wing rises into V-shaped blades and the side wings unfold, and the whole car grips the airflow like an aircraft. With the strongest boost of all five machines, it becomes a seasoned pilot\'s trump card for turning the race on the final straight.',
-    'NOVA ENERGY チームが航空エンジニアと共に作り上げた最初のレースマシン。普段は翼をたたみ、低く滑らかなボディで空気を受け流し、どんなコースでも揺るがないバランスを見せます。しかし AERO MODE が起動した瞬間、リアウイングが V 字のブレードとなってそそり立ち、サイドウイングが翼のように広がって、車体全体が一機の飛行体のように気流をつかみます。5台の中で最も強いブースト出力を持ち、熟練パイロットにとっては最後の直線で勝負をひっくり返す切り札です。',
-    'NOVA ENERGY 车队与航空工程师联手打造的第一台赛车。平时它收起机翼，以低矮流畅的车身让气流顺滑掠过，在任何赛道上都保持稳定的平衡。而 AERO MODE 启动的瞬间，尾翼化作 V 形刀翼高高升起，侧翼如羽翼般展开，整台车像飞行器一样紧紧抓住气流。它拥有五台车中最强的加速输出，是老练车手在最后直道上逆转战局的王牌。'],
-  /* ---------- VORTEX ---------- */
-  'lore.vortex.title': ['붉은 반응로', 'The Crimson Reactor', '紅の反応炉', '赤红反应炉'],
-  'lore.vortex.concept': ['카본 모노코크 안에 실험용 플라즈마 리액터를 품은 최고속 하이퍼카.', 'A top-speed hypercar with an experimental plasma reactor inside a carbon monocoque.', 'カーボンモノコックの中に実験用プラズマリアクターを抱いた最高速ハイパーカー。', '碳纤维单体壳内藏实验型等离子反应炉的极速超跑。'],
-  'lore.vortex.story': [
-    '출처를 밝히지 않는 비밀 연구소에서 제작된 칠흑의 머신입니다. 걸윙 도어 아래 잠들어 있던 붉은 리액터는 OVERDRIVE 신호와 함께 깨어나, 차체 표면을 따라 플라즈마 전류를 흘려보내고 자기장 고리를 뒤로 밀어내며 공기 저항을 찢어 버립니다. 코너에서는 다소 무겁고 예민하지만, 긴 직선에 들어서는 순간 서킷의 누구도 따라잡을 수 없는 최고 속도를 뿜어냅니다. 메인 스트레이트의 지배자, 관중이 가장 먼저 이름을 외치는 머신입니다.',
-    'A pitch-black machine built in a secret lab that has never revealed its name. The crimson reactor sleeping beneath its gull-wing doors wakes on the OVERDRIVE signal, sending plasma currents racing across the bodywork and pushing magnetic rings backward to tear through the air. It feels heavy and twitchy in the corners, but the moment it hits a long straight it unleashes a top speed no one on the circuit can match. Ruler of the main straight — the car the crowd shouts for first.',
-    '名を明かさない秘密研究所で生まれた漆黒のマシン。ガルウイングドアの下で眠っていた紅のリアクターは OVERDRIVE の合図で目覚め、ボディ表面にプラズマ電流を走らせ、磁場リングを後方へ押し出しながら空気抵抗を引き裂きます。コーナーではやや重く神経質ですが、長い直線に入った瞬間、誰も追いつけない最高速度を解き放ちます。メインストレートの支配者、観客が真っ先に名前を叫ぶマシンです。',
-    '诞生于一座从不透露名号的秘密研究所的漆黑赛车。沉睡在鸥翼门下的赤红反应炉随 OVERDRIVE 信号苏醒，让等离子电流沿车身奔涌，并将磁场环向后推出，撕裂空气阻力。它在弯道中略显沉重与敏感，但一旦驶入长直道，便会爆发出赛道上无人能及的极速。它是主直道的霸主，也是观众最先高喊名字的赛车。'],
-  /* ---------- SOLAR WING ---------- */
-  'lore.solar.title': ['태양의 질주', 'Sprint of the Sun', '太陽の疾走', '太阳的疾驰'],
-  'lore.solar.concept': ['차세대 고효율 솔라 셀 아머와 집광형 원형 플라즈마 부스터를 탑재한 하이브리드 머신.', 'A hybrid machine armoured in next-gen solar cells, with a light-focusing circular plasma booster.', '次世代の高効率ソーラーセルアーマーと集光型円形プラズマブースターを搭載したハイブリッドマシン。', '搭载新一代高效太阳能电池装甲与聚光式环形等离子加速器的混合动力赛车。'],
-  'lore.solar.story': [
-    '환경 규제와 신에너지 패러다임 전환 속에서 태어난 실험적 머신입니다. 차체 전면과 휠 하우스 위에 촘촘히 박힌 플렉시블 솔라 셀이 서킷 위에서 실시간으로 태양광을 흡수해 고밀도 축전지에 저장합니다. 평소에는 정밀한 다운포스로 코너를 공략하고, 가장 빠른 가속으로 코너를 박차고 나갑니다. 그리고 콕핏 뒤의 원형 부스터가 회전을 시작하는 순간(CIRCULAR BOOST), 모아 둔 태양 에너지를 초고온 플라즈마로 바꿔 폭발적인 스피드를 뿜어냅니다. 부스터 타이머가 줄어드는 몇 초 동안 파일럿의 심박수를 한계까지 끌어올리는, 서킷의 새로운 혁신입니다.',
-    'An experimental machine born from tightening regulations and the shift to new energy. Flexible solar cells packed across the nose and wheel arches soak up sunlight live on the circuit and store it in high-density cells. Normally it attacks corners with precise downforce and explodes out of them with the quickest acceleration of the field. Then, the instant the circular booster behind the cockpit starts to spin (CIRCULAR BOOST), the stored solar energy turns into superheated plasma for a violent burst of speed. For the few seconds the booster timer counts down, it drives the pilot\'s heart rate to the limit — the circuit\'s newest innovation.',
-    '環境規制と新エネルギーへのパラダイム転換の中で生まれた実験的マシン。車体前面とホイールハウス上部にびっしりと埋め込まれたフレキシブルソーラーセルが、サーキット上でリアルタイムに太陽光を吸収し、高密度バッテリーに蓄えます。普段は精密なダウンフォースでコーナーを攻め、最速の加速でコーナーを蹴り出します。そしてコックピット後方の円形ブースターが回転を始めた瞬間 (CIRCULAR BOOST)、蓄えた太陽エネルギーを超高温プラズマに変え、爆発的なスピードを放ちます。ブースタータイマーが減っていく数秒間、パイロットの心拍数を限界まで引き上げる、サーキットの新たな革新です。',
-    '在环保法规与新能源范式转变中诞生的实验型赛车。密布于车头与轮拱上方的柔性太阳能电池在赛道上实时吸收阳光，储存在高密度电池中。平时它凭借精准的下压力攻克弯道，并以全场最快的加速冲出弯角。而当座舱后方的环形加速器开始旋转 (CIRCULAR BOOST) 的瞬间，积蓄的太阳能化作超高温等离子，喷发出爆炸性的速度。在加速计时器倒数的几秒内，车手的心跳被推向极限 —— 这是赛道上最新的革新。'],
-  /* ---------- GLACIER ---------- */
-  'lore.glacier.title': ['얼음 위의 정적', 'Silence on the Ice', '氷上の静寂', '冰上的寂静'],
-  'lore.glacier.concept': ['극지 탐사 기술로 태어난, 어떤 노면도 놓치지 않는 그립 특화 머신.', 'A grip specialist born from polar-expedition tech that never lets go of the road.', '極地探査の技術から生まれた、どんな路面も逃さないグリップ特化マシン。', '源自极地探险技术、牢牢抓住任何路面的抓地专精赛车。'],
-  'lore.glacier.story': [
-    '영하 40도의 빙원 테스트 트랙에서 다듬어진 머신입니다. 차체를 감싼 냉각 코팅과 정밀한 서스펜션이 노면을 끝까지 붙잡아, 비가 쏟아지거나 눈이 쌓인 서킷에서도 라인을 잃지 않습니다. GLIDE MODE가 켜지면 차체 곳곳에서 얼음 결정이 돋아나고 냉각 쿠션 위로 살짝 떠올라, 바닥에 서리 자국만 남긴 채 미끄러지듯 질주합니다. 날씨가 거칠어질수록 더 차갑고 정확해지는, 악천후의 지배자입니다.',
-    'A machine honed on an ice-field test track at minus forty degrees. Its cryo-coated body and precise suspension hold on to the surface to the very end, so it never loses its line even when rain pours or snow piles onto the circuit. When GLIDE MODE engages, ice crystals sprout across the bodywork and the car lifts slightly on a cooling cushion, gliding forward and leaving only frost marks on the asphalt. The rougher the weather, the colder and more precise it becomes — the master of foul conditions.',
-    '零下40度の氷原テストトラックで磨き上げられたマシン。ボディを包む冷却コーティングと精密なサスペンションが路面を最後までつかみ、雨が降り注いでも雪が積もってもラインを失いません。GLIDE MODE が起動すると、車体のあちこちから氷の結晶が生え、冷却クッションの上にわずかに浮き上がり、路面に霜の跡だけを残して滑るように疾走します。天候が荒れるほど冷たく正確になる、悪天候の支配者です。',
-    '在零下 40 度冰原测试赛道上打磨而成的赛车。包裹车身的冷却涂层与精密悬挂将路面牢牢抓住，即使暴雨倾盆、积雪覆盖，也绝不会偏离路线。GLIDE MODE 启动时，车身各处生出冰晶，车体在冷却气垫上微微浮起，只在路面留下霜痕，滑行般疾驰而去。天气越恶劣，它就越冷静精准 —— 恶劣天气的主宰。'],
-  /* ---------- APEX F1 ---------- */
-  'lore.apex.title': ['정점을 찌르는 칼날', 'The Blade at the Apex', '頂点を突く刃', '直刺弯心之刃'],
-  'lore.apex.concept': ['서킷의 이름을 이어받은 오픈휠 클래식, 코너링 하나에 모든 것을 건 순수 레이서.', 'The open-wheel classic that carries the circuit\'s name — a pure racer that bets everything on cornering.', 'サーキットの名を受け継ぐオープンホイールの名機。コーナリングにすべてを懸けた純粋なレーサー。', '传承赛道之名的开轮经典，将一切押在过弯上的纯粹赛车。'],
-  'lore.apex.story': [
-    'APEX INTERNATIONAL 서킷과 함께 태어난 원조 머신입니다. 바퀴가 드러난 오픈휠 구조라 직선에서는 공기 저항을 이겨 내기 버겁지만, 가볍고 낮은 차체와 날카로운 스티어링으로 코너의 정점(Apex)을 가장 깊고 정확하게 찌릅니다. BLADE MODE가 켜지면 사이드포드에서 빛의 블레이드가 뻗고 DRS가 활짝 열리며, 코끝에서 음속 고리가 연달아 터집니다. 기술 구간이 많은 코스일수록 강해지는, 순수한 드라이빙 실력을 증명하는 머신입니다.',
-    'The original machine, born together with the APEX INTERNATIONAL circuit. Its exposed open wheels struggle against the air on the straights, but its light, low body and razor-sharp steering strike the apex of every corner deeper and cleaner than anyone. When BLADE MODE engages, blades of light extend from the sidepods, the DRS flap swings wide open and sonic rings burst one after another from the nose. The more technical the track, the stronger it gets — a machine that proves pure driving skill.',
-    'APEX INTERNATIONAL サーキットと共に生まれた元祖マシン。ホイールがむき出しのオープンホイール構造のため直線では空気抵抗に苦しみますが、軽く低いボディと鋭いステアリングで、コーナーの頂点 (Apex) を誰よりも深く正確に突きます。BLADE MODE が起動すると、サイドポッドから光のブレードが伸び、DRS が大きく開き、ノーズから音速リングが次々と弾けます。テクニカルな区間が多いコースほど強くなる、純粋なドライビングの腕を証明するマシンです。',
-    '与 APEX INTERNATIONAL 赛道一同诞生的元祖赛车。裸露的开轮结构让它在直道上难敌空气阻力，但轻盈低矮的车身与锋利的转向，让它能比任何人都更深、更准地刺入弯心 (Apex)。BLADE MODE 启动时，光刃从侧箱伸出，DRS 大幅张开，音速环从车头接连爆发。赛道的技术路段越多，它就越强 —— 一台证明纯粹驾驶实力的赛车。'],
+  /* ---------- aero ---------- */
+  'lore.aero.title': ["가변익 밸런스형", "Variable-Wing All-Rounder", "可変翼バランス型", "可变翼均衡型"],
+  'lore.aero.concept': ["항공기 가변익 제어를 옮긴 밸런스형. 부스트 출력이 가장 높아요.", "A balanced car using aircraft variable-wing control. Highest boost output.", "航空機の可変翼制御を応用したバランス型。ブースト出力が最も高い。", "移植飞机可变翼控制的均衡型。加速输出最高。"],
+  'lore.aero.story': ["NOVA ENERGY 팀이 항공 엔지니어와 함께 개발한 차량입니다. 평소에는 날개를 접어 공기 저항을 줄이고, AERO MODE 에서는 리어윙과 측면 윙을 펼쳐 다운포스와 추진 효율을 함께 높이는 가변익 제어 시스템을 씁니다. 이 구조 덕분에 부스트 출력이 다섯 대 중 가장 높습니다. 최고 속도와 가속은 기준값에 맞춘 표준형이라 코스를 가리지 않고 고르게 달립니다. 다만 날개 구동부의 무게 때문에 접지력은 평균보다 조금 낮아, 급한 코너에서는 조금 일찍 감속하는 편이 좋습니다.", "Developed by Team NOVA ENERGY together with aerospace engineers. It folds its wings to cut drag in normal running, and in AERO MODE a variable-wing control system deploys the rear and side wings to raise both downforce and propulsion efficiency. That gives it the highest boost output of the five cars. Top speed and acceleration are set to the reference values, so it runs evenly on any circuit. The weight of the wing actuators leaves grip slightly below average, so brake a little earlier for tight corners.", "NOVA ENERGY チームが航空エンジニアと共に開発した車両です。普段は翼をたたんで空気抵抗を減らし、AERO MODE ではリアウイングとサイドウイングを広げてダウンフォースと推進効率を同時に高める可変翼制御システムを使います。この構造により、ブースト出力は5台の中で最も高くなっています。最高速と加速は基準値に合わせた標準型で、コースを選ばず安定して走れます。ただし翼の駆動部の重さでグリップは平均より少し低く、きついコーナーでは少し早めの減速が有効です。", "NOVA ENERGY 车队与航空工程师共同开发的车辆。平时收起机翼以减少风阻，AERO MODE 下则通过可变翼控制系统展开尾翼与侧翼，同时提升下压力与推进效率。因此它的加速输出是五台车中最高的。极速与起步加速以基准值为准，属于标准型，在任何赛道都能稳定发挥。但翼面驱动机构的重量使抓地力略低于平均，急弯前最好稍早减速。"],
+  /* ---------- vortex ---------- */
+  'lore.vortex.title': ["플라즈마 리액터 최고속형", "Plasma-Reactor Top-Speed Car", "プラズマリアクター最高速型", "等离子反应炉极速型"],
+  'lore.vortex.concept': ["실험용 플라즈마 리액터로 공기 저항을 줄인 최고속형. 대신 무거워요.", "A top-speed car that cuts drag with an experimental plasma reactor. Heavy in return.", "実験用プラズマリアクターで空気抵抗を減らした最高速型。その分重い。", "用实验型等离子反应炉降低风阻的极速型。代价是车重较大。"],
+  'lore.vortex.story': ["카본 모노코크 안에 실험용 플라즈마 리액터를 얹은 차량입니다. 리액터가 만든 전류로 차체 표면에 얇은 플라즈마 층을 띄워 공기 흐름을 매끄럽게 하는 플라즈마 액추에이터 기술을 써서, 최고 속도가 다섯 대 중 가장 높습니다. OVERDRIVE 에서는 리액터 출력을 끌어올려 이 효과를 키웁니다. 부스트 출력은 준수한 편입니다. 대신 리액터와 냉각 장치가 무거워 출발 · 코너 탈출 가속이 가장 느리고 접지력도 가장 낮습니다. 긴 직선이 많은 코스에서 장점이 크고, 코너가 많은 코스에서는 라인 관리가 중요합니다.", "An experimental plasma reactor sits inside its carbon monocoque. Using plasma-actuator technology, current from the reactor lays a thin plasma layer over the bodywork to smooth the airflow, giving it the highest top speed of the five cars. OVERDRIVE pushes reactor output up to strengthen the effect. Boost output is solid. In return, the reactor and its cooling make it heavy: acceleration off the line and out of corners is the slowest, and grip is the lowest. It gains the most on circuits with long straights; on twisty ones, keeping a clean line matters.", "カーボンモノコックの中に実験用プラズマリアクターを載せた車両です。リアクターが生む電流でボディ表面に薄いプラズマ層を作り、空気の流れを整えるプラズマアクチュエーター技術を使っているため、最高速は5台の中で最も高くなっています。OVERDRIVE ではリアクター出力を上げてこの効果を強めます。ブースト出力はまずまずです。その代わりリアクターと冷却装置が重く、発進・コーナー脱出の加速は最も遅く、グリップも最も低めです。長い直線の多いコースで強みが大きく、コーナーの多いコースではライン管理が重要です。", "在碳纤维单体壳中搭载实验型等离子反应炉的车辆。它采用等离子激励器技术，利用反应炉产生的电流在车身表面形成一层薄薄的等离子层，使气流更顺畅，因此极速是五台车中最高的。OVERDRIVE 会提升反应炉输出以强化这一效果。加速输出表现不错。代价是反应炉与冷却装置较重，起步与出弯加速最慢，抓地力也最低。在长直道多的赛道优势明显，弯道多的赛道则需要注意走线。"],
+  /* ---------- solar ---------- */
+  'lore.solar.title': ["솔라 하이브리드 가속형", "Solar Hybrid Accelerator", "ソーラーハイブリッド加速型", "太阳能混动加速型"],
+  'lore.solar.concept': ["솔라 셀 축전지와 휠 모터를 쓰는 하이브리드. 가속이 가장 빨라요.", "A hybrid using solar-cell batteries and wheel motors. Quickest acceleration.", "ソーラーセル蓄電池とホイールモーターのハイブリッド。加速が最も速い。", "采用太阳能电池储能与轮毂电机的混动车。加速最快。"],
+  'lore.solar.story': ["차체 전면과 휠 하우스의 플렉시블 솔라 셀이 모은 전력을 고출력 축전지에 저장했다가 휠 모터로 바로 보내는 하이브리드 구동 차량입니다. 전기 모터는 저속에서 토크가 즉시 나오기 때문에 출발과 코너 탈출 가속이 다섯 대 중 가장 빠릅니다. 접지력은 표준이고, 최고 속도는 평균보다 조금 낮습니다. 축전 용량을 가속에 먼저 배분하는 설계라 CIRCULAR BOOST 의 부스트 출력은 다섯 대 중 가장 낮습니다. 감속과 재가속이 잦은 코스에서 유리합니다.", "Flexible solar cells across the nose and wheel arches charge a high-output battery, which feeds wheel motors directly in this hybrid drivetrain. Electric motors deliver torque instantly at low speed, so its acceleration off the line and out of corners is the quickest of the five cars. Grip is standard and top speed is slightly below average. Because battery capacity goes to acceleration first, the boost output of its CIRCULAR BOOST is the lowest of the five. It does best on circuits with lots of braking and re-accelerating.", "車体前面とホイールハウスのフレキシブルソーラーセルが集めた電力を高出力蓄電池に貯め、ホイールモーターへ直接送るハイブリッド駆動の車両です。電気モーターは低速から即座にトルクが出るため、発進とコーナー脱出の加速は5台の中で最も速くなっています。グリップは標準、最高速は平均より少し低めです。蓄電容量を加速に優先配分する設計のため、CIRCULAR BOOST のブースト出力は5台の中で最も低めです。減速と再加速の多いコースで有利です。", "车头与轮拱上的柔性太阳能电池将收集的电力储存在高输出电池中，再直接供给轮毂电机，属于混合动力驱动。电机在低速时即可输出扭矩，因此起步与出弯加速是五台车中最快的。抓地力为标准水平，极速略低于平均。由于电池容量优先分配给加速，CIRCULAR BOOST 的加速输出是五台车中最低的。在频繁减速与再加速的赛道上更有优势。"],
+  /* ---------- glacier ---------- */
+  'lore.glacier.title': ["극지 서스펜션 그립형", "Polar-Suspension Grip Car", "極地サスペンショングリップ型", "极地悬挂抓地型"],
+  'lore.glacier.concept': ["극지 탐사차의 능동 서스펜션과 저온 타이어를 쓴 그립형. 접지력이 가장 높아요.", "A grip car with polar-rover active suspension and cold-weather tyres. Highest grip.", "極地探査車のアクティブサスと低温タイヤを使ったグリップ型。グリップが最も高い。", "采用极地探测车主动悬挂与低温轮胎的抓地型。抓地力最高。"],
+  'lore.glacier.story': ["영하 40도 빙원에서 시험한 극지 탐사차의 기술을 옮긴 차량입니다. 능동 서스펜션이 노면 변화에 맞춰 네 바퀴의 하중을 계속 다시 나누고, 낮은 온도에서도 굳지 않는 저온 컴파운드 타이어를 써서 접지력이 다섯 대 중 가장 높습니다. 그래서 비나 눈처럼 미끄러운 조건에서도 라인을 지키기 쉽습니다. 가속과 최고 속도는 평균보다 조금 낮고, 부스트 출력은 평균 수준입니다. GLIDE MODE 에서는 냉각 쿠션으로 차체를 살짝 띄워 마찰을 줄입니다.", "It carries over technology from polar exploration vehicles tested on ice fields at minus forty degrees. Active suspension keeps redistributing load across all four wheels as the surface changes, and cold-compound tyres stay soft at low temperatures, giving it the highest grip of the five cars. That makes it easier to hold a line in slippery conditions such as rain or snow. Acceleration and top speed are slightly below average, and boost output is average. In GLIDE MODE a cooling cushion lifts the body slightly to reduce friction.", "零下40度の氷原で試験された極地探査車の技術を移した車両です。アクティブサスペンションが路面の変化に合わせて四輪の荷重を絶えず配分し直し、低温でも硬くならない低温コンパウンドタイヤを使うため、グリップは5台の中で最も高くなっています。そのため雨や雪のような滑りやすい条件でもラインを保ちやすくなります。加速と最高速は平均より少し低く、ブースト出力は平均的です。GLIDE MODE では冷却クッションで車体をわずかに浮かせ、摩擦を減らします。", "移植了在零下40度冰原上测试过的极地探测车技术。主动悬挂会随路面变化不断重新分配四轮负荷，再配合低温下也不会变硬的低温配方轮胎，使抓地力成为五台车中最高。因此在雨天或雪地等湿滑条件下也更容易保持走线。起步加速与极速略低于平均，加速输出为平均水平。GLIDE MODE 会用冷却气垫将车身微微托起，以减少摩擦。"],
+  /* ---------- apex ---------- */
+  'lore.apex.title': ["경량 오픈휠 코너링형", "Lightweight Open-Wheel Cornering Car", "軽量オープンホイールのコーナリング型", "轻量开轮过弯型"],
+  'lore.apex.concept': ["가볍고 무게중심이 낮은 오픈휠. 접지력 · 가속이 좋고 최고 속도는 낮아요.", "A light, low open-wheeler. Good grip and acceleration, lower top speed.", "軽く重心の低いオープンホイール。グリップと加速が良く、最高速は低め。", "轻量低重心的开轮车。抓地与加速好，极速较低。"],
+  'lore.apex.story': ["APEX INTERNATIONAL 서킷과 함께 개발된 오픈휠 차량입니다. 카본 섀시를 꼭 필요한 부분만 남겨 가볍게 만들고 무게중심을 낮춰, 접지력과 가속이 상위권입니다. 반면 바퀴가 밖으로 드러난 구조라 공기 저항이 커서 최고 속도는 다섯 대 중 가장 낮고, 부스트 출력도 평균보다 조금 낮습니다. BLADE MODE 에서는 DRS 플랩을 크게 열어 직선의 공기 저항을 줄입니다. 코너가 이어지는 기술 구간에서 강점이 있습니다.", "An open-wheel car developed alongside the APEX INTERNATIONAL circuit. Its carbon chassis is trimmed to the essentials to keep it light with a low centre of gravity, putting its grip and acceleration near the top. On the other hand, exposed wheels mean more drag, so its top speed is the lowest of the five and its boost output is slightly below average. BLADE MODE opens the DRS flap wide to cut drag on the straights. It is strongest in technical sections with linked corners.", "APEX INTERNATIONAL サーキットと共に開発されたオープンホイール車両です。カーボンシャシーを必要な部分だけに絞って軽くし、重心を下げているため、グリップと加速は上位です。一方でホイールがむき出しの構造で空気抵抗が大きく、最高速は5台の中で最も低く、ブースト出力も平均より少し低めです。BLADE MODE では DRS フラップを大きく開いて直線の空気抵抗を減らします。コーナーが続くテクニカル区間に強みがあります。", "与 APEX INTERNATIONAL 赛道同步开发的开轮车辆。碳纤维底盘只保留必要部分，车身轻、重心低，抓地力与加速位居前列。另一方面，车轮外露导致风阻较大，极速是五台车中最低的，加速输出也略低于平均。BLADE MODE 会大幅打开 DRS 襟翼，降低直道风阻。在弯道连续的技术路段更有优势。"],
   'lore.concept': ['콘셉트', 'CONCEPT', 'コンセプト', '概念'],
   'lore.story': ['배경 스토리', 'BACKGROUND', 'ストーリー', '背景故事'],
   'lore.read': ['📖 스토리', '📖 Story', '📖 ストーリー', '📖 故事'],
@@ -1040,10 +1020,10 @@ const I18N_SRC = {
 "ボルテックス",
 "涡旋"
 ],
-"최고속형 · 직선의 괴물": [
-"Top-speed type · a monster on straights",
-"最高速型 · 直線の怪物",
-"极速型 · 直道怪兽"
+"최고속형 · 직선이 빠름": [
+"Top-speed type · fast on straights",
+"最高速型 · 直線が速い",
+"极速型 · 直道快"
 ],
 "걸윙 도어가 열리고 차체를 따라 플라즈마 전류가 흘러요": [
 "Gull-wing doors open and plasma runs along the body",
@@ -2542,7 +2522,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '8.1.1';
+const GAME_VERSION = '8.1.2';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -7540,7 +7520,7 @@ const CAR_DESIGNS = {
     boostName: 'AERO MODE', boostDesc: '리어윙이 V자 블레이드로 솟고 측면 윙이 펼쳐져요',
   },
   vortex: {
-    name: 'VORTEX', ko: '볼텍스', tagline: '최고속형 · 직선의 괴물', uiColor: '#ff1e3c',
+    name: 'VORTEX', ko: '볼텍스', tagline: '최고속형 · 직선이 빠름', uiColor: '#ff1e3c',
     livery: { primary: '#1b1d22', secondary: '#2e3139', accent: '#ff1e3c', glow: '#ff2a44', led: '#ff2a44', number: '66' },
     stats: { top: 1.016, accel: 0.99, grip: 0.983, boost: 1.006 },
     boostName: 'OVERDRIVE', boostDesc: '걸윙 도어가 열리고 차체를 따라 플라즈마 전류가 흘러요',
