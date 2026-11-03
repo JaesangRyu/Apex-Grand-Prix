@@ -415,7 +415,7 @@ addStrings({
   'lobby.rule': ['둘 다 READY면 출발 · 날씨·시간대는 랜덤 · 상대가 들어오고 5초 안에 못 들어오면 리타이어', 'Starts when both are READY · random weather/time · finish within 5s of your opponent or retire', '両者 READY でスタート · 天候と時間帯はランダム · 相手のゴール後5秒以内に届かないとリタイア', '双方 READY 即出发 · 天气与时段随机 · 对手完赛后5秒内未完赛则退赛'],
 });
 addStrings({
-  'touch.steer': ['누른 채 좌우로 밀어 조향', 'Hold & slide to steer', '押したまま左右にスライドで操作', '按住左右滑动转向'],
+  'touch.steer': ["좌우로 밀어 조향", "Slide to steer", "左右にスライドで操作", "左右滑动转向"],
   'touch.driftSub': ['드리프트', 'drift', 'ドリフト', '漂移'],   // 7.8.6: 기능 그대로 짧게
   'touch.brakeSub': ['감속', 'slow', '減速', '减速'],
   'touch.gasSub': ['가속', 'gas', 'アクセル', '加速'],
@@ -432,7 +432,7 @@ addStrings({
   'intro.tapPc': ['클릭하거나 ENTER를 눌러 시작', 'CLICK OR PRESS ENTER', 'クリックまたは ENTER でスタート', '点击或按 ENTER 开始'],
   'ui.close': ['닫기', 'Close', '閉じる', '关闭'],
   'tut.welcome': ['어서 오세요!', 'Welcome!', 'ようこそ!', '欢迎!'],
-  'tut.ask': ['처음 오셨네요. 튜토리얼을 볼까요? (1분)', 'Looks like your first time. Want a quick tutorial? (1 min)', '初めてのようですね。チュートリアルを見ますか? (1分)', '看起来你是第一次来。要看一下教程吗? (1分钟)'],
+  'tut.ask': ["처음 오셨네요. 튜토리얼을 볼까요? (30초)", "First time here? Quick tutorial? (30s)", "初めてですか? チュートリアルを見ますか? (30秒)", "第一次来吗? 看看教程? (30秒)"],
   'tut.yes': ['튜토리얼 보기', 'Show tutorial', 'チュートリアルを見る', '查看教程'],
   'tut.no': ['바로 시작', 'Skip', 'すぐに始める', '直接开始'],
   'tut.later': ['나중에 메뉴 → 조작법 에서 다시 볼 수 있어요', 'You can open it later from Menu → Controls', '後でメニュー → 操作方法 から見られます', '之后可在 菜单 → 操作说明 中查看'],
@@ -443,22 +443,22 @@ addStrings({
   'tut.done': ['시작하기!', "Let's race!", 'レース開始!', '开始比赛!'],
   'key.gas': ['가속', 'Gas', 'アクセル', '加速'], 'key.brake': ['브레이크', 'Brake', 'ブレーキ', '刹车'], 'key.left': ['왼쪽', 'Left', '左', '左'], 'key.right': ['오른쪽', 'Right', '右', '右'],
   'key.drift': ['드리프트', 'Drift', 'ドリフト', '漂移'], 'key.boost': ['부스트', 'Boost', 'ブースト', '加速'],
-  'tut.goal.title': ['목표: 3랩 레이스에서 1위', 'Goal: win the 3-lap race', '目標: 3周レースで1位', '目标: 3圈比赛中夺冠'],
-  'tut.goal.points': ['AI 7대와 함께 출발해요. 신호등 5개가 모두 꺼지면 출발!|1위로 들어오면 <b>명예의 전당</b>에 이름과 리플레이가 남아요', 'You start with 7 AI rivals. Go when all 5 lights go out!|Win and your name and replay go into the <b>Hall of Fame</b>', 'AI 7台と一緒にスタート。5つのライトが全部消えたら発進!|1位になると<b>殿堂</b>に名前とリプレイが残ります', '与 7 辆 AI 赛车同场。5 盏灯全部熄灭即出发!|获得第一名，名字和回放会进入<b>名人堂</b>'],
-  'tut.drivePc.title': ['키보드 조작', 'Keyboard controls', 'キーボード操作', '键盘操作'],
-  'tut.drivePc.points': ['<b>{up}</b> 가속 · <b>{down}</b> 브레이크 · <b>{left} {right}</b> 조향|<b>{drift}</b> 드리프트 · <b>{boost}</b> 부스트 · P 일시정지 · O 설정', '<b>{up}</b> gas · <b>{down}</b> brake · <b>{left} {right}</b> steer|<b>{drift}</b> drift · <b>{boost}</b> boost · P pause · O settings', '<b>{up}</b> アクセル · <b>{down}</b> ブレーキ · <b>{left} {right}</b> ステア|<b>{drift}</b> ドリフト · <b>{boost}</b> ブースト · P 一時停止 · O 設定', '<b>{up}</b> 加速 · <b>{down}</b> 刹车 · <b>{left} {right}</b> 转向|<b>{drift}</b> 漂移 · <b>{boost}</b> 加速 · P 暂停 · O 设置'],
-  'tut.steerTouch.title': ['조향: 왼쪽 화면을 누르고 밀기', 'Steering: hold & slide on the left', 'ステア: 左側を押してスライド', '转向: 按住左侧滑动'],
-  'tut.steerTouch.points': ['화면 왼쪽 아무 곳이나 누른 채 <b>좌우로 밀면</b> 그만큼 꺾여요|처음 누른 자리가 가운데예요. 손가락을 떼면 똑바로 가요|가속은 자동이에요 (설정에서 끌 수 있어요)', 'Hold anywhere on the left half and <b>slide left/right</b> to steer|Where you first touch is the centre. Lift to go straight|Gas is automatic (you can turn it off in Settings)', '画面の左側どこでも押したまま<b>左右にスライド</b>すると曲がります|最初に触れた位置が中央。指を離すと直進|アクセルは自動 (設定でオフにできます)', '按住屏幕左半边任意位置并<b>左右滑动</b>即可转向|第一次按下的位置为中心，松开手指即直行|自动加速 (可在设置中关闭)'],
-  'tut.buttonsTouch.title': ['오른쪽 버튼', 'Right-hand buttons', '右側のボタン', '右侧按钮'],
-  'tut.buttonsTouch.points': ['<b>DRIFT</b> (가장 큰 버튼): 누르는 동안 드리프트|<b>BRAKE</b>: 급한 코너 앞에서 살짝 눌러 속도를 줄여요|<b>⚡ BOOST</b>: 부스트 켜기 · 임계점 부스트 (점 = 남은 부스트 개수)', '<b>DRIFT</b> (largest): drift while held|<b>BRAKE</b>: tap before tight corners to slow down|<b>⚡ BOOST</b>: boost and LIMIT BREAK (dots = boosts stored)', '<b>DRIFT</b> (一番大きい): 押している間ドリフト|<b>BRAKE</b>: きついコーナーの手前で軽く押して減速|<b>⚡ BOOST</b>: ブースト・限界突破 (点 = 残りの数)', '<b>DRIFT</b> (最大按钮): 按住即漂移|<b>BRAKE</b>: 急弯前轻按减速|<b>⚡ BOOST</b>: 加速与临界点加速 (圆点 = 剩余次数)'],
-  'tut.drift.title': ['드리프트 요령', 'How to drift', 'ドリフトのコツ', '漂移技巧'],
-  'tut.drift.points': ['코너에 들어가면서 <b>조향 + 드리프트</b>를 같이 눌러요|드리프트를 <b>0.5초 이상</b> 유지하고 놓으면 <b>미니 터보</b> (계기판 DRIFT 시간이 주황 → 파랑)|<b>코너에서</b> 드리프트할수록 부스트 게이지가 빨리 차요. 직선 드리프트는 거의 안 차요', 'Hold <b>steer + drift</b> as you enter a corner|Hold the drift for <b>0.5s+</b> and release for a <b>mini turbo</b> (DRIFT timer turns orange → blue)|Drifting <b>through corners</b> fills the boost gauge fast. Drifting on straights barely fills it', 'コーナー進入で<b>ステア + ドリフト</b>を同時に|<b>0.5秒以上</b>続けて離すと<b>ミニターボ</b> (DRIFT 表示が橙 → 青)|<b>コーナーで</b>ドリフトするほどブーストゲージが早くたまります。直線ではほぼたまりません', '入弯时同时按住<b>转向 + 漂移</b>|保持<b>0.5秒以上</b>后松开可获得<b>小涡轮</b> (DRIFT 计时由橙变蓝)|在<b>弯道</b>中漂移能快速充满加速槽，直道漂移几乎不充能'],
-  'tut.boost.title': ['부스트 모으기 · 쓰기', 'Charging & using boost', 'ブーストをためて使う', '积攒与使用加速'],
-  'tut.boost.points': ['계기판 아래 <b>노란 게이지</b>가 차면 ⚡ 1개 (최대 2개)|앞차 바로 뒤에 붙어 달려도(슬립스트림) 조금씩 차요|<b>{boost}</b>를 누르면 3.4초 부스트. 계기판이 붉게 바뀌고 <b>BOOSTER</b> 원형 게이지가 줄어들어요', 'Fill the <b>yellow gauge</b> under the dashboard to earn ⚡ (max 2)|Following right behind a car (slipstream) also fills it a little|Press <b>{boost}</b> for a 3.4s boost. The dash turns red and the <b>BOOSTER</b> ring counts down', 'ダッシュボード下の<b>黄色いゲージ</b>が満タンで ⚡ 1つ (最大2)|前の車の真後ろ (スリップストリーム) でも少したまります|<b>{boost}</b> で3.4秒ブースト。メーターが赤くなり<b>BOOSTER</b>リングが減っていきます', '仪表盘下方<b>黄色槽</b>充满可获得 ⚡ (最多 2 个)|紧跟前车 (尾流) 也会慢慢充能|按 <b>{boost}</b> 发动 3.4 秒加速，仪表变红，<b>BOOSTER</b> 圆环开始倒计时'],
-  'tut.spurt.title': ['엔진 임계점 부스트 (타이밍!)', 'LIMIT BREAK boost (timing!)', '限界突破ブースト (タイミング!)', '临界点加速 (把握时机!)'],
-  'tut.spurt.points': ['링 끝의 <b>노란 LIMIT 구간</b>(마지막 1.2초)에 들어가면 링이 깜빡여요|그때 <b>{boost}</b>를 한 번 더 → <b>3초 임계점 부스트</b>, 훨씬 빨라져요|너무 <b>일찍</b> 누르면 남은 부스트가 사라져요. 안 누르면 그냥 끝나요', 'When the ring reaches the <b>yellow LIMIT zone</b> (last 1.2s) it flashes|Press <b>{boost}</b> again then → <b>3s LIMIT BREAK</b>, much faster|Press too <b>early</b> and the rest of the boost is lost. Do nothing and it just ends', 'リング終端の<b>黄色い LIMIT 区間</b> (残り1.2秒) で点滅します|その時もう一度 <b>{boost}</b> → <b>3秒限界突破</b>で一気に加速|<b>早すぎる</b>と残りのブーストが消えます。押さなければそのまま終了', '圆环进入末端<b>黄色 LIMIT 区</b> (最后 1.2 秒) 时会闪烁|此时再按一次 <b>{boost}</b> → <b>3 秒临界点加速</b>，速度大增|按<b>太早</b>会失去剩余加速；不按则正常结束'],
-  'tut.hud.title': ['레이스 화면 보기', 'Reading the race screen', 'レース画面の見方', '比赛画面说明'],
-  'tut.hud.points': ['왼쪽 위: <b>랩</b> · <b>순위</b> · 순위표|오른쪽 위: 미니맵 (초록 = DRS 구간) · <b>⚙</b> 설정·일시정지|흰색·하늘색 연석 = 부스트 추천 구간 (긴 직선)', 'Top left: <b>lap</b> · <b>position</b> · standings|Top right: minimap (green = DRS zones) · <b>⚙</b> settings & pause|White/sky-blue kerbs = recommended boost zones (long straights)', '左上: <b>周回</b> · <b>順位</b> · 順位表|右上: ミニマップ (緑 = DRS 区間) · <b>⚙</b> 設定・一時停止|白と水色の縁石 = ブースト推奨区間 (長い直線)', '左上: <b>圈数</b> · <b>名次</b> · 排名|右上: 小地图 (绿色 = DRS 区) · <b>⚙</b> 设置与暂停|白蓝路肩 = 推荐加速区 (长直道)'],
+  'tut.goal.title': ["목표: 3랩 레이스 1위", "Goal: win the 3-lap race", "目標: 3周レースで1位", "目标: 3圈比赛夺冠"],
+  'tut.goal.points': ["신호등이 모두 꺼지면 출발!|1위 = <b>명예의 전당</b>에 이름 · 리플레이", "Go when all lights go out!|Win = your name & replay in the <b>Hall of Fame</b>", "ライトが全部消えたら発進!|1位 = <b>殿堂</b>に名前とリプレイ", "灯全部熄灭即出发!|第一名 = 名字和回放进入<b>名人堂</b>"],
+  'tut.drivePc.title': ["키보드 조작", "Keyboard", "キーボード操作", "键盘操作"],
+  'tut.drivePc.points': ["<b>{up}</b> 가속 · <b>{down}</b> 브레이크 · <b>{left} {right}</b> 조향|<b>{drift}</b> 드리프트 · <b>{boost}</b> 부스트", "<b>{up}</b> gas · <b>{down}</b> brake · <b>{left} {right}</b> steer|<b>{drift}</b> drift · <b>{boost}</b> boost", "<b>{up}</b> アクセル · <b>{down}</b> ブレーキ · <b>{left} {right}</b> ステア|<b>{drift}</b> ドリフト · <b>{boost}</b> ブースト", "<b>{up}</b> 加速 · <b>{down}</b> 刹车 · <b>{left} {right}</b> 转向|<b>{drift}</b> 漂移 · <b>{boost}</b> 加速"],
+  'tut.steerTouch.title': ["조향: 왼쪽에서 좌우로 밀기", "Steer: slide on the left", "ステア: 左側でスライド", "转向: 在左侧滑动"],
+  'tut.steerTouch.points': ["왼쪽 화면을 누른 채 <b>좌우로 밀기</b>|손을 떼면 직진 · 가속은 자동", "Hold the left side and <b>slide</b>|Lift to go straight · gas is automatic", "左側を押したまま<b>左右にスライド</b>|指を離すと直進 · アクセルは自動", "按住左侧<b>左右滑动</b>|松开即直行 · 自动加速"],
+  'tut.buttonsTouch.title': ["오른쪽 버튼", "Buttons", "右側のボタン", "右侧按钮"],
+  'tut.buttonsTouch.points': ["<b>DRIFT</b> 드리프트 · <b>BRAKE</b> 감속 · <b>⚡</b> 부스트", "<b>DRIFT</b> drift · <b>BRAKE</b> slow · <b>⚡</b> boost", "<b>DRIFT</b> ドリフト · <b>BRAKE</b> 減速 · <b>⚡</b> ブースト", "<b>DRIFT</b> 漂移 · <b>BRAKE</b> 减速 · <b>⚡</b> 加速"],
+  'tut.drift.title': ["드리프트", "Drift", "ドリフト", "漂移"],
+  'tut.drift.points': ["코너에서 <b>조향 + 드리프트</b>|0.5초 넘게 하고 놓으면 <b>미니 터보</b>|코너 드리프트 = 부스트 게이지 충전", "<b>Steer + drift</b> in corners|Hold 0.5s+ and release = <b>mini turbo</b>|Corner drifts fill the boost gauge", "コーナーで<b>ステア + ドリフト</b>|0.5秒以上で離すと<b>ミニターボ</b>|コーナードリフト = ブーストがたまる", "弯道中<b>转向 + 漂移</b>|保持0.5秒以上松开 = <b>小涡轮</b>|弯道漂移 = 积攒加速槽"],
+  'tut.boost.title': ["부스트", "Boost", "ブースト", "加速"],
+  'tut.boost.points': ["노란 게이지가 차면 ⚡ 1개 (최대 2)|<b>{boost}</b> = 부스트", "Full yellow gauge = ⚡ (max 2)|<b>{boost}</b> = boost", "黄色ゲージ満タン = ⚡ (最大2)|<b>{boost}</b> = ブースト", "黄色槽满 = ⚡ (最多2)|<b>{boost}</b> = 加速"],
+  'tut.spurt.title': ["임계점 부스트", "LIMIT BREAK", "限界突破", "临界点加速"],
+  'tut.spurt.points': ["링이 <b>노란 LIMIT</b>에서 깜빡일 때 <b>{boost}</b> 한 번 더|너무 일찍 누르면 부스트가 사라져요|슬립스트림 · DRS 를 겹치면 최고 <b>700 km/h</b>", "Press <b>{boost}</b> again when the ring flashes in <b>yellow LIMIT</b>|Too early = boost lost|Add slipstream & DRS for up to <b>700 km/h</b>", "リングが<b>黄色い LIMIT</b>で点滅したらもう一度 <b>{boost}</b>|早すぎるとブースト消失|スリップストリーム · DRS で最高 <b>700 km/h</b>", "圆环在<b>黄色 LIMIT</b>闪烁时再按 <b>{boost}</b>|太早 = 加速消失|叠加尾流 · DRS 最高 <b>700 km/h</b>"],
+  'tut.hud.title': ["레이스 화면", "Race screen", "レース画面", "比赛画面"],
+  'tut.hud.points': ["왼쪽 위: 랩 · 순위|오른쪽 위: 미니맵 (초록 = DRS) · <b>⚙</b> 설정|흰 · 하늘색 연석 = 부스트 추천 구간", "Top left: lap · position|Top right: minimap (green = DRS) · <b>⚙</b> settings|White & sky-blue kerbs = boost zones", "左上: 周回 · 順位|右上: ミニマップ (緑 = DRS) · <b>⚙</b> 設定|白 · 水色の縁石 = ブースト推奨", "左上: 圈数 · 名次|右上: 小地图 (绿 = DRS) · <b>⚙</b> 设置|白蓝路肩 = 推荐加速区"],
 });
 addStrings({
   'ui.ok': ['확인', 'OK', 'OK', '确定'],
@@ -2542,7 +2542,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '7.9.2';
+const GAME_VERSION = '8.1.1';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -3948,10 +3948,11 @@ const MAX_BOOST_STOCK = 2;
    그보다 일찍 누르면 남은 부스트가 사라져요(타이밍 실수 = 손해). 안 누르면 그냥 끝나요. */
 const SPRINT_WINDOW = 1.2;
 const SPRINT_DURATION = 3.0;
-const SPRINT_SPEED_MULT = 2.14;   // 7.0: 1.65 → 2.14 — 엔진 임계점 부스트 최고 630 km/h (720 + 290 × 2.14 = 1341 × 0.47)
+const SPRINT_SPEED_MULT = 2.33;   // 8.0: 2.14 → 2.33 — 임계점 부스트만 쓰면 차에 따라 약 650~665 km/h, 슬립스트림 · DRS · 미니터보까지 잘 겹치면 700 km/h
 const SPRINT_ACCEL_MULT = 1.7;    // 부스트 가속 배율
 const SPEED_TO_KMH = 0.47;
-const SPRINT_MAX_KMH = 630;   // 7.0: 엔진 임계점 부스트 최고 속도 (계기판 km/h)
+const SPRINT_MAX_KMH = 700;   // 8.0: 630 → 700 — 엔진 임계점 부스트 최고 속도 (계기판 km/h) · 카메라도 이 속도에서 가장 멀어져요
+const CAMERA_MAX_SPEED = SPRINT_MAX_KMH / SPEED_TO_KMH;   // 8.0: 카메라 거리 · 화각이 속도에 비례해 늘어나는 기준 (700 km/h)
 const maxSteerAngle = (speed) => 0.5 / (1 + Math.abs(speed) / 330);
 
 const allCars = [];       // 8대 (플레이어 + AI 7)
@@ -4020,13 +4021,16 @@ function resetRaceField(raceType, duelGridPosition = 0) {
 /* ---------- 사용자 설정 (localStorage) ---------- */
 const SETTINGS_KEY = 'apexgp_settings_v2';
 const VOLUME_STEPS = [1, 0.6, 0.3, 0];
-const STEER_SENSITIVITY = { low: 1.35, normal: 1, high: 0.72 };   // 터치 조향: 손가락 이동 거리 배율
+const STEER_SENSITIVITY = { low: 1.35, normal: 1, high: 0.72 };   // (8.1 이전) 터치 조향: 손가락 이동 거리 배율
+/** 8.1: 조향 민감도 0~100 → 꽉 꺾는 데 필요한 손가락 이동 거리 배율 (0 = 1.8배 · 50 = 1 · 100 = 0.55배). 예전 낮음/보통/높음 = 25/50/75 */
+const steerTravelMult = () => Math.pow(2, (50 - clamp(Number.isFinite(+settings.steerSens) ? +settings.steerSens : 50, 0, 100)) / 50 * 0.85);
 
 const settings = {
   keyLayout: 'wasd',        // 'wasd' = 왼손 WASD 주행 + 오른손 J·K / 'arrows' = 오른손 방향키 주행 + 왼손 F·D
   touchHand: 'right',       // 'right' = 오른손 액션(왼손 조향) / 'left' = 왼손 액션(오른손 조향)
   autoGas: true,            // 모바일 자동 가속
   steerSensitivity: 'normal',
+  steerSens: 50,
   keyboardSteerMode: 'car', // 'car' = 차 기준 좌우 / 'screen' = 화면 방향
   volumeIndex: 0,           // (예전 방식 · 호환용)
   masterVolume: 0.7,        // 5.2: 전체 볼륨 0~1 · 7.4: 처음 기본값 70%
@@ -4059,6 +4063,7 @@ function loadSettings() {
     if (!saved.vol74) { if (saved.masterVolume == null || +saved.masterVolume === 1) settings.masterVolume = 0.7; settings.vol74 = true; }   // 7.4: 기본 볼륨 70% (예전 기본값 100% 그대로인 경우만 한 번)
     if ((saved.audioDefaults || 0) < 2) Object.assign(settings, { musicVolume: 1, sfxVolume: 0.35, engineVolume: 0.2, audioDefaults: 2 });   // 5.3 새 기본값 적용
     if (!saved.steerModeReset681) { Object.assign(settings, { keyboardSteerMode: 'car', steerModeReset681: true }); setTimeout(() => { try { saveSettings(); } catch (e) { /* 무시 */ } }, 0); }   // 6.8.1: C 키로 실수로 바뀐 '화면 방향(자동 조향)'을 한 번 '차 기준'으로 되돌려요
+    if (saved.steerSens == null) settings.steerSens = { low: 25, normal: 50, high: 75 }[saved.steerSensitivity] ?? 50;   // 8.1: 예전 3단계 → 0~100
     isFirstVisit = !localStorage.getItem(SETTINGS_KEY);   // 6.0: 설정이 한 번도 저장된 적 없으면 처음 온 사람
   } catch (e) { /* 손상된 설정은 무시 */ }
   currentLang = I18N[settings.lang] ? settings.lang : detectLanguage();
@@ -4185,6 +4190,7 @@ const anyKeyDown = (codes) => codes.some((code) => keysDown.has(code));
 /* ---------- 모바일 터치 ---------- */
 const touchSteer = { pointerId: null, anchorX: 0, anchorY: 0, fingerX: 0, fingerY: 0, value: 0 };
 const touchActionPointers = new Map();   // pointerId → 버튼 id
+const touchPointerPos = new Map();   // 8.0.1: pointerId → 마지막 손가락 위치 (손을 뗐는데 pointerup 이 안 온 경우 정리용)
 
 const touchButtonScale = () => clamp(Math.min(screenW, screenH) / 400, 0.75, 1.35);
 
@@ -4222,11 +4228,13 @@ function computeTouchLayout() {
     { id: 'boost', x: X(boost.x), y: boost.y, radius: Rs, label: '⚡', sub: 'BOOST', color: '#FF6B3D' },
   ];
   if (!settings.autoGas) { const g = pick(Rb, [{ x: drift.x, y: drift.y - Rd - Rb - 12 }, { x: drift.x - Rd * 0.3, y: drift.y - Rd * 1.9 }]); buttons.push({ id: 'gas', x: X(g.x), y: g.y, radius: Rb, label: 'GAS', sub: tr('touch.gasSub'), color: '#2bff88' }); }
-  const steerZone = mirror ? { left: screenW * 0.5, right: screenW } : { left: 0, right: screenW * 0.5 };
+  // 8.1: 조향 영역을 화면 절반 → 버튼 묶음 바로 앞까지 (최대 화면 70%). 버튼 위는 버튼이 먼저예요
+  const nearest = Math.min(...buttons.map((b) => (mirror ? screenW - b.x : b.x) - b.radius * 1.3)) - 14, reach = clamp(nearest, screenW * 0.5, screenW * 0.7);
+  const steerZone = mirror ? { left: screenW - reach, right: screenW } : { left: 0, right: reach };
   // 조향 안내 패드: 계기판 왼쪽 빈자리 (반전이면 오른쪽)
   const hw = clamp(D.x0 - 2 * m - safeInsets.left, 120, 260), hh = clamp(screenH * 0.11, 38, 58);
   const hx = mirror ? screenW - m - hw / 2 : m + safeInsets.left + hw / 2, hy = bottom - hh / 2 - 6;
-  return { buttons, steerZone, steerTravel: 62 * B * STEER_SENSITIVITY[settings.steerSensitivity || 'normal'], steerHint: { x: hx, y: hy, w: hw, h: hh } };
+  return { buttons, steerZone, steerTravel: 62 * B * steerTravelMult(), steerHint: { x: hx, y: hy, w: hw, h: hh } };
 }
 function touchButtonAt(x, y) {
   let best = null, bestDist = 1e9;
@@ -4250,12 +4258,24 @@ function updateTouchSteer(x, y) {
 }
 function releaseAllTouches() {
   touchSteer.pointerId = null; touchSteer.value = 0;
-  touchActionPointers.clear();
+  touchActionPointers.clear(); touchPointerPos.clear();
+}
+/** 8.0.1: 브라우저가 손 뗌(pointerup)을 빠뜨려도 버튼이 눌린 채 남지 않게, 실제 화면에 닿아 있는 손가락 목록(touches)과 맞춰요.
+    남아 있는 손가락 근처에 없는 버튼 · 조향 손가락은 뗀 것으로 봐요. */
+function syncTouchPointers(touches, eventTime) {
+  // 8.1.1: 방금(이 손 뗌 신호보다 늦게) 누른 손가락은 건드리지 않아요 — 조향 손을 떼는 순간 드리프트를 누르면 드리프트가 바로 풀리던 문제
+  const fresh = (pos) => pos.t >= eventTime - 30;
+  if (!touches || touches.length === 0) { for (const [id, pos] of [...touchPointerPos]) if (!fresh(pos)) onTouchPointerUp(id); if (!touchPointerPos.size) releaseAllTouches(); return; }
+  const live = []; for (let i = 0; i < touches.length; i++) live.push({ x: touches[i].clientX - canvasLeft, y: touches[i].clientY - canvasTop });
+  for (const [id, pos] of [...touchPointerPos]) {
+    if (fresh(pos) || live.some((t) => Math.hypot(t.x - pos.x, t.y - pos.y) < 90)) continue;
+    onTouchPointerUp(id);
+  }
 }
 function onTouchPointerDown(pointerId, x, y) {
   const button = touchButtonAt(x, y);
   if (button) {
-    touchActionPointers.set(pointerId, button.id);
+    touchActionPointers.set(pointerId, button.id); touchPointerPos.set(pointerId, { x, y, t: performance.now() });
     if (button.id === 'boost') actionQueue.boost++;
     if (button.id === 'drift' || button.id === 'boost') vibrate(12);
     return true;
@@ -4263,13 +4283,14 @@ function onTouchPointerDown(pointerId, x, y) {
   const zone = computeTouchLayout().steerZone;
   if (touchSteer.pointerId == null && x >= zone.left && x <= zone.right) {
     touchSteer.pointerId = pointerId;
-    touchSteer.anchorX = x; touchSteer.anchorY = y;
+    touchSteer.anchorX = x; touchSteer.anchorY = y; touchPointerPos.set(pointerId, { x, y, t: performance.now() });
     updateTouchSteer(x, y);
     return true;
   }
   return false;
 }
 function onTouchPointerMove(pointerId, x, y) {
+  const tp = touchPointerPos.get(pointerId); if (tp) { tp.x = x; tp.y = y; }
   if (pointerId === touchSteer.pointerId) { updateTouchSteer(x, y); return; }
   if (touchActionPointers.has(pointerId)) {
     // 손가락을 떼지 않고 다른 버튼으로 미끄러지면 그 버튼으로 전환 (부스트는 미끄러짐으로 발동 안 함)
@@ -4279,7 +4300,7 @@ function onTouchPointerMove(pointerId, x, y) {
 }
 function onTouchPointerUp(pointerId) {
   if (pointerId === touchSteer.pointerId) { touchSteer.pointerId = null; touchSteer.value = 0; }
-  touchActionPointers.delete(pointerId);
+  touchActionPointers.delete(pointerId); touchPointerPos.delete(pointerId);
 }
 
 /** 키보드 + 터치 입력 → 주행 입력 */
@@ -4355,7 +4376,7 @@ function activateBoost(car) {
   car.speed = Math.max(car.speed, 0) + 45;
   car.boostsUsed++;
   if (car === player) {
-    showMessage('BOOST', '#FF6B3D', 1.0, car.boostsUsed <= 2 ? tr('msg.boostHint', { key: useTouchUI ? '⚡' : activeKeyLayout().labels.boost }) : '');   // 힌트는 처음 두 번만
+    showMessage('BOOST', '#FF6B3D', 1.0);   // 8.1.1: 부가 설명 없이
     punchZoom = 1; sfx.boost(car.designId);
   } else if (Math.abs(car.progress - player.progress) < 14 && gameMode === 'race') {
     pushFeed(devMode ? `⚡ ${car.team.code} [${car.trait.name}] BOOST` : `⚡ ${car.team.driver} BOOST`, devMode ? car.trait.color : '#FF6B3D');
@@ -4376,7 +4397,7 @@ function boostSecondPress(car) {
   if (car.sprint) return;
   if (car.boostTime <= SPRINT_WINDOW) { startSprint(car); return; }
   car.boostTime = 0; car.boostMax = 0;
-  if (car === player) { showMessage(tr('msg.tooEarly'), '#ff6b6b', 1.1, tr('msg.tooEarlySub')); sfx.boostFizzle(); }
+  if (car === player) { showMessage(tr('msg.tooEarly'), '#ff6b6b', 1.1); sfx.boostFizzle(); }
 }
 /** 플레이어 부스트 버튼: 꺼져 있으면 켜고, 켜져 있으면 임계점 부스트 시도 */
 function toggleBoost(car) {
@@ -4619,7 +4640,7 @@ function updateCarPhysics(car, dt) {
   const topSpeed = (TOP_SPEED * design.top * topSpeedMultiplier() * (trait ? trait.topSpeed * lerp(1, car.skill, 0.6) * (car.isAI && car !== player && !car.coolDown ? (car.pace || 1) : 1) : 1)
     + (car.drsOpen ? DRS_SPEED_BONUS : 0) + draft * 35 * (trait ? trait.draftSkill : 1)
     + (boosting ? BOOST_SPEED_BONUS * design.boost * (car.sprint ? SPRINT_SPEED_MULT : 1) : 0) + (miniTurbo ? 70 : 0)) * SURFACE_TOP_SPEED[surface];
-  const topSpeedCapped = boosting && car.sprint ? Math.min(topSpeed, SPRINT_MAX_KMH / SPEED_TO_KMH) : topSpeed;   // 7.0: 임계점 부스트 최고 630 km/h
+  const topSpeedCapped = boosting && car.sprint ? Math.min(topSpeed, SPRINT_MAX_KMH / SPEED_TO_KMH) : topSpeed;   // 8.0: 임계점 부스트 최고 700 km/h
   let accel = 0;
   const speedRatio = Math.max(car.speed, 0) / topSpeed, power = 1 - speedRatio * speedRatio;
   if (car.speed > -2) {
@@ -4638,7 +4659,7 @@ function updateCarPhysics(car, dt) {
   if (car.brake > 0 && speedBefore > 3 && car.speed < 0) car.speed = 0;
   if (car.throttle < 0.05 && car.brake < 0.05 && Math.abs(car.speed) < 6) car.speed *= 0.9;
   car.speed = Math.max(car.speed, -140);
-  if (boosting && car.sprint && car.speed > topSpeedCapped) car.speed = Math.max(topSpeedCapped, car.speed - 400 * dt);   // 7.0: 630 km/h 위로는 못 올라가요 (DRS · 슬립스트림 포함)
+  if (boosting && car.sprint && car.speed > topSpeedCapped) car.speed = Math.max(topSpeedCapped, car.speed - 400 * dt);   // 8.0: 700 km/h 위로는 못 올라가요 (DRS · 슬립스트림 · 미니터보 포함)
 
   // 부스트 타이머
   if (boosting) {
@@ -4737,7 +4758,7 @@ function updateCarPhysics(car, dt) {
 
   // DRS (구간 안 + 브레이크 안 밟을 때 자동)
   const inZone = isInDrsZone(car.trackPos), drsOpen = inZone && car.brake <= 0 && gameMode === 'race' && raceTime > 4;
-  if (drsOpen && !car.drsOpen && isPlayer) { showMessage('DRS OPEN', '#2bff88', 1.1, car.drsHintShown ? '' : '리어 윙 열림 · 직선 최고속 ↑ (브레이크 밟으면 닫혀요)'); car.drsHintShown = true; sfx.drsOpen(); }
+  if (drsOpen && !car.drsOpen && isPlayer) { showMessage('DRS OPEN', '#2bff88', 1.1); car.drsHintShown = true; sfx.drsOpen(); }
   car.drsOpen = drsOpen; car.inDrsZone = inZone;
 
   // 기어 · RPM
@@ -4824,7 +4845,7 @@ function unstickCar(car) {
     car.x = q.x; car.y = q.y; car.lateral = clamp(car.lateral, -ROAD_HALF + 30, ROAD_HALF - 30);
   }
   car.heading = q.heading; car.speed = Math.max(car.speed, 120); car.knockX = car.knockY = 0;
-  if (car === player) { showMessage('RECOVER', '#F2C46D', 1, '충돌 교착 해제'); sfx.recover(); }
+  if (car === player) { showMessage('RECOVER', '#F2C46D', 1); sfx.recover(); }
 }
 
 /** 차끼리 충돌: 겹침 해소 + 최소 반발력으로 서로 튕겨냄 (교착 방지) */
@@ -6392,7 +6413,7 @@ function drawReplayHUD() {
 const PEERJS_SCRIPT_URL = 'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';
 const ROOM_ID_PREFIX = 'apexgp2-room-';
 const ROOM_CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';   // 헷갈리는 0/O, 1/I 제외
-const DUEL_PROTOCOL = 7;   // 7.0: 충돌 모드 · 임계점 부스트 630 km/h (6.0: 로비 · 기권 · 5초 리타이어)
+const DUEL_PROTOCOL = 8;   // 8.0: 임계점 부스트 최고 700 km/h · 7.0: 충돌 모드 · 임계점 부스트 630 km/h (6.0: 로비 · 기권 · 5초 리타이어)
 const RETIRE_AFTER = 5;    // 상대가 먼저 들어온 뒤 이 시간 안에 못 들어오면 리타이어
 /* 방(room) 구조: players 배열에 { id, name, car, ready, host } — 지금은 2명(1:1)이지만 6~8명으로 늘릴 때
    호스트가 모든 참가자와 연결하고 메시지를 중계하는 별(star) 구조로 확장할 수 있게 id 기반으로 만들어 뒀어요. */
@@ -6777,7 +6798,7 @@ function backToDuelLobby() {
    테스트: 주소에 ?net=local → 같은 브라우저의 탭끼리 BroadcastChannel 로 연결, 방 목록은 localStorage.
    ===================================================================== */
 
-const MP_PROTOCOL = 5;   // 7.9: 위치 정보를 짧은 배열로 · 호스트가 묶어서   // 7.6: 새 코스 모양 다듬음   // 7.4: 코스 · AI 난이도   // 7.3: 재연결(resume) 메시지
+const MP_PROTOCOL = 6;   // 8.0: 최고 속도 700 km/h   // 7.9: 위치 정보를 짧은 배열로 · 호스트가 묶어서   // 7.6: 새 코스 모양 다듬음   // 7.4: 코스 · AI 난이도   // 7.3: 재연결(resume) 메시지
 const MP_MAX_PLAYERS = 8;
 const MP_PEER_PREFIX = 'apexgp-mp1-';
 const MP_SEND_INTERVAL = 1 / 20;
@@ -7417,7 +7438,7 @@ function mpRetire(reason = 'retired') {
   finishResult = { raceType: 'multi', position: raceField.length, totalTime: raceTime, bestLap: player.bestLapTime, laps: player.lapTimes.slice(), environment, timeOfDay, weatherLevel,
     formShown: true, recordId: null, replayRaceId: 0, noRecord: true, reason: 'retired', timeOver: reason === 'time' };
   const s = mpStats(); s.streak = 0; mpSaveStats(s);
-  if (reason === 'time') showMessage('TIME OVER', '#ff6b6b', 2.4, '1위 결승 후 10초 · 리타이어'); else showMessage('RETIRED', '#ff6b6b', 2);
+  if (reason === 'time') showMessage('TIME OVER', '#ff6b6b', 2.4); else showMessage('RETIRED', '#ff6b6b', 2);
 }
 /** 7.3: 1위가 들어오면 10초 카운트 — 그 안에 못 들어온 차는 리타이어 (호스트는 자기 AI 도) */
 function mpFinishClock() {
@@ -8776,7 +8797,7 @@ function garageConfirm() {
   menuStage = 'main'; menuStageTimer = 0;
   if (next === 'solo') { initAudio(); startRace({ type: 'solo' }); return; }
   if (next === 'duel') { openMultiMenu(); return; }   // 7.2: 1:1 대전은 멀티플레이로 통합
-  showMessage(CAR_DESIGNS[settings.carDesign].name, '#ffffff', 1.4, '이 차로 레이스에 나가요');
+  showMessage(CAR_DESIGNS[settings.carDesign].name, '#ffffff', 1.4);
 }
 function garageBack() { sfx.menuBack(); garage.next = null; menuStage = 'main'; menuStageTimer = 0; }
 
@@ -10293,16 +10314,17 @@ function updateCamera3D(dt) {
     camera.lookY = lerp(camera.lookY || 0, Math.sin(travel) * look * dir, smoothFactor(2.4, dt));
     const extra = 160 * aheadK;   // 부스트 전방 주시: 시선을 진행 방향으로 더 멀리
     lookAt.set(p.x + camera.lookX + Math.cos(travel) * extra * dir, 0, p.y + camera.lookY + Math.sin(travel) * extra * dir);
-    const dist = (460 + clamp(Math.abs(p.speed) / 720, 0, 1.4) * 110 - punchZoom * 30) * (1 - 0.32 * show) + 70 * aheadK;
+    const camK = clamp(Math.abs(p.speed) / CAMERA_MAX_SPEED, 0, 1);   // 8.0: 0 ~ 700 km/h 에 비례
+    const dist = (460 + camK * 154 - punchZoom * 30) * (1 - 0.32 * show) + 70 * aheadK;
     desiredPos.set(lookAt.x + dist * 0.6, dist * 0.95, lookAt.z + dist * 0.6);
-    fov = 40 + 9 * sk; lerpRate = 10;
+    fov = 40 + 9 * camK * camK; lerpRate = 10;
   } else {
     const C = CHASE_CAMERA, travel = p.heading + (p.speed >= 0 ? (p.bodySlip || 0) * 0.6 : Math.PI);
     W3.camYaw = W3.snap ? travel : W3.camYaw + angleDiff(travel, W3.camYaw) * smoothFactor(C.yawRate, dt);
     // 출발 그리드: 바로 뒤 차에 가려지지 않게 높고 가까이서 내려다보다가 출발 후 2초간 평소 위치로
     const grid = gameMode === 'lights' ? 1 : gameMode === 'race' ? clamp(1 - raceTime / 2, 0, 1) : 0;
-    const speedK = clamp(Math.abs(p.speed) / 720, 0, 1.5);
-    let dist = lerp(C.distance + speedK * 45, 120, grid) + 8 * sk, height = lerp(C.height + speedK * 6, 118, grid) * (1 - 0.18 * sk);   // 7.8.4: 임계점 때 차가 너무 멀어 보이지 않게 (뒤로 34 → 8)
+    const camK = clamp(Math.abs(p.speed) / CAMERA_MAX_SPEED, 0, 1);   // 8.0: 부스트 포함 속도 0 ~ 700 km/h 에 비례해서 카메라가 멀어져요 (700 = 예전 최대 줌 아웃)
+    let dist = lerp(C.distance + camK * 76, 120, grid), height = lerp(C.height + camK * 9, 118, grid) * (1 - 0.18 * camK * camK);
     dist = dist * (1 - BC.closeDist * show) + BC.aheadDist * aheadK;           // 쇼케이스: 가까이 / 전방 주시: 살짝 뒤로
     height = height * (1 - BC.closeHeight * show) + BC.aheadHeight * aheadK;   // 쇼케이스: 낮게 / 전방 주시: 높게
     const side = (W3.boostOrbitSide || 1) * BC.orbit * show, yaw = W3.camYaw + side; // 쇼케이스 때 옆으로 살짝 돌아 변신 모습이 보이게
@@ -10310,7 +10332,7 @@ function updateCamera3D(dt) {
     desiredPos.set(p.x - Math.cos(yaw) * dist, height, p.y - Math.sin(yaw) * dist);
     const ahead = lerp(C.lookAhead, 95, grid) * (1 - BC.zoomCenter * show) + BC.aheadLook * aheadK;   // 줌 중심을 살짝 차 쪽으로 → 차가 평소와 같은 높이에 남아요
     lookAt.set(p.x + Math.cos(W3.camYaw) * ahead, C.lookHeight, p.y + Math.sin(W3.camYaw) * ahead);
-    fov = C.fov + speedK * 7 + (p.boostTransform || 0) * 5 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show) + 6 * sk + 10 * sprintFlash;   // 7.8.4: 화각은 켜는 순간만 확 벌어졌다가(킥) 6도만 유지 — 대신 바람 줄기로 속도감
+    fov = C.fov + camK * 16 + (p.boostTransform || 0) * 5 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show) + 10 * sprintFlash;   // 8.0: 화각도 속도에 비례 (700 km/h 에서 +16도) · 켜는 순간 킥은 그대로
     lerpRate = 12 + 18 * show;   // 부스트 속도에서도 쇼케이스 거리를 유지하도록 더 빨리 따라붙어요
   }
   if (W3.snap) { W3.camPos.copy(desiredPos); W3.camTarget.copy(lookAt); W3.snap = false; }
@@ -12342,7 +12364,7 @@ function renderFrame(dt) {
 function applyScreenTransform() { ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0); }
 function toggleCameraMode() {
   settings.cameraMode = settings.cameraMode === 'tv' ? 'chase' : 'tv'; saveSettings(); requestCameraSnap();
-  showMessage(settings.cameraMode === 'tv' ? 'TV VIEW' : 'CHASE VIEW', '#F2C46D', 1, settings.cameraMode === 'tv' ? '위에서 보는 쿼터뷰' : '차 뒤 3인칭');
+  showMessage(settings.cameraMode === 'tv' ? 'TV VIEW' : 'CHASE VIEW', '#F2C46D', 1);
 }
 
 /* ===== 18_overlays.js ===== */
@@ -12568,7 +12590,7 @@ function openSettings(tab) {
       <div class="sect">📱 모바일</div>
       <div class="cards">${choice('touchHand', 'right', '오른손 액션', '')}${choice('touchHand', 'left', '왼손 액션', '')}</div>
       ${toggle('optAutoGas', '⛽', '자동 가속', settings.autoGas ? 'ON' : 'OFF', settings.autoGas)}
-      <div class="seghint" style="margin:10px 0 6px">조향 민감도</div>${seg('steerSensitivity', [['low', '낮음'], ['normal', '보통'], ['high', '높음']])}`;
+      <div class="srow"><div class="ico">🎯</div><div><b>조향 민감도</b></div><div class="val" id="val_steerSens">${Math.round(settings.steerSens)}</div><input type="range" min="0" max="100" step="1" value="${Math.round(settings.steerSens)}" data-steer style="--fill:${Math.round(settings.steerSens)}%"><span></span></div>`;
   } else {
     body = `<div class="sect" data-raw>🌐 Language · 언어 · 言語 · 语言</div><div class="seg">${LANGUAGES.map(([code, name]) => `<button class="${currentLang === code ? 'on' : ''}" data-lang="${code}">${name}</button>`).join('')}</div>
       <div class="sect">🖥 화면 모드</div><div class="cards">
@@ -12596,6 +12618,10 @@ function openSettings(tab) {
     const key = input.dataset.vol, show = () => { input.style.setProperty('--fill', input.value + '%'); byId('val_' + key).textContent = input.value + '%'; };
     input.oninput = () => { settings[key] = input.value / 100; show(); initAudio(); };
     input.onchange = () => { saveSettings(); if (key !== 'engineVolume') sfx.uiClick(true); };
+  });
+  overlayCard.querySelectorAll('[data-steer]').forEach((input) => {   // 8.1: 조향 민감도 0~100
+    input.oninput = () => { settings.steerSens = +input.value; input.style.setProperty('--fill', input.value + '%'); byId('val_steerSens').textContent = input.value; };
+    input.onchange = () => { saveSettings(); sfx.uiClick(true); };
   });
   overlayCard.querySelectorAll('[data-test]').forEach((b) => { b.onclick = () => { initAudio(); b.dataset.test === 'engineVolume' ? playEngineTest() : sfx.boost(selectedDesignId()); }; });
   on('optMusic', () => { toggleMusic(); openSettings(); });
@@ -13135,11 +13161,11 @@ function toggleDevMode() {
 }
 function toggleSteerMode() {
   settings.keyboardSteerMode = settings.keyboardSteerMode === 'screen' ? 'car' : 'screen'; saveSettings();
-  showMessage(settings.keyboardSteerMode === 'screen' ? '방향 조작' : '차 기준 조작', '#F2C46D', 1.6, settings.keyboardSteerMode === 'screen' ? (settings.cameraMode === 'tv' ? '누른 방향(화면 기준)으로 차가 돌아감' : '3인칭: ↑ = 도로 진행 방향 · ←→ = 도로 좌우') : '좌/우 = 차가 보는 방향 기준');
+  showMessage(settings.keyboardSteerMode === 'screen' ? '방향 조작' : '차 기준 조작', '#F2C46D', 1.2);
 }
 function setUIMode(touch) {
   useTouchUI = touch; releaseAllTouches(); showAILineup = !touch && showAILineup; resize();
-  showMessage(touch ? 'MOBILE UI' : 'PC UI', touch ? '#2bff88' : '#F2C46D', 1.2, touch ? '터치 조작' : '키보드 조작');
+  showMessage(touch ? 'MOBILE UI' : 'PC UI', touch ? '#2bff88' : '#F2C46D', 1.2);
 }
 function onEnvironmentChangedByDev() { precipitationDrops.length = 0; conditionsCardTimer = Math.max(conditionsCardTimer, 3); if (gameMode === 'menu') environmentPreRolled = true; }
 /** 개발자 테스트: 바로 1위 결과 화면 */
@@ -13237,7 +13263,7 @@ function stepSimulation(dt) {
     if (lit > lastLitCount) { lastLitCount = lit; sfx.countdownBeep(); }
     if (lightsTimer >= lightsOutAt) {
       gameMode = 'race'; raceTime = 0; actionQueue.boost = 0; conditionsCardTimer = 0; startReplayRecording();
-      showMessage('LIGHTS OUT', '#ffffff', 1.4, 'AND AWAY WE GO'); sfx.lightsOut();
+      showMessage('LIGHTS OUT', '#ffffff', 1.4); sfx.lightsOut();
     }
     return;
   }
@@ -13294,7 +13320,7 @@ function resize() {
 }
 addEventListener('resize', resize);
 if (window.visualViewport) window.visualViewport.addEventListener('resize', () => resize());
-addEventListener('orientationchange', () => { for (const ms of [60, 250, 600, 1200]) setTimeout(resize, ms); });   // 7.8.2: 아이폰은 높이를 늦게 알려줘서 몇 번 다시 재요
+addEventListener('orientationchange', () => setTimeout(resize, 600));   // 8.0: 화면을 돌린 뒤 높이는 한 번만 다시 재요 (7.8.2 의 4번 → 1번)
 const BROWSER_SHORTCUTS_TO_BLOCK = ['Tab', 'F2', 'Backquote', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'ShiftLeft', 'ShiftRight'];
 addEventListener('keydown', (e) => {
   if (introOpen) return;   // 6.0: 시작 화면은 자체 처리
@@ -13322,7 +13348,6 @@ canvas.addEventListener('pointerdown', (e) => {
   if (overlayOpen) return;
   initAudio();
   const x = e.clientX - canvasLeft, y = e.clientY - canvasTop;
-  if (e.pointerType === 'touch' && useTouchUI) goFullscreenLandscape();
   for (let i = uiHitAreas.length - 1; i >= 0; i--) {
     const area = uiHitAreas[i];
     if (x >= area.x && x <= area.x + area.w && y >= area.y && y <= area.y + area.h) { sfx.uiClick(true); area.action(); e.preventDefault(); return; }
@@ -13347,6 +13372,11 @@ const endPointer = (e) => onTouchPointerUp(e.pointerId);
 canvas.addEventListener('pointerup', endPointer);
 canvas.addEventListener('pointercancel', endPointer);
 canvas.addEventListener('lostpointercapture', endPointer);
+// 8.0.1: 드리프트 버튼이 손을 떼도 눌린 채 남던 문제 — 캔버스 밖(다른 화면 요소 위)에서 뗀 경우 · 손 뗌 신호가 빠진 경우까지 정리
+addEventListener('pointerup', (e) => { if (e.target !== canvas) endPointer(e); }, true);
+addEventListener('pointercancel', (e) => { if (e.target !== canvas) endPointer(e); }, true);
+for (const type of ['touchend', 'touchcancel']) document.addEventListener(type, (e) => syncTouchPointers(e.touches, performance.now()), { capture: true, passive: true });   // 8.1.1: 바로 맞춰요 (예전엔 한 박자 늦게 → 그 사이 누른 버튼이 풀렸어요)
+document.addEventListener('visibilitychange', () => { if (document.hidden) { keysDown.clear(); releaseAllTouches(); } });
 canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 document.addEventListener('touchmove', (e) => { if (!overlayOpen) e.preventDefault(); }, { passive: false });
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
@@ -13526,7 +13556,8 @@ function showIntro() {
     if (e && e.target && e.target.closest && e.target.closest('[data-lang]')) return;
     if (!introOpen || !introReady()) return; introOpen = false; introPrep.stop = true;   // 다 못 만든 코스는 고를 때 만들어요
     try { initAudio(); kickMusic(); } catch (err) { /* 소리 없이 계속 */ }
-    if (useTouchUI) goFullscreenLandscape();   // 7.8.1: 첫 터치에 전체 화면 + 가로 고정 (지원하는 폰)
+    if (useTouchUI) goFullscreenLandscape();   // 8.0: 전체 화면 + 가로 고정은 로딩이 끝난 첫 화면 터치 때 1번만 (매 터치마다 다시 확인하지 않아요)
+    setTimeout(resize, 600);   // 8.0: 전체 화면이 된 뒤 화면 크기를 한 번 다시 재요
     el.classList.add('out'); setTimeout(() => el.remove(), 750);
     menuStage = 'title'; menuStageTimer = 0;
     if (isFirstVisit && !settings.tutorialSeen) setTimeout(openTutorialPrompt, 900);
