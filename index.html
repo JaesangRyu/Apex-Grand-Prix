@@ -273,6 +273,11 @@ input.codein{font-family:"Titillium Web",ui-monospace,Menlo,Consolas,monospace}
 .mcourse .mcourses{margin-top:2px}.mcourse .mcourses button{font-size:10.5px;padding:6px 1px;letter-spacing:-.2px}
 .mdiff{display:flex;flex-direction:column;gap:4px}.mdiff small{color:var(--muted);font:700 11px var(--font)}.mdiff .seg button{font-size:11px;padding:6px 2px}
 .tabs.hcourse{margin-bottom:6px}.tabs.hcourse .tab{font-weight:900}
+
+/* 7.5 날씨 · 시간대 버튼 */
+.menv button{font-size:12px;padding:7px 2px;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:940px),(max-height:500px){.menv button .nm{display:none}.menv button{font-size:15px}.mcourse .mcourses{display:grid;grid-template-columns:1fr 1fr}.mcourse .mcourses button{border-left:0;border-top:1px solid var(--line)}}
+.mcourse .mopt.sm{grid-template-columns:1fr;gap:2px}.mcourse .mopt.sm>span{font-size:10px}.mcourse .menv button{font-size:12px;padding:5px 0;text-overflow:clip}
 </style>
 </head>
 <body>
@@ -500,6 +505,7 @@ addStrings({
 /* 00_strings_src.js — 화면에 보이는 한국어 원문 → [English, 日本語, 简体中文] (6.0)
    화면에 그릴 때 L() 이 원문을 찾아 바꿔요. 원문을 고치면 여기 키도 같이 고쳐야 번역돼요. */
 const I18N_SRC = {
+"날씨 · 시간대 선택": ["choose weather & time", "天候 · 時間帯を選択", "选择天气 · 时段"],
 "코스": ["Course", "コース", "赛道"],
 "코스 고정": ["Fixed by course", "コース固定", "赛道固定"],
 "코스 불러오는 중…": ["Loading course…", "コースを読み込み中…", "正在载入赛道…"],
@@ -2493,7 +2499,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '7.4.0';
+const GAME_VERSION = '7.5.0';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -2582,7 +2588,7 @@ function vibrate(ms) {
    ---------------------------------------------------------------------
    design: 화면에서 본 모양(화면 좌표). 새 코스 3개는 실제 서킷 지도를 따라 그렸어요. 02_track.js 가 월드 좌표로 바꾸고 매끈하게 다듬어요.
    새 코스는 '꼭짓점 + 모서리 반경'으로 그려요 (roundedCourse). 코스 둘레가 달라도 한 바퀴 길이를 targetKm 에 맞춰 크기를 정해요.
-   fixedEnv: null 이면 레이스마다 랜덤(메뉴에서 고를 수 있음), 값이 있으면 그 코스는 항상 같은 환경이에요.
+   fixedEnv: 7.5 부터 모든 코스가 null (날씨 · 시간대를 자유롭게). suggestEnv = 그 코스의 대표 환경 (설명 · 미리보기용)
    recordKey: 명예의 전당 · 리플레이를 코스별로 나누는 열쇠 ('legacy' = 7.3 이전 기록과 같은 열쇠)
    ===================================================================== */
 
@@ -2628,21 +2634,21 @@ const COURSES = {
   vegas: {
     id: 'vegas', name: 'LAS VEGAS STRIP', short: 'VEGAS', ko: '라스베이거스 스트립', flag: '🌃', real: 'Las Vegas Strip Circuit · 라스베이거스 그랑프리',
     design: [[500, -3880], [-220, -3480], [-420, -3480], [-2140, -2680], [-2460, -2360], [-2620, -2000], [-2820, -1400], [-2820, -920], [-2580, 1760], [-1580, 4000], [-1260, 4320], [-980, 4440], [-140, 3160], [820, 2680], [1460, 2360], [-100, -1320], [420, -1600], [620, -1600], [980, -840], [1100, -760], [1340, -840], [1740, -1080], [1420, -1960], [2820, -2680], [2060, -4440], [1740, -4400]],
-    targetKm: 4.4, minGap: 1150, start: [836, 888], fixedEnv: { environment: 'NORMAL', timeOfDay: 'NIGHT', weatherLevel: 1 }, music: 'marina', theme: 'city', recordKey: 'vegas-v1',
+    targetKm: 4.4, minGap: 1150, start: [836, 888], fixedEnv: null, suggestEnv: { environment: 'NORMAL', timeOfDay: 'NIGHT', weatherLevel: 1 }, music: 'marina', theme: 'city', recordKey: 'vegas-v1',
     tagline: '네온 불빛 아래 스트립을 질주하는 밤의 시가지 서킷',
   },
   /* 스파-프랑코샹 — 비 내리는 숲과 산 (시계 방향) */
   spa: {
     id: 'spa', name: 'SPA-FRANCORCHAMPS', short: 'SPA', ko: '스파-프랑코샹', flag: '⛈️', real: 'Circuit de Spa-Francorchamps · 벨기에 그랑프리',
     design: [[-2540, 2480], [-2180, 2040], [-1700, 1680], [-660, 1240], [-460, 1040], [20, 80], [-20, -320], [-380, -1240], [-380, -2160], [-140, -2360], [-1060, -4160], [-1020, -4400], [-60, -3800], [660, -2880], [1220, -2440], [1300, -1760], [1980, -600], [2180, 200], [2740, 2760], [2500, 2960], [2540, 3640], [1460, 4360], [1180, 4400], [1060, 4120], [1740, 3680], [1740, 3440], [1460, 2480], [1380, 1640], [1300, 1440], [1060, 1280], [500, 1280], [380, 1360], [220, 1520], [-500, 3000], [-700, 3040], [-1220, 2840], [-2020, 3760], [-2260, 3680], [-2700, 3280], [-2740, 3000]],
-    targetKm: 4.75, minGap: 1150, start: [2404, 1224], fixedEnv: { environment: 'RAIN', timeOfDay: 'DUSK', weatherLevel: 2 }, music: 'sierra', theme: 'mountain', recordKey: 'spa-v1',
+    targetKm: 4.75, minGap: 1150, start: [2404, 1224], fixedEnv: null, suggestEnv: { environment: 'RAIN', timeOfDay: 'DUSK', weatherLevel: 2 }, music: 'sierra', theme: 'mountain', recordKey: 'spa-v1',
     tagline: '아르덴 숲과 안개, 바퀴마다 달라지는 빗길 — 전설의 고속 서킷',
   },
   /* 바레인 인터내셔널 서킷 (사키르) — 사막의 노을 (시계 방향) */
   bahrain: {
     id: 'bahrain', name: 'BAHRAIN · SAKHIR', short: 'BAHRAIN', ko: '바레인 사키르', flag: '🏜️', real: 'Bahrain International Circuit · 바레인 그랑프리',
     design: [[-980, 2320], [-500, 2160], [-220, 1880], [140, 1080], [700, 720], [1140, 720], [1620, 960], [2260, 1440], [2340, 1680], [2180, 1960], [1900, 2120], [-2860, 4400], [-3120, 4440], [-3380, 4320], [-3560, 3920], [-3560, 3520], [-2880, -4360], [-2600, -4500], [-1780, -4040], [-780, -4200], [3020, -3280], [3140, -3160], [3100, -2840], [1820, -1720], [1580, -1240], [1420, -1160], [500, -1200], [-80, 40], [-300, -40], [-300, -400], [80, -2560], [20, -2760], [-560, -3200], [-1100, -3000], [-1600, 1560], [-1500, 2160], [-1380, 2240]],
-    targetKm: 4.6, minGap: 1150, start: [-3260, 368], fixedEnv: { environment: 'TROPICAL', timeOfDay: 'DUSK', weatherLevel: 1 }, music: 'dune', theme: 'desert', recordKey: 'bahrain-v1',
+    targetKm: 4.6, minGap: 1150, start: [-3260, 368], fixedEnv: null, suggestEnv: { environment: 'TROPICAL', timeOfDay: 'DUSK', weatherLevel: 1 }, music: 'dune', theme: 'desert', recordKey: 'bahrain-v1',
     tagline: '사막 위 금빛 오아시스 — 긴 직선과 급제동 헤어핀의 승부',
   },
 };
@@ -3078,6 +3084,19 @@ function randomizeEnvironment() {
   if (C.fixedEnv) { applyCourseFixedEnv(C); return; }   // 7.4: 환경이 고정된 코스
   rollRaceCondition('raceEnv'); rollRaceCondition('raceTime'); rollRaceCondition('raceWeather');
 }
+/** 7.5: 멀티 방처럼 따로 고른 값으로 환경 뽑기 (choices: { raceEnv, raceTime, raceWeather } — 'random' 이거나 값) */
+function rollConditionsFrom(choices = {}) {
+  const pickOf = (v, table, weights) => (v != null && v !== 'random' && table[v] != null ? v : pickWeighted(weights));
+  environment = pickOf(choices.raceEnv, ENVIRONMENTS, ENVIRONMENT_WEIGHTS);
+  timeOfDay = pickOf(choices.raceTime, TIMES_OF_DAY, TIME_WEIGHTS);
+  weatherLevel = +pickOf(choices.raceWeather, WEATHER_LEVELS, WEATHER_LEVEL_WEIGHTS);
+}
+/** 고르는 화면용 선택지 (아이콘 · 이름) */
+const ENV_CHOICES = {
+  raceEnv: [['random', '🎲', '랜덤'], ['NORMAL', '🏁', '일반'], ['TROPICAL', '🌴', '열대'], ['RAIN', '🌧️', '비'], ['SNOW', '❄️', '눈']],
+  raceTime: [['random', '🎲', '랜덤'], ['DAY', '☀️', '주간'], ['DUSK', '🌇', '노을'], ['NIGHT', '🌙', '야간']],
+  raceWeather: [['random', '🎲', '랜덤'], ['0', '', '약', '▂'], ['1', '', '보통', '▄'], ['2', '', '강', '▆']]   // 4번째 = 좁은 로비용 짧은 표시,
+};
 const hasRandomCondition = () => !courseOf(currentCourseId).fixedEnv && ['raceEnv', 'raceTime', 'raceWeather'].some((f) => settings[f] === 'random');
 
 const weatherStrength = () => WEATHER_LEVELS[weatherLevel].strength;
@@ -3686,9 +3705,9 @@ function nearestCenterIndex(x, y) {
 
 /* 7.4: 코스 테마별 장식 밀도 — near: 트랙 옆 나무를 건너뛸 확률 · far: 먼 숲 나무 수 · lamp: 가로등 간격 */
 const SCENERY_DENSITY = {
-  classic: { near: 0.42, far: 2600, lamp: 11 },
+  classic: { near: 0.42, far: 3200, lamp: 11, farPad: 3000 },
   city: { near: 0.86, far: 0, lamp: 8 },          // 빌딩이 대신 들어서요
-  mountain: { near: 0.22, far: 4200, lamp: 13 },  // 울창한 소나무 숲
+  mountain: { near: 0.22, far: 5200, lamp: 13, farPad: 4200 },  // 울창한 소나무 숲 (언덕까지)
   desert: { near: 0.9, far: 0, lamp: 11 },        // 오아시스 둘레에만 야자수
 };
 function buildScenery() {
@@ -3697,21 +3716,26 @@ function buildScenery() {
   // 화면에서 "뒤쪽"(위쪽)에 해당하는 트랙 바깥 방향
   const farSide = (i) => (normalX[i] + normalY[i] > 0 ? -1 : 1);
 
-  // 관중석: 긴 직선(DRS 구간) 바깥쪽
+  // 관중석 7.5: 모든 긴 직선 + 큰 제동 코너 바깥 (TV 시점에서 가리지 않게 화면 뒤쪽 편에)
   let standIndex = 0;
-  DRS_ZONES.forEach((zone, zoneIndex) => {
-    const full = zone.full;
-    for (let k = 14; k < full.length - 14; k += 26) {
-      const i = wrapIndex(full.start + k, SEGMENTS);
-      if (Math.abs(tangentX[i] + tangentY[i]) > 0.14) continue;
-      const side = farSide(i), offset = wallDistance[sideIndex(side)][i] + 46;
-      sceneryObjects.push({
-        kind: 'grandstand', x: centerX[i] + normalX[i] * offset * side, y: centerY[i] + normalY[i] * offset * side,
-        sprite: SPRITES.grandstands[((k / 26 + zoneIndex) % 2) | 0], animPhase: standIndex++ * 1.7,
-      });
-      blockedAreas.push({ x: centerX[i] + normalX[i] * (offset + 130) * side, y: centerY[i] + normalY[i] * (offset + 130) * side, radius: 400 });
-    }
-  });
+  const addStand = (i, kOff) => {
+    const side = farSide(i), offset = wallDistance[sideIndex(side)][i] + 46;
+    const x = centerX[i] + normalX[i] * offset * side, y = centerY[i] + normalY[i] * offset * side;
+    const bx = centerX[i] + normalX[i] * (offset + 130) * side, by = centerY[i] + normalY[i] * (offset + 130) * side;
+    const ends = [-1, 1].map((e) => [bx + tangentX[i] * 330 * e, by + tangentY[i] * 330 * e]);
+    if (isBlocked(bx, by) || [[bx, by], ...ends].some(([px, py]) => nearestCenterIndex(px, py).distance < offset + 40)) return false;   // 다른 구간과 겹치면 건너뛰기
+    sceneryObjects.push({ kind: 'grandstand', x, y, sprite: SPRITES.grandstands[(standIndex + kOff) % 2], animPhase: standIndex++ * 1.7 });
+    blockedAreas.push({ x: bx, y: by, radius: 400 });
+    return true;
+  };
+  const straights = []; { let run = null; for (let k = 0; k <= SEGMENTS; k++) { const i = k % SEGMENTS, st = Math.abs(curvature[i]) < 1 / 2600 && k < SEGMENTS; if (st && !run) run = { start: i, length: 0 }; if (st) run.length++; if (!st && run) { straights.push(run); run = null; } } }
+  straights.sort((a, b) => b.length - a.length);
+  for (const r of straights.filter((r) => r.length >= 60).slice(0, 6)) for (let k = 14; k < r.length - 14; k += 26) addStand(wrapIndex(r.start + k, SEGMENTS), k);
+  for (let i = 0, last = -99; i < SEGMENTS; i++) {   // 느린 코너 (헤어핀 등) 바깥
+    if (cornerSpeedLimit[i] > 330 || i - last < 120) continue;
+    const side = -Math.sign(curvature[i]) || 1; if (side !== farSide(i)) continue;
+    if (addStand(i, 1)) last = i;
+  }
 
   // 피트 건물: 메인 직선 안쪽
   const mainZone = DRS_ZONES.find((z) => isInZone(0, z)) || DRS_ZONES[0];
@@ -3755,27 +3779,31 @@ function buildScenery() {
       if (treeAllowed(x, y)) sceneryObjects.push({ kind: 'tree', x, y, variant: Math.floor(sceneryRandom() * 6), scale: 0.8 + sceneryRandom() * 0.45 });
     }
   }
-  for (let k = 0; k < D.far; k++) {
-    const x = lerp(TRACK_BOUNDS.minX - 1500, TRACK_BOUNDS.maxX + 1500, sceneryRandom());
-    const y = lerp(TRACK_BOUNDS.minY - 1500, TRACK_BOUNDS.maxY + 1500, sceneryRandom());
+  for (let k = 0, pad = D.farPad || 1500; k < D.far; k++) {
+    const x = lerp(TRACK_BOUNDS.minX - pad, TRACK_BOUNDS.maxX + pad, sceneryRandom());
+    const y = lerp(TRACK_BOUNDS.minY - pad, TRACK_BOUNDS.maxY + pad, sceneryRandom());
     if (nearestCenterIndex(x, y).distance < 600 || isBlocked(x, y)) continue;
     sceneryObjects.push({ kind: 'tree', x, y, variant: Math.floor(sceneryRandom() * 6), scale: 0.85 + sceneryRandom() * 0.5 });
   }
 
-  // 7.4 사막: 트랙에서 가장 먼 빈터에 오아시스 + 둘레 야자수
+  // 7.5 사막: 달리면서 보이는 트랙 옆 오아시스 2곳 + 둘레 야자수 · 메인 직선 야자수 길
   if (courseOf(currentCourseId).theme === 'desert' && typeof W3 !== 'undefined') {
-    let best = null;
-    for (let gx = 0; gx <= 24; gx++) for (let gy = 0; gy <= 24; gy++) {
-      const x = lerp(TRACK_BOUNDS.minX, TRACK_BOUNDS.maxX, gx / 24), y = lerp(TRACK_BOUNDS.minY, TRACK_BOUNDS.maxY, gy / 24), d = nearestCenterIndex(x, y).distance;
-      if (!isBlocked(x, y) && (!best || d > best.d)) best = { x, y, d };
+    const oases = [];
+    for (let k = 0; k < 3000 && oases.length < 2; k++) {
+      const i = Math.floor(sceneryRandom() * SEGMENTS), side = sceneryRandom() < 0.5 ? -1 : 1, r = 300 + sceneryRandom() * 140, off = wallDistance[sideIndex(side)][i] + 260 + r;
+      const x = centerX[i] + normalX[i] * off * side, y = centerY[i] + normalY[i] * off * side;
+      if (nearestCenterIndex(x, y).distance < r + ROAD_HALF + 230 || isBlocked(x, y) || oases.some((o) => Math.hypot(o.x - x, o.y - y) < 4000)) continue;
+      oases.push({ x, y, r }); blockedAreas.push({ x, y, radius: r + 80 });
     }
-    if (best && best.d > 900) {
-      const r = Math.min(1100, best.d - 520); W3.courseOasis = { x: best.x, y: best.y, r };
-      blockedAreas.push({ x: best.x, y: best.y, radius: r + 60 });
-      for (let k = 0; k < 46; k++) {
-        const a = sceneryRandom() * TAU, rr = r + 90 + sceneryRandom() * 260;
-        sceneryObjects.push({ kind: 'tree', x: best.x + Math.cos(a) * rr, y: best.y + Math.sin(a) * rr, variant: 0, kind2: 'palm', scale: 0.9 + sceneryRandom() * 0.5 });
-      }
+    W3.courseOases = oases;
+    for (const O of oases) for (let k = 0; k < 34; k++) {
+      const a = sceneryRandom() * TAU, rr = O.r + 70 + sceneryRandom() * 220;
+      sceneryObjects.push({ kind: 'tree', x: O.x + Math.cos(a) * rr, y: O.y + Math.sin(a) * rr, variant: 0, kind2: 'palm', scale: 0.9 + sceneryRandom() * 0.5 });
+    }
+    const mainZ = DRS_ZONES.find((z) => isInZone(0, z)) || DRS_ZONES[0];
+    for (let k = 0; k < mainZ.full.length; k += 7) for (const side of [-1, 1]) {
+      const i = wrapIndex(mainZ.full.start + k, SEGMENTS), off = wallDistance[sideIndex(side)][i] + 70, x = centerX[i] + normalX[i] * off * side, y = centerY[i] + normalY[i] * off * side;
+      if (!isBlocked(x, y) && nearestCenterIndex(x, y).distance > off - 10) sceneryObjects.push({ kind: 'tree', x, y, variant: 0, kind2: 'palm', scale: 1.05 });
     }
   }
   // 제동 보드 (3·2·1): 감속이 큰 코너 앞, 바깥쪽
@@ -6739,13 +6767,14 @@ function mpCloseTransport(later = false) {
 function mpNewId() { return Math.random().toString(36).slice(2, 10); }
 
 /** 방 만들기 */
-async function mpHost({ name, isPublic = true, aiFill = true, max = MP_MAX_PLAYERS, ghost = false, course = settings.course, aiDifficulty = settings.difficulty || 'normal' } = {}) {
+async function mpHost({ name, isPublic = true, aiFill = true, max = MP_MAX_PLAYERS, ghost = false, course = settings.course, aiDifficulty = settings.difficulty || 'normal', env = null } = {}) {
+  env = { raceEnv: 'random', raceTime: 'random', raceWeather: 'random', ...(env || { raceEnv: settings.raceEnv, raceTime: settings.raceTime, raceWeather: settings.raceWeather }) };
   course = courseOf(course).id; if (!AI_DIFFICULTY[aiDifficulty]) aiDifficulty = 'normal';
   max = clamp(Math.round(max) || MP_MAX_PLAYERS, 2, MP_MAX_PLAYERS); if (max === 2) aiFill = false;   // 7.2: 2인 방 = 1:1 대전
   mpLeave(true);
   Object.assign(mp, { role: 'host', code: generateRoomCode(), isPublic, myId: mpNewId(), me: { ready: false }, countdown: 0 });
   mp.name = (name || `${settings.playerName || 'PLAYER'}의 방`).slice(0, 24);
-  mp.room = { code: mp.code, name: mp.name, aiFill, max, ghost, course, aiDifficulty, slots: [mpMySlot(true)] };
+  mp.room = { code: mp.code, name: mp.name, aiFill, max, ghost, course, aiDifficulty, env, slots: [mpMySlot(true)] };
   mpPrepareCourse();
   mpSetStatus('connecting', '방을 여는 중…');
   if (USE_LOCAL_TRANSPORT) { mpOpenLocal(); mpSetStatus('lobby', '방이 열렸어요. 다른 플레이어를 기다리는 중…'); mpPublish(); return; }
@@ -6776,7 +6805,7 @@ async function mpHost({ name, isPublic = true, aiFill = true, max = MP_MAX_PLAYE
     conn.on('close', gone); conn.on('error', gone);
   });
   peer.on('disconnected', () => { if (mp.peer === peer) try { peer.reconnect(); } catch (e) { /* 무시 */ } });
-  peer.on('error', (error) => { if (error.type === 'unavailable-id') { mpHost({ name: mp.name, isPublic, aiFill, max, ghost, course, aiDifficulty }); return; } if (mp.status === 'connecting') mpSetStatus('error', describePeerError(error)); });
+  peer.on('error', (error) => { if (error.type === 'unavailable-id') { mpHost({ name: mp.name, isPublic, aiFill, max, ghost, course, aiDifficulty, env }); return; } if (mp.status === 'connecting') mpSetStatus('error', describePeerError(error)); });
 }
 /** 코드로 참가 */
 async function mpJoin(code) {
@@ -6886,6 +6915,8 @@ function mpPushMe() {
 function mpSetAiFill(on) { if (mp.role !== 'host') return; mp.room.aiFill = !!on; mpSendRoom(); mpPublish(); }
 /** 7.4 호스트: 방의 코스 · AI 난이도 바꾸기 (준비는 모두 풀어요 — 바뀐 걸 보고 다시 READY) */
 function mpSetCourse(id) { if (mp.role !== 'host' || !COURSES[id] || mp.room.course === id) return; mp.room.course = id; mp.me.ready = false; for (const s of mp.room.slots) s.ready = false; mpPrepareCourse(); mpSendRoom(); mpPublish(); }
+/** 7.5 호스트: 방의 날씨 · 시간대 (field = raceEnv | raceTime | raceWeather) */
+function mpSetEnv(field, value) { if (mp.role !== 'host' || !ENV_CHOICES[field]) return; mp.room.env = { ...(mp.room.env || {}), [field]: String(value) }; mpSendRoom(); }
 function mpSetAiDifficulty(level) { if (mp.role !== 'host' || !AI_DIFFICULTY[level]) return; mp.room.aiDifficulty = level; mpSendRoom(); }
 /** 7.4: 방 코스를 미리 불러 둬요 (출발 때 늦게 시작하지 않게) — 대기실 화면이 가려 주는 동안 */
 function mpPrepareCourse() { if (mp.room && courseOf(mp.room.course).id !== currentCourseId) setTimeout(() => { if (mp.room && gameMode === 'menu') useCourse(mp.room.course); }, 30); }
@@ -7018,8 +7049,8 @@ function mpCanStart() {
 }
 function mpHostStart() {
   if (!mpCanStart()) return;
-  useCourse(mp.room.course);   // 7.4: 방 코스 (고정 환경이면 그 환경)
-  if (!environmentLocked) randomizeEnvironment();
+  useCourse(mp.room.course);   // 7.4: 방 코스
+  if (!environmentLocked) rollConditionsFrom(mp.room.env || {});   // 7.5: 방에서 고른 날씨 · 시간대 (랜덤이면 뽑기)
   const humans = mp.room.slots.map((s) => ({ id: s.id, kind: 'human', name: s.name, car: s.car, streak: s.streak }));
   const ai = mp.room.aiFill ? [1, 2, 3, 4, 5, 6, 7].slice(0, (mp.room.max || MP_MAX_PLAYERS) - humans.length).map((k) => ({ id: 'ai' + k, kind: 'ai', team: k, name: TEAMS[k].driver, car: AI_DESIGN_BY_TEAM[k] })) : [];
   const roster = [...humans, ...ai];
@@ -8946,7 +8977,7 @@ function initWorld3D() {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   W3.renderer = renderer;
   W3.scene = new THREE.Scene();
-  W3.camera = new THREE.PerspectiveCamera(60, 16 / 9, 4, 34000);   // 7.4: 멀리 보이는 산 · 스카이라인까지
+  W3.camera = new THREE.PerspectiveCamera(60, 16 / 9, 8, 34000);   /* 7.5: near 4 → 8 (깊이 정밀도 2배) */   // 7.4: 멀리 보이는 산 · 스카이라인까지
   W3.camera.position.set(0, 400, 400);
   W3.camTarget = new THREE.Vector3(); W3.camPos = new THREE.Vector3();
   W3.camYaw = 0; W3.snap = true; W3.shake = 0; W3.envKey = ''; W3.qualityKey = '';
@@ -9247,7 +9278,7 @@ function buildTrackMeshes() {
   M.grass = new THREE.MeshStandardMaterial({ map: T.grass.NORMAL, normalMap: T.grassNormal, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.95 });
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(span, span), M.grass);
   ground.rotation.x = -Math.PI / 2;
-  ground.position.set((TRACK_BOUNDS.minX + TRACK_BOUNDS.maxX) / 2, -0.4, (TRACK_BOUNDS.minY + TRACK_BOUNDS.maxY) / 2);
+  ground.position.set((TRACK_BOUNDS.minX + TRACK_BOUNDS.maxX) / 2, -2.5, (TRACK_BOUNDS.minY + TRACK_BOUNDS.maxY) / 2);   // 7.5: 노면과 간격을 넓혀 깊이 겹침(도로가 초록으로 깜빡임) 방지
   ground.receiveShadow = true; S.add(ground);
   for (const t of Object.values(T.grass)) t.repeat.set(span / 330, span / 330);
   T.grassNormal.repeat.set(span / 120, span / 120);
@@ -9464,11 +9495,11 @@ function buildTrees() {
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), up = new THREE.Vector3(0, 1, 0), sc = new THREE.Vector3();
   for (const env of ENVIRONMENT_KEYS) {
     const group = new THREE.Group(), byKind = {};
-    const kinds = COURSE_TREE_KINDS[courseTheme()] || TREE_KINDS_BY_ENV[env];   // 7.4: 코스 테마별 나무
+    const theme = courseTheme(), kinds = theme === 'desert' ? COURSE_TREE_KINDS.desert : env === 'SNOW' ? TREE_KINDS_BY_ENV.SNOW : COURSE_TREE_KINDS[theme] || TREE_KINDS_BY_ENV[env];   // 7.5: 눈이면 눈 덮인 나무   // 7.4: 코스 테마별 나무
     trees.forEach((t, i) => { const kind = t.kind2 || kinds[t.variant]; (byKind[kind] = byKind[kind] || []).push(t); });
     for (const kind in byKind) {
       const list = byKind[kind], mesh = new THREE.InstancedMesh(geometries[kind], material, list.length);
-      list.forEach((t, k) => { q.setFromAxisAngle(up, ((t.x * 13.1 + t.y * 7.7) % TAU)); const s = t.scale * 1.05; m4.compose(v3(t.x, 0, t.y), q, sc.set(s, s, s)); mesh.setMatrixAt(k, m4); });
+      list.forEach((t, k) => { q.setFromAxisAngle(up, ((t.x * 13.1 + t.y * 7.7) % TAU)); const s = t.scale * 1.05; m4.compose(v3(t.x, W3.terrain ? W3.terrain.heightAt(t.x, t.y) - 2 : 0, t.y), q, sc.set(s, s, s)); mesh.setMatrixAt(k, m4); });   // 7.5: 언덕 위
       mesh.castShadow = true; mesh.receiveShadow = true; group.add(mesh);
     }
     group.visible = false; W3.scene.add(group); W3.treeSets[env] = group;
@@ -9486,7 +9517,7 @@ function orientToTrack(object, x, y) {
 function buildStructures() {
   const S = W3.scene, concrete = new THREE.MeshStandardMaterial({ color: '#8d96a0', roughness: 0.8 }), white = new THREE.MeshStandardMaterial({ color: '#eef1f4', roughness: 0.5 });
   const steel = new THREE.MeshStandardMaterial({ color: '#59626c', metalness: 0.6, roughness: 0.4 });
-  W3.stands = []; W3.crowdSpots = []; W3.floodMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#ffe9c2', emissiveIntensity: 0 });
+  W3.stands = []; W3.crowdSpots = []; W3.flagSpots = [];   /* 7.5: 코스를 바꿔도 예전 깃발이 남지 않게 */ W3.floodMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#ffe9c2', emissiveIntensity: 0 });
   const box = (w, h, d, mat, x, y, z, parent) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m; };
   for (const obj of sceneryObjects) {
     if (obj.kind === 'grandstand') {
@@ -10294,165 +10325,327 @@ function courseTextures() {
 /** 시간대에 따라 밝기가 바뀌는 발광 재질 등록 (낮 · 노을 · 밤) */
 function emissiveByTime(mat, day, dusk, night) { COURSE_FX.emissive.push({ mat, day, dusk, night }); return mat; }
 
-/* ---------- 공통: 멀리 완만한 언덕 (classic) ---------- */
-function buildClassicScenery() {
-  buildPeakRing({ count: 30, near: 1800, far: 5200, rMin: 1600, rMax: 3200, hMin: 380, hMax: 1100, colors: ['#3f7f3a', '#4d8c40', '#6d9a55'], seed: 501, segs: 10, rough: 0.12, snowLine: 2 });
-  buildPeakRing({ count: 20, near: 6500, far: 9500, rMin: 3000, rMax: 5000, hMin: 1400, hMax: 2600, colors: ['#4b6e52', '#5f7d68', '#c9d3dc'], seed: 502, segs: 8, rough: 0.2, snowLine: 0.86 });
+/* ---------- 7.5 지형: 트랙 둘레가 자연스럽게 솟아오르는 높이맵 (나무 · 마을이 그 위에 앉아요) ---------- */
+function makeValueNoise(seed) {
+  const r = seededRandom(seed), p = Array.from({ length: 256 }, (_, i) => i);
+  for (let i = 255; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; }
+  const perm = new Uint8Array(512); for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+  const val = Float32Array.from({ length: 256 }, () => r()), fade = (t) => t * t * (3 - 2 * t);
+  const h = (i, j) => val[perm[(perm[i & 255] + j) & 511]];
+  const n2 = (x, y) => { const xi = Math.floor(x), yi = Math.floor(y), xf = fade(x - xi), yf = fade(y - yi);
+    const a = h(xi, yi), b = h(xi + 1, yi), c = h(xi, yi + 1), d = h(xi + 1, yi + 1); return a + (b - a) * xf + (c - a) * yf + (a - b - c + d) * xf * yf; };
+  return (x, y, oct = 4) => { let s = 0, amp = 1, f = 1, n = 0; for (let o = 0; o < oct; o++) { s += amp * n2(x * f + o * 17.3, y * f + o * 9.1); n += amp; amp *= 0.5; f *= 2.03; } return s / n; };
+}
+const smooth01 = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+/** 트랙까지 거리 (거친 격자로 미리 계산해서 빠르게) */
+function trackDistanceField(cell) {
+  const B = TRACK_BOUNDS, pad = 16000, x0 = B.minX - pad, y0 = B.minY - pad, nx = Math.ceil((B.maxX - B.minX + pad * 2) / cell) + 1, ny = Math.ceil((B.maxY - B.minY + pad * 2) / cell) + 1;
+  const d = new Float32Array(nx * ny);
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) d[j * nx + i] = trackDistance(x0 + i * cell, y0 + j * cell);
+  return (x, y) => {
+    const fx = clamp((x - x0) / cell, 0, nx - 1.001), fy = clamp((y - y0) / cell, 0, ny - 1.001), i = Math.floor(fx), j = Math.floor(fy), u = fx - i, v = fy - j;
+    const a = d[j * nx + i], b = d[j * nx + i + 1], c = d[(j + 1) * nx + i], e = d[(j + 1) * nx + i + 1];
+    return a + (b - a) * u + (c - a) * v + (a - b - c + e) * u * v;
+  };
+}
+/**
+ * opt: near(평지 반경) · ramp · amp · scale(언덕 크기) · farStart · farAmp · farScale · mesa(0~1 평평한 꼭대기) · flats([{x,y,r}] 호수 · 마을 자리)
+ *      palette(h, slope, n) → 색 · snowPalette (눈 환경일 때)
+ */
+function buildTerrain(opt) {
+  const B = TRACK_BOUNDS, cx = (B.minX + B.maxX) / 2, cy = (B.minY + B.maxY) / 2, span = Math.max(B.maxX - B.minX, B.maxY - B.minY) + 2 * (opt.extent || 12000);
+  const segs = opt.segs || 180, noise = makeValueNoise(opt.seed), dist = W3.distField || (W3.distField = trackDistanceField(260));
+  const heightAt = (x, y) => {
+    const d = dist(x, y);
+    let h = smooth01(opt.near, opt.near + opt.ramp, d) * opt.amp * Math.pow(noise(x / opt.scale, y / opt.scale, 4), 1.35) * 1.6;
+    if (opt.farAmp) { const ridge = 1 - Math.abs(noise(x / opt.farScale + 40, y / opt.farScale - 20, 5) * 2 - 1); h += smooth01(opt.farStart, opt.farStart + 4500, d) * opt.farAmp * Math.pow(ridge, 1.6) * 1.3; }
+    if (opt.mesa) h = Math.min(h, (opt.amp + opt.farAmp) * opt.mesa) + Math.max(0, h - (opt.amp + opt.farAmp) * opt.mesa) * 0.08;
+    for (const f of opt.flats || []) { const fd = Math.hypot(x - f.x, y - f.y); if (fd < f.r + 900) h *= smooth01(f.r, f.r + 900, fd); }
+    return h;
+  };
+  const g = new THREE.PlaneGeometry(span, span, segs, segs); g.rotateX(-Math.PI / 2); g.translate(cx, 0, cy);
+  const p = g.attributes.position, hs = new Float32Array(p.count);
+  for (let i = 0; i < p.count; i++) { const h = heightAt(p.getX(i), p.getZ(i)); hs[i] = h; p.setY(i, h > 2 ? h : -7); }
+  g.computeVertexNormals();
+  const n = g.attributes.normal, colA = new Float32Array(p.count * 3), colB = new Float32Array(p.count * 3), c = new THREE.Color(), r = seededRandom(opt.seed + 1);
+  for (let i = 0; i < p.count; i++) {
+    const slope = 1 - n.getY(i), jitter = 0.92 + r() * 0.14;
+    c.set(opt.palette(hs[i], slope)).multiplyScalar(jitter); colA[i * 3] = c.r; colA[i * 3 + 1] = c.g; colA[i * 3 + 2] = c.b;
+    c.set((opt.snowPalette || opt.palette)(hs[i], slope)).multiplyScalar(jitter); colB[i * 3] = c.r; colB[i * 3 + 1] = c.g; colB[i * 3 + 2] = c.b;
+  }
+  g.setAttribute('color', new THREE.BufferAttribute(colA.slice(), 3));
+  const mesh = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.96, flatShading: !!opt.flat }));
+  mesh.receiveShadow = true; W3.scene.add(mesh);
+  W3.terrain = { mesh, colA, colB, heightAt: (x, y) => { const h = heightAt(x, y); return h > 2 ? h : 0; } };
+  return W3.terrain;
+}
+/** 눈 환경이면 지형 색을 눈 덮인 색으로 */
+function applyTerrainSnow() {
+  const T = W3.terrain; if (!T) return;
+  const a = T.mesh.geometry.attributes.color; a.array.set(environment === 'SNOW' ? T.colB : T.colA); a.needsUpdate = true;
+}
+const mixHex = (a, b, t) => '#' + new THREE.Color(a).lerp(new THREE.Color(b), clamp(t, 0, 1)).getHexString();
+/** 지형 위 빈자리 찾기: 트랙에서 dMin~dMax · 경사 완만 · 다른 것과 겹치지 않게 */
+function findSpots(rand, count, dMin, dMax, gapTo = [], minGap = 400, tries = 4000) {
+  const B = TRACK_BOUNDS, out = [], dist = W3.distField;
+  for (let k = 0; k < tries && out.length < count; k++) {
+    const x = lerp(B.minX - dMax, B.maxX + dMax, rand()), y = lerp(B.minY - dMax, B.maxY + dMax, rand()), d = dist(x, y);
+    if (d < dMin || d > dMax || nearStructure(x, y, 650)) continue;
+    if ([...out, ...gapTo].some((q) => Math.hypot(q.x - x, q.y - y) < minGap + (q.r || 0))) continue;
+    out.push({ x, y, d });
+  }
+  return out;
 }
 
-/* ---------- MARINA NOCTURNE: 시가지 ---------- */
-function harbourFrame() {
-  // 메인 직선(출발선) 바깥쪽 = 항구. 트랙 전체가 직선 기준선 안쪽에 있도록 바다 시작 거리를 계산
-  const zone = DRS_ZONES.find((z) => isInZone(0, z)) || DRS_ZONES[0], i = Math.floor(wrapIndex(zone.full.start + zone.full.length / 2, SEGMENTS));
-  const side = normalX[i] + normalY[i] > 0 ? -1 : 1, nx = normalX[i] * side, ny = normalY[i] * side, tx = tangentX[i], ty = tangentY[i];
-  let maxOut = -1e9; for (let k = 0; k < SEGMENTS; k += 3) maxOut = Math.max(maxOut, (centerX[k] - centerX[i]) * nx + (centerY[k] - centerY[i]) * ny);
-  const start = maxOut + ROAD_HALF + 620;
-  return { ox: centerX[i], oy: centerY[i], nx, ny, tx, ty, start, outOf: (x, y) => (x - centerX[i]) * nx + (y - centerY[i]) * ny };
+/* ---------- 테마별 지형 (높이 · 색) ---------- */
+const THEME_TERRAIN = {
+  classic: { seed: 501, near: 1300, ramp: 2400, amp: 430, scale: 2600, farStart: 5200, farAmp: 2500, farScale: 5600,
+    palette: (h, s) => (h > 2300 ? mixHex('#e9eef2', '#aab3bb', s * 2) : h > 1400 ? mixHex('#6f7c6b', '#8b8f8c', s * 2) : mixHex(mixHex('#5aa64a', '#3c7d36', h / 900), '#7c826b', s * 1.8)),
+    snowPalette: (h, s) => mixHex('#eef3f8', '#b8c3cf', s * 1.6) },
+  mountain: { seed: 701, near: 950, ramp: 1700, amp: 980, scale: 2000, farStart: 3600, farAmp: 3100, farScale: 4000,
+    palette: (h, s) => (h > 2900 ? mixHex('#f2f6f9', '#b9c3cc', s * 2) : h > 1900 ? mixHex('#646e76', '#80888e', s * 2) : mixHex(mixHex('#3f8a3d', '#1f532c', h / 1100), '#5d6158', s * 1.9)),
+    snowPalette: (h, s) => mixHex('#eef3f8', '#9aa6b2', s * 1.4) },
+  desert: { seed: 801, near: 650, ramp: 1500, amp: 300, scale: 1400, farStart: 4600, farAmp: 1800, farScale: 3600, mesa: 0.6,
+    palette: (h, s) => (h > 800 ? mixHex('#c07443', '#8f4f2f', s * 2.2) : mixHex(mixHex('#e2bf7f', '#d5a764', h / 320), '#b98552', s * 2)),
+    snowPalette: (h, s) => mixHex('#f2ebe1', '#c9b8a3', s * 1.5) },
+  city: { seed: 601, near: 7200, ramp: 2600, amp: 160, scale: 3000, farStart: 7600, farAmp: 2300, farScale: 4300,
+    palette: (h, s) => mixHex(mixHex('#7d6457', '#56404a', h / 2200), '#3d3036', s * 2), snowPalette: (h, s) => mixHex('#e6ebf2', '#a0aab8', s * 1.5) },
+};
+
+/* ---------- 빌딩 외벽 6종 (낮 색 · 밤 불빛) — 한 장 = 6창 × 8층, 세계 크기 120 × 240 ---------- */
+function makeFacade(style, seed) {
+  const W = 192, H = 256, map = makeCanvas(W, H), emi = makeCanvas(W, H), m = map.getContext('2d'), e = emi.getContext('2d'), r = seededRandom(seed);
+  const cols = 6, rows = 8, cw = W / cols, rh = H / rows;
+  const S = {
+    glass: { wall: '#3b4654', glass: ['#263445', '#2e3f52', '#22303f'], frame: '#8c99a6', lit: ['#dbe8ff', '#f2f6ff', '#bcd2ff'], p: 0.42, band: 0.25, win: [0.06, 0.1] },
+    hotel: { wall: '#cbb79c', glass: ['#3a3128', '#43382c'], frame: '#b6a183', lit: ['#ffd38f', '#ffc06b', '#fff0c8'], p: 0.6, band: 0.05, win: [0.22, 0.24] },
+    bronze: { wall: '#6a4c26', glass: ['#7d5a2c', '#8a6534', '#6b4a22'], frame: '#a6824a', lit: ['#ffc56e', '#ffdca0', '#ffb04a'], p: 0.5, band: 0.35, win: [0.05, 0.08] },
+    resid: { wall: '#9b8676', glass: ['#2f3a45', '#3a4550'], frame: '#d9d2c8', lit: ['#ffcf88', '#ffe2b0', '#ffb877', '#d8e6ff'], p: 0.55, band: 0, win: [0.2, 0.22] },
+    white: { wall: '#e3e6ea', glass: ['#2b3846', '#33404e'], frame: '#f2f4f6', lit: ['#f4f8ff', '#ffe8c4'], p: 0.48, band: 0.4, win: [0.02, 0.3] },
+    casino: { wall: '#1b1424', glass: ['#2a1d36', '#22182c'], frame: '#3b2a4a', lit: ['#ff4fd8', '#b56bff', '#ffd23f', '#ff6b3d'], p: 0.35, band: 0.6, win: [0.12, 0.2] },
+  }[style];
+  m.fillStyle = S.wall; m.fillRect(0, 0, W, H); e.fillStyle = '#000'; e.fillRect(0, 0, W, H);
+  for (let y = 0; y < rows; y++) {
+    const floorLit = r() < S.band, floorP = floorLit ? 0.95 : S.p * (0.4 + r() * 1.1), tone = S.lit[Math.floor(r() * S.lit.length)];
+    for (let x = 0; x < cols; x++) {
+      const px = x * cw + cw * S.win[0], py = y * rh + rh * S.win[1], w = cw * (1 - S.win[0] * 2), h = rh * (1 - S.win[1] * 2);
+      m.fillStyle = S.glass[Math.floor(r() * S.glass.length)]; m.fillRect(px, py, w, h);
+      m.fillStyle = 'rgba(255,255,255,.08)'; m.fillRect(px, py, w, h * 0.3);
+      if (r() < floorP) { e.globalAlpha = 0.45 + r() * 0.55; e.fillStyle = r() < 0.85 ? tone : S.lit[Math.floor(r() * S.lit.length)]; e.fillRect(px, py, w, h * (r() < 0.2 ? 0.55 : 1)); e.globalAlpha = 1; }
+    }
+    m.fillStyle = S.frame; m.fillRect(0, y * rh, W, 2);                       // 층 구분선
+    if (style === 'white') { e.fillStyle = 'rgba(255,240,215,.25)'; e.fillRect(0, y * rh, W, 2); }
+  }
+  if (style === 'glass' || style === 'bronze') for (let x = 0; x <= cols; x++) { m.fillStyle = S.frame; m.fillRect(x * cw - 1, 0, 2, H); }   // 세로 멀리언
+  if (style === 'casino') for (let x = 0; x < cols; x += 2) { const c = S.lit[x % S.lit.length]; e.fillStyle = c; e.globalAlpha = 0.85; e.fillRect(x * cw + cw * 0.45, 0, 3, H); e.globalAlpha = 1; m.fillStyle = c; m.fillRect(x * cw + cw * 0.45, 0, 3, H); }
+  m.fillStyle = '#2a2d33'; m.fillRect(0, 0, W, 6); e.fillStyle = '#000'; e.fillRect(0, 0, W, 6);   // 지붕용 띠 (v ≈ 1)
+  return { map: canvasTexture(map), emi: canvasTexture(emi) };
 }
+/** 도시 바닥: 블록 · 도로 · 차선 (낮) + 가로등 · 차 불빛 (밤) */
+function makeCityGround() {
+  const S = 512, a = makeCanvas(S, S), b = makeCanvas(S, S), x = a.getContext('2d'), y = b.getContext('2d'), r = seededRandom(77);
+  x.fillStyle = '#34373d'; x.fillRect(0, 0, S, S); y.fillStyle = '#000'; y.fillRect(0, 0, S, S);
+  const road = 46, block = S / 2;
+  for (let by = 0; by < 2; by++) for (let bx = 0; bx < 2; bx++) {   // 블록 (보도 + 건물 마당)
+    const X = bx * block + road / 2, Y = by * block + road / 2, w = block - road;
+    x.fillStyle = '#6a6c70'; x.fillRect(X, Y, w, w); x.fillStyle = r() < 0.4 ? '#3f5238' : r() < 0.7 ? '#4a4c52' : '#55575c'; x.fillRect(X + 10, Y + 10, w - 20, w - 20);
+    for (let k = 0; k < 40; k++) { x.fillStyle = `rgba(0,0,0,${0.05 + r() * 0.08})`; x.fillRect(X + 10 + r() * (w - 30), Y + 10 + r() * (w - 30), 6 + r() * 30, 6 + r() * 30); }
+  }
+  x.strokeStyle = '#d8c46a'; x.lineWidth = 2; x.setLineDash([14, 12]);
+  for (const c of [0, block, S]) { x.beginPath(); x.moveTo(c, 0); x.lineTo(c, S); x.stroke(); x.beginPath(); x.moveTo(0, c); x.lineTo(S, c); x.stroke(); }
+  x.setLineDash([]);
+  for (const c of [0, block, S]) for (let t = 6; t < S; t += 22) {   // 차 불빛 (흰 헤드라이트 · 빨간 미등) + 가로등
+    if (r() < 0.55) { y.fillStyle = r() < 0.5 ? 'rgba(255,245,220,.9)' : 'rgba(255,60,50,.85)'; y.fillRect(c - 8 + r() * 16, t, 3, 7); y.fillRect(t, c - 8 + r() * 16, 7, 3); }
+    if (t % 44 === 6) { const g = y.createRadialGradient(c + road / 2 - 4, t, 0, c + road / 2 - 4, t, 16); g.addColorStop(0, 'rgba(255,205,140,.55)'); g.addColorStop(1, 'rgba(255,205,140,0)'); y.fillStyle = g; y.fillRect(c + road / 2 - 20, t - 16, 32, 32); }
+  }
+  return { map: canvasTexture(a), emi: canvasTexture(b) };
+}
+
+/* ---------- 공통: 클래식 (APEX) — 완만한 초록 언덕 + 먼 산 ---------- */
+function buildClassicScenery() { /* 지형과 숲만으로 (buildTrackWorld 가 만들어요) */ }
+
+/* ---------- LAS VEGAS: 진짜 야경 같은 도시 ---------- */
 function buildCityScenery() {
-  const T = courseTextures(), S = W3.scene, H = harbourFrame(), rand = seededRandom(601);
-  // 빌딩 재질: 낮 = 외벽, 밤 = 창문이 켜져요
-  const facade = emissiveByTime(new THREE.MeshStandardMaterial({ map: T.facade, emissive: '#ffffff', emissiveMap: T.facadeLit, emissiveIntensity: 0, roughness: 0.55, metalness: 0.25 }), 0, 0.35, 1.35);
-  const tower = (x, y, w, d, h, rot) => {
-    const g = new THREE.BoxGeometry(w, h, d), uv = g.attributes.uv;
-    for (let f = 0; f < 6; f++) for (let v = 0; v < 4; v++) {
-      const k = f * 4 + v, u = uv.getX(k), vv = uv.getY(k);
-      if (f === 2 || f === 3) uv.setXY(k, 0.5, 0.995);                          // 지붕 = 외벽 맨 위 띠
-      else uv.setXY(k, u * ((f < 2 ? d : w) / 120), vv * (h / 120));
-    }
-    g.rotateY(rot); g.translate(x, h / 2, y); return g;
+  const S = W3.scene, rand = seededRandom(601), plan = W3.coursePlan || {};
+  const styles = ['glass', 'hotel', 'bronze', 'resid', 'white', 'casino'], mats = styles.map((st, k) => {
+    const f = makeFacade(st, 900 + k * 7), night = st === 'casino' ? 1.8 : st === 'white' ? 1.0 : 1.25;
+    return emissiveByTime(new THREE.MeshStandardMaterial({ map: f.map, emissive: '#ffffff', emissiveMap: f.emi, emissiveIntensity: 0, roughness: st === 'glass' || st === 'bronze' ? 0.18 : 0.6, metalness: st === 'glass' || st === 'bronze' ? 0.55 : 0.1 }), 0, st === 'casino' ? 0.5 : 0.25, night);
+  });
+  const lists = styles.map(() => []), crowns = [], beacons = [];
+  const grid = Math.atan2(tangentY[0], tangentX[0]);   // 도시 격자 방향 = 메인 직선
+  const uvBox = (g, w, d, h) => {   // 면마다 실제 크기에 맞춰 반복 + 건물마다 다른 시작점 (무늬 반복이 안 보이게)
+    const uv = g.attributes.uv, ou = Math.floor(rand() * 6) / 6, ov = Math.floor(rand() * 8) / 8;
+    for (let f = 0; f < 6; f++) for (let v = 0; v < 4; v++) { const k = f * 4 + v; if (f === 2 || f === 3) uv.setXY(k, 0.5, 0.99); else uv.setXY(k, ou + uv.getX(k) * ((f < 2 ? d : w) / 120), ov + uv.getY(k) * (h / 240)); }
   };
-  const near = [], far = [];
-  // 1) 트랙 주변 시가지 블록 (벽 바깥 · 바다 아님 · 관중석/피트 피해서)
-  for (let k = 0, placed = 0; k < 2600 && placed < 260; k++) {
-    const x = lerp(TRACK_BOUNDS.minX - 2600, TRACK_BOUNDS.maxX + 2600, rand()), y = lerp(TRACK_BOUNDS.minY - 2600, TRACK_BOUNDS.maxY + 2600, rand());
-    const w = 160 + rand() * 260, d = 160 + rand() * 260, need = Math.hypot(w, d) / 2 + ROAD_HALF + 330;
-    if (trackDistance(x, y) < need || H.outOf(x, y) > H.start - 300 || nearStructure(x, y, 700)) continue;
-    const h = 140 + Math.pow(rand(), 1.6) * 900, near0 = nearestCenterIndex(x, y).index;
-    near.push(tower(x, y, w, d, h, -Math.atan2(tangentY[near0], tangentX[near0]))); placed++;
-  }
-  // 2) 멀리 스카이라인 (초고층) — 바다 쪽은 비워서 수평선이 보이게
-  for (let k = 0; k < 200; k++) {
-    const q = aroundTrack(rand(), 3000 + rand() * 6000), x = q.x, y = q.y;
-    if (H.outOf(x, y) > H.start - 200) continue;
-    const w = 220 + rand() * 380, h = 700 + Math.pow(rand(), 1.3) * 2800;
-    far.push(tower(x, y, w, w * (0.7 + rand() * 0.6), h, rand() * TAU));
-  }
-  for (const list of [near, far]) { const m = new THREE.Mesh(mergeGeometries(list), facade); m.castShadow = list === near; m.receiveShadow = true; S.add(m); }
-  // 3) 옥상 네온 간판 (트랙 쪽을 향해)
-  const neonMat = emissiveByTime(new THREE.MeshStandardMaterial({ map: T.neon, emissive: '#ffffff', emissiveMap: T.neon, emissiveIntensity: 0.6, roughness: 0.4, side: THREE.DoubleSide }), 0.6, 1.8, 3.2);
-  const signs = [];
-  for (let k = 0; k < near.length && signs.length < 34; k += 6) {
-    const bb = (near[k].computeBoundingBox(), near[k].boundingBox), cx = (bb.min.x + bb.max.x) / 2, cz = (bb.min.z + bb.max.z) / 2, top = bb.max.y;
-    const ni = nearestCenterIndex(cx, cz).index, yaw = Math.atan2(centerX[ni] - cx, centerY[ni] - cz);
-    const g = new THREE.PlaneGeometry(200, 26), slot = signs.length % 8, uv = g.attributes.uv;
-    for (let v = 0; v < 4; v++) uv.setY(v, 1 - (slot + 1 - uv.getY(v)) / 8);
-    g.rotateY(yaw); g.translate(cx, top + 22, cz); signs.push(g);
-  }
-  if (signs.length) S.add(new THREE.Mesh(mergeGeometries(signs), neonMat));
-  // 4) 항구: 바다 · 방파제 조명 · 요트 · 사장교
-  const sea = new THREE.Mesh(new THREE.PlaneGeometry(60000, 24000), new THREE.MeshStandardMaterial({ color: '#0b1a2b', roughness: 0.08, metalness: 0.75 }));
-  sea.rotation.x = -Math.PI / 2; sea.rotation.z = Math.atan2(H.ty, H.tx);
-  const seaMid = H.start + 12000; sea.position.set(H.ox + H.nx * seaMid, 1.2, H.oy + H.ny * seaMid); S.add(sea);
-  // 바다 가장자리 산책로 (밝은 줄)
-  const quay = new THREE.Mesh(new THREE.BoxGeometry(60000, 6, 40), emissiveByTime(new THREE.MeshStandardMaterial({ color: '#c9d1d9', emissive: '#ffd59a', emissiveIntensity: 0 }), 0, 0.4, 1.4));
-  quay.rotation.y = -Math.atan2(H.ty, H.tx); quay.position.set(H.ox + H.nx * H.start, 3, H.oy + H.ny * H.start); S.add(quay);
-  const yachtParts = [];
-  for (let k = 0; k < 28; k++) {
-    const along = (rand() - 0.5) * 16000, out = H.start + 500 + rand() * 4000, x = H.ox + H.tx * along + H.nx * out, y = H.oy + H.ty * along + H.ny * out;
-    const L = 60 + rand() * 80, hull = paintGeometry(new THREE.BoxGeometry(L, 10, L * 0.32), '#f2f4f6'); hull.translate(0, 5, 0);
-    const cabin = paintGeometry(new THREE.BoxGeometry(L * 0.45, 9, L * 0.22), '#1c2836'); cabin.translate(-L * 0.08, 14, 0);
-    const mast = paintGeometry(new THREE.CylinderGeometry(0.8, 0.8, L * 0.9, 5), '#d0d5da'); mast.translate(L * 0.1, L * 0.45 + 10, 0);
-    for (const g of [hull, cabin, mast]) { g.rotateY(Math.atan2(H.ty, H.tx) + (rand() - 0.5) * 0.4); g.translate(x, 0, y); yachtParts.push(g); }
-  }
-  S.add(new THREE.Mesh(mergeGeometries(yachtParts), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.4 })));
-  // 사장교: 바다 위를 가로질러 (교각 2개 + 케이블 + 상판 조명)
-  const bridge = [], bOut = H.start + 2600, bLen = 14000, towerH = 820;
-  const deck = paintGeometry(new THREE.BoxGeometry(bLen, 18, 90), '#6b737c'); deck.translate(0, 150, 0); bridge.push(deck);
-  for (const sx of [-bLen * 0.22, bLen * 0.22]) {
-    for (const dz of [-38, 38]) { const t = paintGeometry(new THREE.BoxGeometry(30, towerH, 18), '#aab3bc'); t.translate(sx, towerH / 2, dz); bridge.push(t); }
-    for (let c = 1; c <= 8; c++) for (const dir of [-1, 1]) for (const dz of [-40, 40]) {
-      const ax = sx, ay = towerH - 30 - c * 18, bx = sx + dir * c * 360, by = 158, len = Math.hypot(bx - ax, by - ay);
-      const cable = paintGeometry(new THREE.CylinderGeometry(1.2, 1.2, len, 4), '#d9dee3');
-      cable.rotateZ(Math.atan2(bx - ax, ay - by)); cable.translate((ax + bx) / 2, (ay + by) / 2, dz); bridge.push(cable);
+  const building = (x, y, w, d, h, rot, style) => {
+    const parts = [];
+    let base = 0, cw = w, cd = d, left = h; const tiers = h > 900 ? 3 : h > 450 ? 2 : 1;
+    for (let t = 0; t < tiers; t++) {   // 셋백: 위로 갈수록 가늘게
+      const th = t === tiers - 1 ? left : left * (0.45 + rand() * 0.2); left -= th;
+      if (rand() < 0.18 && t === tiers - 1 && cw > 120) { const g = new THREE.CylinderGeometry(cw * 0.45, cw * 0.48, th, 16, 1); const uv = g.attributes.uv; for (let k = 0; k < uv.count; k++) uv.setXY(k, uv.getX(k) * (cw * 1.45 / 120), uv.getY(k) * (th / 240)); g.translate(0, base + th / 2, 0); parts.push(g); }
+      else { const g = new THREE.BoxGeometry(cw, th, cd); uvBox(g, cw, cd, th); g.translate(0, base + th / 2, 0); parts.push(g); }
+      base += th; cw *= 0.72 + rand() * 0.12; cd *= 0.72 + rand() * 0.12;
     }
+    for (const g of parts) { g.rotateY(rot); g.translate(x, 0, y); lists[style].push(g); }
+    if (h > 520) {   // 옥상 크라운 조명 띠 + 항공 경고등
+      const col = ['#ffd27a', '#ffffff', '#ff5fd2', '#ff4a3d', '#c08bff'][Math.floor(rand() * 5)];
+      const cr = paintGeometry(new THREE.BoxGeometry(cw / (0.79) + 4, 8, cd / (0.79) + 4), col); cr.translate(0, base - 6, 0); cr.rotateY(rot); cr.translate(x, 0, y); crowns.push(cr);
+      const bc = paintGeometry(new THREE.BoxGeometry(8, 8, 8), '#ff2a20'); bc.translate(0, base + 14, 0); bc.rotateY(rot); bc.translate(x, 0, y); beacons.push(bc);
+    }
+  };
+  const avoid = [...(plan.lake ? [plan.lake] : []), ...(plan.sphere ? [{ ...plan.sphere, r: 420 }] : []), ...(plan.tower ? [{ ...plan.tower, r: 260 }] : [])];
+  const free = (x, y, r) => !avoid.some((q) => Math.hypot(q.x - x, q.y - y) < (q.r || 0) + r) && !nearStructure(x, y, 650 + r);
+  const ring = (count, dMin, dMax, hMin, hMax, sizeMin, sizeMax) => {
+    const B = TRACK_BOUNDS;
+    for (let k = 0, made = 0; k < count * 12 && made < count; k++) {
+      const x = lerp(B.minX - dMax, B.maxX + dMax, rand()), y = lerp(B.minY - dMax, B.maxY + dMax, rand()), dd = W3.distField(x, y);
+      const w = sizeMin + rand() * (sizeMax - sizeMin), d = w * (0.6 + rand() * 0.6), half = Math.hypot(w, d) / 2;
+      if (dd < dMin + half || dd > dMax || !free(x, y, half)) continue;
+      const h = hMin + Math.pow(rand(), 1.8) * (hMax - hMin), pr = rand(), st = pr < 0.27 ? 0 : pr < 0.5 ? 1 : pr < 0.64 ? 2 : pr < 0.84 ? 3 : pr < 0.95 ? 4 : 5;   // 유리 · 호텔 위주, 카지노 LED 는 가끔
+      building(x, y, w, d, h, grid + (rand() < 0.8 ? 0 : (rand() - 0.5) * 0.6), st); made++;
+    }
+  };
+  ring(170, ROAD_HALF + 380, 2200, 90, 560, 120, 300);     // 트랙 옆: 낮은 건물 (시야를 가리지 않게)
+  ring(260, 2200, 6200, 260, 1500, 180, 380);              // 중간: 호텔 · 오피스
+  ring(150, 6200, 11000, 700, 2700, 220, 420);             // 멀리: 스카이라인
+  lists.forEach((l, k) => { if (!l.length) return; const m = new THREE.Mesh(mergeGeometries(l), mats[k]); m.castShadow = true; m.receiveShadow = true; S.add(m); });
+  const crownMat = new THREE.MeshBasicMaterial({ vertexColors: true }); COURSE_FX.emissive.push({ mat: crownMat, basic: true, day: 0.55, dusk: 1.1, night: 1.6 });
+  if (crowns.length) S.add(new THREE.Mesh(mergeGeometries(crowns), crownMat));
+  const beaconMat = new THREE.MeshBasicMaterial({ vertexColors: true }); if (beacons.length) S.add(new THREE.Mesh(mergeGeometries(beacons), beaconMat));
+  COURSE_FX.updaters.push(() => { beaconMat.color.setScalar(Math.sin(nowSeconds() * 3.2) > 0.2 ? 1.6 : 0.15); });
+  // 랜드마크 1: 구형 LED 공연장 (표면 영상이 천천히 돌아요)
+  if (plan.sphere) {
+    const c = makeCanvas(1024, 512), x = c.getContext('2d'), g = x.createLinearGradient(0, 0, 0, 512);
+    g.addColorStop(0, '#0b1b5a'); g.addColorStop(0.5, '#2f7bff'); g.addColorStop(0.62, '#8fd0ff'); g.addColorStop(1, '#0c2a12'); x.fillStyle = g; x.fillRect(0, 0, 1024, 512);
+    x.fillStyle = 'rgba(255,255,255,.85)'; for (let k = 0; k < 9; k++) { x.beginPath(); x.ellipse(60 + k * 115, 150 + Math.sin(k) * 40, 70, 22, 0, 0, TAU); x.fill(); }
+    x.font = `italic 900 120px ${UI_FONT}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#ffd23f'; x.fillText('APEX GP', 256, 330); x.fillStyle = '#ff3b6b'; x.fillText('LAS VEGAS', 768, 330);
+    const tex = canvasTexture(c, false); tex.wrapS = THREE.RepeatWrapping;
+    const mat = emissiveByTime(new THREE.MeshStandardMaterial({ map: tex, emissive: '#ffffff', emissiveMap: tex, emissiveIntensity: 1, roughness: 0.35 }), 0.75, 1.3, 1.9);
+    const sphere = new THREE.Mesh(new THREE.SphereGeometry(300, 48, 32), mat); sphere.position.set(plan.sphere.x, 270, plan.sphere.y); sphere.castShadow = true; S.add(sphere);
+    COURSE_FX.updaters.push((dt) => { tex.offset.x = (tex.offset.x + dt * 0.02) % 1; });
   }
-  const bridgeMesh = new THREE.Mesh(mergeGeometries(bridge), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.5, metalness: 0.4 }));
-  const bx = H.ox + H.nx * bOut, by = H.oy + H.ny * bOut; bridgeMesh.rotation.y = -Math.atan2(H.ty, H.tx); bridgeMesh.position.set(bx, 0, by); S.add(bridgeMesh);
-  const lights = new THREE.Mesh(new THREE.BoxGeometry(bLen, 3, 96), emissiveByTime(new THREE.MeshStandardMaterial({ color: '#ffe6b0', emissive: '#ffcf7a', emissiveIntensity: 0 }), 0, 0.8, 2.6));
-  lights.rotation.y = bridgeMesh.rotation.y; lights.position.set(bx, 161, by); S.add(lights);
-  // 5) 불꽃놀이 (밤 · 항구 위)
-  const fw = makePointCloud(420, true), sparks = [];
+  // 랜드마크 2: 전망 타워 (가는 기둥 + 원반 전망대 + 첨탑)
+  if (plan.tower) {
+    const parts = [], T = plan.tower;
+    const shaft = paintGeometry(new THREE.CylinderGeometry(38, 62, 1550, 14), '#d6d9dd'); shaft.translate(0, 775, 0); parts.push(shaft);
+    for (const [y, r, h, col] of [[1550, 150, 60, '#c9ced4'], [1620, 125, 70, '#3a4a5c'], [1700, 95, 40, '#d6d9dd']]) { const g = paintGeometry(new THREE.CylinderGeometry(r, r * 0.92, h, 24), col); g.translate(0, y, 0); parts.push(g); }
+    const spire = paintGeometry(new THREE.CylinderGeometry(4, 16, 260, 8), '#e8ebee'); spire.translate(0, 1850, 0); parts.push(spire);
+    const m = new THREE.Mesh(mergeGeometries(parts), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.4, metalness: 0.3 })); m.position.set(T.x, 0, T.y); m.castShadow = true; S.add(m);
+    const ringMat = new THREE.MeshBasicMaterial({ color: '#ffd9a0' }); COURSE_FX.emissive.push({ mat: ringMat, basic: true, day: 0.4, dusk: 1.1, night: 1.8, base: '#ffd9a0' });
+    for (const y of [1585, 1655]) { const r = new THREE.Mesh(new THREE.TorusGeometry(y < 1600 ? 152 : 127, 3, 6, 40).rotateX(Math.PI / 2), ringMat); r.position.set(T.x, y, T.y); S.add(r); }
+    const top = new THREE.Mesh(new THREE.SphereGeometry(9, 8, 6), beaconMat.clone()); top.material.color.set('#ff2a20'); top.position.set(T.x, 1985, T.y); S.add(top);
+  }
+  // 랜드마크 3: 분수 호수 (밤엔 물기둥 쇼)
+  if (plan.lake) {
+    const L = plan.lake;
+    const water = new THREE.Mesh(new THREE.CircleGeometry(L.r, 48).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#16344d', roughness: 0.06, metalness: 0.55, emissive: '#0d2236', emissiveIntensity: 0.6 }));
+    water.position.set(L.x, 1.4, L.y); S.add(water);
+    const rim = new THREE.Mesh(new THREE.RingGeometry(L.r, L.r + 26, 48).rotateX(-Math.PI / 2), emissiveByTime(new THREE.MeshStandardMaterial({ color: '#d9d2c3', emissive: '#ffd59a', emissiveIntensity: 0 }), 0, 0.5, 1.2));
+    rim.position.set(L.x, 2, L.y); S.add(rim);
+    const jets = makePointCloud(700, true), drops = [];
+    COURSE_FX.updaters.push((dt) => {
+      const t = nowSeconds(), show = 0.5 + 0.5 * Math.sin(t * 0.7), g = jets.geometry;
+      for (let k = 0; k < 14; k++) if (drops.length < 700 && Math.random() < dt * 60) {
+        const a = (k / 14) * TAU, rr = L.r * 0.55, v = 260 + 200 * show * (0.6 + 0.4 * Math.sin(t * 2 + k));
+        drops.push({ x: L.x + Math.cos(a) * rr, y: 6, z: L.y + Math.sin(a) * rr, vx: (Math.random() - 0.5) * 20, vy: v, vz: (Math.random() - 0.5) * 20, life: 2.4 });
+      }
+      let n = 0;
+      for (let k = drops.length - 1; k >= 0; k--) { const d = drops[k]; d.life -= dt; d.vy -= 220 * dt; d.x += d.vx * dt; d.y += d.vy * dt; d.z += d.vz * dt; if (d.y < 0 || d.life <= 0) { drops.splice(k, 1); continue; }
+        g.attributes.position.setXYZ(n, d.x, d.y, d.z); g.attributes.color.setXYZW(n, 0.85, 0.92, 1, timeOfDay === 'NIGHT' ? 0.55 : 0.35); g.attributes.size.setX(n, 22); n++; }
+      g.setDrawRange(0, n); g.attributes.position.needsUpdate = g.attributes.color.needsUpdate = g.attributes.size.needsUpdate = true;
+      jets.material.uniforms.pixelScale.value = W3.glowPoints.material.uniforms.pixelScale.value;
+    });
+  }
+  // 네온 간판 (중간 높이 건물 벽 · 트랙 쪽)
+  const N = makeCanvas(512, 512), nx = N.getContext('2d');
+  const signs = [['LAS VEGAS', '#ff2f8a'], ['CASINO', '#ffd23f'], ['APEX GP', '#ff3b2f'], ['NEON FUEL', '#b56bff'], ['HOTEL', '#ff8a00'], ['KAIROS', '#ffe9a8'], ['ZENITH', '#ff4fd8'], ['JACKPOT', '#ffc23f']];
+  nx.fillStyle = '#000'; nx.fillRect(0, 0, 512, 512);
+  signs.forEach(([t, col], i) => { const y = i * 64; nx.strokeStyle = col; nx.lineWidth = 4; nx.strokeRect(8, y + 8, 496, 48); nx.font = `italic 900 38px ${UI_FONT}`; nx.textAlign = 'center'; nx.textBaseline = 'middle'; nx.shadowColor = col; nx.shadowBlur = 14; nx.fillStyle = col; nx.fillText(t, 256, y + 34); nx.shadowBlur = 0; });
+  const neonTex = canvasTexture(N, false), neonMat = emissiveByTime(new THREE.MeshStandardMaterial({ map: neonTex, emissive: '#ffffff', emissiveMap: neonTex, emissiveIntensity: 0.6, roughness: 0.4, side: THREE.DoubleSide }), 0.7, 1.8, 3.2);
+  const signGeo = [];
+  for (const l of lists) for (let k = 0; k < l.length && signGeo.length < 46; k += 9) {
+    const g = l[k]; g.computeBoundingBox(); const bb = g.boundingBox, cx = (bb.min.x + bb.max.x) / 2, cz = (bb.min.z + bb.max.z) / 2;
+    if (W3.distField(cx, cz) > 3200) continue;
+    const ni = nearestCenterIndex(cx, cz).index, yaw = Math.atan2(centerX[ni] - cx, centerY[ni] - cz), hgt = Math.min(bb.max.y * 0.7, 160 + rand() * 140);
+    const pg = new THREE.PlaneGeometry(180, 24), slot = signGeo.length % 8, uv = pg.attributes.uv; for (let v = 0; v < 4; v++) uv.setY(v, 1 - (slot + 1 - uv.getY(v)) / 8);
+    const out = Math.min(bb.max.x - bb.min.x, bb.max.z - bb.min.z) / 2 + 3;
+    pg.rotateY(yaw); pg.translate(cx + Math.sin(yaw) * out, hgt, cz + Math.cos(yaw) * out); signGeo.push(pg);
+  }
+  if (signGeo.length) S.add(new THREE.Mesh(mergeGeometries(signGeo), neonMat));
+  // 불꽃놀이 (밤 · 호수 위)
+  const fw = makePointCloud(420, true), sparks = [], C0 = plan.lake || trackCenter();
   let nextBurst = 1;
   COURSE_FX.updaters.push((dt) => {
-    const night = timeOfDay === 'NIGHT';
     nextBurst -= dt;
-    if (night && nextBurst <= 0 && gameMode !== 'garage') {
-      nextBurst = 1.4 + Math.random() * 3;
-      const along = (Math.random() - 0.5) * 9000, out = H.start + 1500 + Math.random() * 3500, x = H.ox + H.tx * along + H.nx * out, y = H.oy + H.ty * along + H.ny * out, h = 1100 + Math.random() * 900;
-      const hue = Math.random(), col = new THREE.Color().setHSL([0.0, 0.08, 0.13, 0.85, 0.95][Math.floor(hue * 5)], 1, 0.6);
-      for (let k = 0; k < 70 && sparks.length < 420; k++) {
-        const a = Math.random() * TAU, b = Math.acos(2 * Math.random() - 1), v = 260 + Math.random() * 120;
-        sparks.push({ x, y: h, z: y, vx: Math.sin(b) * Math.cos(a) * v, vy: Math.cos(b) * v, vz: Math.sin(b) * Math.sin(a) * v, life: 1.6 + Math.random() * 0.8, c: col });
-      }
+    if (timeOfDay === 'NIGHT' && nextBurst <= 0) {
+      nextBurst = 1.6 + Math.random() * 3;
+      const x = C0.x + (Math.random() - 0.5) * 2400, y = C0.y + (Math.random() - 0.5) * 2400, h = 1000 + Math.random() * 800;
+      const col = new THREE.Color().setHSL([0.0, 0.08, 0.13, 0.85, 0.95][Math.floor(Math.random() * 5)], 1, 0.6);
+      for (let k = 0; k < 70 && sparks.length < 420; k++) { const a = Math.random() * TAU, b = Math.acos(2 * Math.random() - 1), v = 260 + Math.random() * 120; sparks.push({ x, y: h, z: y, vx: Math.sin(b) * Math.cos(a) * v, vy: Math.cos(b) * v, vz: Math.sin(b) * Math.sin(a) * v, life: 1.6 + Math.random() * 0.8, c: col }); }
     }
     const g = fw.geometry; let n = 0;
-    for (let k = sparks.length - 1; k >= 0; k--) {
-      const s = sparks[k]; s.life -= dt; if (s.life <= 0) { sparks.splice(k, 1); continue; }
-      s.vy -= 160 * dt; s.vx *= 0.985; s.vz *= 0.985; s.vy *= 0.985; s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt;
-      g.attributes.position.setXYZ(n, s.x, s.y, s.z); g.attributes.color.setXYZW(n, s.c.r * 2, s.c.g * 2, s.c.b * 2, Math.min(1, s.life)); g.attributes.size.setX(n, 26); n++;
-    }
+    for (let k = sparks.length - 1; k >= 0; k--) { const s = sparks[k]; s.life -= dt; if (s.life <= 0) { sparks.splice(k, 1); continue; } s.vy -= 160 * dt; s.vx *= 0.985; s.vz *= 0.985; s.vy *= 0.985; s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt;
+      g.attributes.position.setXYZ(n, s.x, s.y, s.z); g.attributes.color.setXYZW(n, s.c.r * 2, s.c.g * 2, s.c.b * 2, Math.min(1, s.life)); g.attributes.size.setX(n, 26); n++; }
     g.setDrawRange(0, n); g.attributes.position.needsUpdate = g.attributes.color.needsUpdate = g.attributes.size.needsUpdate = true;
     fw.material.uniforms.pixelScale.value = W3.glowPoints.material.uniforms.pixelScale.value;
   });
 }
 
-/* ---------- SIERRA TEMPESTA: 산악 ---------- */
+/* ---------- SPA: 아르덴 숲 언덕 · 풍력발전기 · 마을 · 돌다리 · 폭포 ---------- */
 function buildMountainScenery() {
-  const S = W3.scene, T = courseTextures(), rand = seededRandom(701);
-  // 멀리 눈 덮인 산맥 + 가까운 숲 언덕
-  buildPeakRing({ count: 26, near: 4800, far: 8500, rMin: 2800, rMax: 4800, hMin: 2600, hMax: 5200, colors: ['#2f4a36', '#5b6670', '#eef3f7'], seed: 702, segs: 9, rough: 0.3, snowLine: 0.66 });
-  buildPeakRing({ count: 34, near: 1500, far: 3800, rMin: 1100, rMax: 2000, hMin: 520, hMax: 1300, colors: ['#1f4a2c', '#2a5a35', '#3c6b45'], seed: 703, segs: 8, rough: 0.18, snowLine: 2 });
-  // 폭포 절벽: 트랙에서 900~1500 떨어진 빈 곳 중 하나
-  let spot = null;
-  for (let k = 0; k < 400 && !spot; k++) {
-    const i = Math.floor(rand() * SEGMENTS), side = rand() < 0.5 ? -1 : 1, off = wallDistance[sideIndex(side)][i] + 900 + rand() * 500;
-    const x = centerX[i] + normalX[i] * off * side, y = centerY[i] + normalY[i] * off * side;
-    if (trackDistance(x, y) > 850 && !nearStructure(x, y, 900)) spot = { x, y, i };
+  const S = W3.scene, T = courseTextures(), rand = seededRandom(701), plan = W3.coursePlan || {}, Hh = W3.terrain ? W3.terrain.heightAt : () => 0;
+  // 풍력발전기: 언덕 높은 곳에 (날개가 천천히 돌아요)
+  const cand = findSpots(rand, 160, 1600, 5200, [], 260).map((q) => ({ ...q, h: Hh(q.x, q.y) })).sort((a, b) => b.h - a.h);
+  const turbines = []; for (const q of cand) { if (turbines.length >= 9) break; if (q.h > 250 && turbines.every((t) => Math.hypot(t.x - q.x, t.y - q.y) > 700)) turbines.push(q); }
+  const white = new THREE.MeshStandardMaterial({ color: '#eef1f4', roughness: 0.45, metalness: 0.2 }), rotors = [];
+  for (const q of turbines) {
+    const grp = new THREE.Group(); grp.position.set(q.x, q.h - 5, q.y);
+    const towerG = new THREE.CylinderGeometry(7, 13, 400, 10); towerG.translate(0, 200, 0); grp.add(new THREE.Mesh(towerG, white));
+    const nac = new THREE.Mesh(new THREE.BoxGeometry(46, 16, 18), white); nac.position.set(6, 404, 0); grp.add(nac);
+    const rotor = new THREE.Group(); rotor.position.set(-20, 404, 0);
+    for (let b = 0; b < 3; b++) { const bl = new THREE.Mesh(new THREE.BoxGeometry(3, 170, 9).translate(0, 85, 0), white); bl.rotation.x = (b / 3) * TAU; rotor.add(bl); }
+    rotor.rotation.x = rand() * TAU; grp.add(rotor); grp.rotation.y = 0.7 + rand() * 0.3; rotors.push(rotor); S.add(grp);
+    grp.traverse((o) => { if (o.isMesh) o.castShadow = true; });
   }
+  COURSE_FX.updaters.push((dt) => { for (const r of rotors) r.rotation.x += dt * 0.9; });
+  // 붉은 지붕 마을 + 교회 첨탑 (트랙 옆 평지)
+  if (plan.village) {
+    const V = plan.village, parts = [];
+    const walls = ['#efe7da', '#d9cfc0', '#bfb6a8', '#e8dccb'], roofs = ['#8b2f24', '#6f2a22', '#4a4f57', '#9a3a2a'];
+    for (let k = 0; k < 34; k++) {
+      const a = rand() * TAU, rr = Math.sqrt(rand()) * V.r, x = V.x + Math.cos(a) * rr, y = V.y + Math.sin(a) * rr;
+      if (W3.distField(x, y) < ROAD_HALF + 320 || nearStructure(x, y, 600)) continue;
+      const w = 50 + rand() * 40, d = 36 + rand() * 24, h = 30 + rand() * 26, rot = rand() * TAU;
+      const body = paintGeometry(new THREE.BoxGeometry(w, h, d), walls[k % 4]); body.translate(0, h / 2, 0);
+      const roof = paintGeometry(new THREE.CylinderGeometry(d * 0.62, d * 0.62, w + 6, 3), roofs[k % 4]); roof.rotateZ(Math.PI / 2); roof.translate(0, h + d * 0.28, 0);
+      for (const g of [body, roof]) { g.rotateY(rot); g.translate(x, 0, y); parts.push(g); }
+    }
+    const tw = paintGeometry(new THREE.BoxGeometry(34, 120, 34), '#cfc6b6'); tw.translate(V.x, 60, V.y); parts.push(tw);
+    const sp = paintGeometry(new THREE.ConeGeometry(26, 90, 4), '#4a4f57'); sp.rotateY(Math.PI / 4); sp.translate(V.x, 165, V.y); parts.push(sp);
+    const m = new THREE.Mesh(mergeGeometries(parts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 0.85 })); m.castShadow = true; m.receiveShadow = true; S.add(m);
+  }
+  // 폭포 절벽 (트랙에서 보이는 언덕 자락)
+  const spot = plan.waterfall;
   if (spot) {
-    const yaw = Math.atan2(centerX[spot.i] - spot.x, centerY[spot.i] - spot.y);   // 절벽 앞면이 트랙을 봐요
-    const cliffParts = [];
+    const yaw = Math.atan2(spot.tx - spot.x, spot.ty - spot.y), cliffParts = [];
     for (let k = 0; k < 7; k++) { const g = new THREE.DodecahedronGeometry(180 + rand() * 160, 0); g.scale(1.4, 1.6 + rand(), 1); g.translate((k - 3) * 170, 180 + rand() * 120, -80 - rand() * 60); cliffParts.push(paintGeometry(g, ['#5b5f63', '#4d5257', '#6a6e72'][k % 3])); }
     const cliff = new THREE.Mesh(mergeGeometries(cliffParts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 0.95 }));
     cliff.rotation.y = yaw; cliff.position.set(spot.x, 0, spot.y); cliff.castShadow = true; cliff.receiveShadow = true; S.add(cliff);
-    const fallMat = new THREE.MeshStandardMaterial({ map: T.waterfall, transparent: true, opacity: 0.85, emissive: '#9fb7cc', emissiveIntensity: 0.15, roughness: 0.2, depthWrite: false, side: THREE.DoubleSide });
+    const fallMat = new THREE.MeshStandardMaterial({ map: T.waterfall, transparent: true, opacity: 0.88, emissive: '#9fb7cc', emissiveIntensity: 0.2, roughness: 0.2, depthWrite: false, side: THREE.DoubleSide });
     T.waterfall.repeat.set(1, 2);
-    const fall = new THREE.Mesh(new THREE.PlaneGeometry(130, 560), fallMat); fall.position.set(0, 280, 250);   // 바위 앞면
+    const fall = new THREE.Mesh(new THREE.PlaneGeometry(130, 560), fallMat); fall.position.set(0, 280, 250);
     const pool = new THREE.Mesh(new THREE.CircleGeometry(220, 24).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#25445a', roughness: 0.05, metalness: 0.7 })); pool.position.set(0, 1.5, 420);
     const holder = new THREE.Group(); holder.add(fall); holder.add(pool); holder.rotation.y = yaw; holder.position.set(spot.x, 0, spot.y); S.add(holder);
-    const mist = makePointCloud(60, false), drops = Array.from({ length: 60 }, () => ({ t: Math.random() }));
-    COURSE_FX.updaters.push((dt) => {
-      T.waterfall.offset.y += dt * 1.6;
-      const g = mist.geometry, c = Math.cos(yaw), s = Math.sin(yaw);
-      drops.forEach((d, k) => {
-        d.t = (d.t + dt * 0.35) % 1; const r = 40 + d.t * 200, a = k * 2.4;
-        const lx = Math.cos(a) * r * 0.8, lz = 400 + Math.sin(a) * r * 0.5;
-        g.attributes.position.setXYZ(k, spot.x + lx * c + lz * s, 10 + d.t * 90, spot.y - lx * s + lz * c);
-        g.attributes.color.setXYZW(k, 0.9, 0.95, 1, 0.35 * (1 - d.t)); g.attributes.size.setX(k, 60 + d.t * 90);
-      });
-      g.setDrawRange(0, drops.length); g.attributes.position.needsUpdate = g.attributes.color.needsUpdate = g.attributes.size.needsUpdate = true;
-      mist.material.uniforms.pixelScale.value = W3.glowPoints.material.uniforms.pixelScale.value;
-    });
+    COURSE_FX.updaters.push((dt) => { T.waterfall.offset.y += dt * 1.6; });
   }
-  // 트랙을 건너는 돌다리 (두 번째 긴 직선 가운데) — 아치 + 난간
+  // 트랙을 건너는 돌다리
   const zone = DRS_ZONES[1] || DRS_ZONES[0];
   if (zone) {
     const i = Math.floor(wrapIndex(zone.full.start + zone.full.length * 0.5, SEGMENTS)), span = Math.max(wallDistance[0][i], wallDistance[1][i]) + 70;
     const parts = [], stone = ['#8b8379', '#7a7369', '#968e83'];
     for (const s of [-1, 1]) { const pier = paintGeometry(new THREE.BoxGeometry(70, 300, 90), stone[1]); pier.translate(0, 150, s * (span + 35)); parts.push(pier); }
     const N = 14;
-    for (let k = 0; k < N; k++) {   // 아치를 블록으로
+    for (let k = 0; k < N; k++) {
       const a0 = Math.PI * (k / N), a1 = Math.PI * ((k + 1) / N), z0 = -Math.cos(a0) * span, z1 = -Math.cos(a1) * span, y0 = 190 + Math.sin(a0) * 70, y1 = 190 + Math.sin(a1) * 70;
       const len = Math.hypot(z1 - z0, y1 - y0) + 4, blk = paintGeometry(new THREE.BoxGeometry(60, 26, len), stone[k % 3]);
       blk.rotateX(-Math.atan2(y1 - y0, z1 - z0)); blk.translate(0, (y0 + y1) / 2, (z0 + z1) / 2); parts.push(blk);
@@ -10464,47 +10657,62 @@ function buildMountainScenery() {
   }
 }
 
-/* ---------- DUNE MIRAGE: 사막 ---------- */
+/* ---------- BAHRAIN: 사막 · 오아시스 · 사키르 타워 · 텐트 · 호텔 아치 ---------- */
 function buildDesertScenery() {
-  const S = W3.scene, rand = seededRandom(801);
-  // 멀리 붉은 사막 산 (평평한 메사 섞어서)
-  buildPeakRing({ count: 24, near: 5500, far: 9000, rMin: 2400, rMax: 4200, hMin: 1300, hMax: 2600, colors: ['#a7623b', '#bf7a4a', '#d79a68'], seed: 802, segs: 7, rough: 0.22, snowLine: 2, flatTop: 0.25 });
-  // 모래 언덕: 납작한 반구 여러 개 (트랙과 겹치지 않게)
-  const dunes = [];
-  for (let k = 0, made = 0; k < 900 && made < 70; k++) {
-    const x = lerp(TRACK_BOUNDS.minX - 6000, TRACK_BOUNDS.maxX + 6000, rand()), y = lerp(TRACK_BOUNDS.minY - 6000, TRACK_BOUNDS.maxY + 6000, rand());
-    const rx = 700 + rand() * 1500, rz = rx * (0.35 + rand() * 0.35), h = 90 + rand() * 360;
-    const O0 = W3.courseOasis;
-    if (trackDistance(x, y) < rx + ROAD_HALF + 500 || nearStructure(x, y, rx + 500) || (O0 && Math.hypot(x - O0.x, y - O0.y) < O0.r + rx + 400)) continue;   // 오아시스는 비워 둬요
-    const g = new THREE.SphereGeometry(1, 18, 8, 0, TAU, 0, Math.PI / 2); g.scale(rx, h, rz); g.rotateY(rand() * TAU); g.translate(x, -2, y);
-    dunes.push(paintGeometry(g, rand() < 0.5 ? '#ddb878' : '#d2a965')); made++;
-  }
-  if (dunes.length) { const m = new THREE.Mesh(mergeGeometries(dunes), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1 })); m.receiveShadow = true; S.add(m); }
-  // 오아시스 호수 (buildScenery 가 자리를 정하고 야자수를 심어 둬요)
-  const O = W3.courseOasis;
-  if (O) {
-    const water = new THREE.Mesh(new THREE.CircleGeometry(O.r, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#1f6f86', roughness: 0.04, metalness: 0.6 }));
+  const S = W3.scene, rand = seededRandom(801), plan = W3.coursePlan || {};
+  for (const O of plan.oases || []) {   // 트랙 옆 오아시스 (야자수는 06_scenery 가 심어요)
+    const water = new THREE.Mesh(new THREE.CircleGeometry(O.r, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#1d7a8c', roughness: 0.04, metalness: 0.5, emissive: '#0b3a44', emissiveIntensity: 0.25 }));
     water.position.set(O.x, 1.6, O.y); S.add(water);
-    const shore = new THREE.Mesh(new THREE.RingGeometry(O.r, O.r + 70, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#8a9a52', roughness: 1 }));
-    shore.position.set(O.x, 1.2, O.y); S.add(shore);
+    const shore = new THREE.Mesh(new THREE.RingGeometry(O.r, O.r + 120, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#7f9a48', roughness: 1 })); shore.position.set(O.x, 1.3, O.y); S.add(shore);
+    const reeds = []; for (let k = 0; k < 40; k++) { const a = rand() * TAU, rr = O.r + rand() * 60, g = paintGeometry(new THREE.ConeGeometry(8, 40 + rand() * 30, 4), '#5e7c34'); g.translate(O.x + Math.cos(a) * rr, 22, O.y + Math.sin(a) * rr); reeds.push(g); }
+    S.add(new THREE.Mesh(mergeGeometries(reeds), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true })));
   }
-  // 트랙 위 호텔 아치: 두 번째 긴 직선 위 — 양옆 호텔 타워 + 금빛 격자 지붕
-  const zone = DRS_ZONES[1] || DRS_ZONES[0];
-  if (zone) {
-    const i = Math.floor(wrapIndex(zone.full.start + zone.full.length * 0.35, SEGMENTS)), span = Math.max(wallDistance[0][i], wallDistance[1][i]) + 240;
-    const T = courseTextures();
-    const glass = emissiveByTime(new THREE.MeshStandardMaterial({ map: T.facade, emissive: '#ffffff', emissiveMap: T.facadeLit, emissiveIntensity: 0.2, roughness: 0.25, metalness: 0.5, color: '#e8d9bd' }), 0, 0.7, 1.4);
-    const parts = [];
-    for (const s of [-1, 1]) {
-      const g = new THREE.BoxGeometry(300, 420, 380), uv = g.attributes.uv; for (let k = 0; k < uv.count; k++) uv.setXY(k, uv.getX(k) * 3, uv.getY(k) * 3.5);
-      g.translate(0, 210, s * (span + 190)); parts.push(g);
-    }
+  // 사키르 타워 (피트 뒤 · 텐트 모양 지붕)
+  const pit = sceneryObjects.find((o) => o.kind === 'pit');
+  if (pit) {
+    const ni = nearestCenterIndex(pit.x, pit.y).index, ox = pit.x - centerX[ni], oy = pit.y - centerY[ni], L = Math.hypot(ox, oy) || 1;
+    const tx = pit.x + (ox / L) * 330 + tangentX[ni] * 760, ty = pit.y + (oy / L) * 330 + tangentY[ni] * 760, parts = [];
+    const glassT = paintGeometry(new THREE.CylinderGeometry(90, 110, 300, 20), '#c9d4dc'); glassT.translate(0, 150, 0); parts.push(glassT);
+    for (let f = 0; f < 6; f++) { const band = paintGeometry(new THREE.CylinderGeometry(114 - f * 3, 114 - f * 3, 6, 20), '#7a8792'); band.translate(0, 30 + f * 46, 0); parts.push(band); }
+    const deck = paintGeometry(new THREE.CylinderGeometry(190, 170, 18, 24), '#e9e3d6'); deck.translate(0, 310, 0); parts.push(deck);
+    const tent = paintGeometry(new THREE.ConeGeometry(200, 150, 8, 1, true), '#f6f2ea'); tent.translate(0, 395, 0); parts.push(tent);
+    for (let k = 0; k < 4; k++) { const mast = paintGeometry(new THREE.CylinderGeometry(3, 3, 210, 6), '#d2d6da'); mast.translate(Math.cos(k * TAU / 4) * 150, 400, Math.sin(k * TAU / 4) * 150); parts.push(mast); }
+    const m = new THREE.Mesh(mergeGeometries(parts), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.4, metalness: 0.25, side: THREE.DoubleSide }));
+    m.position.set(tx, 0, ty); m.castShadow = true; m.receiveShadow = true; S.add(m);
+    const glow = new THREE.Mesh(new THREE.CylinderGeometry(112, 112, 4, 20), new THREE.MeshBasicMaterial({ color: '#ffd9a0' })); glow.position.set(tx, 300, ty); S.add(glow);
+    COURSE_FX.emissive.push({ mat: glow.material, basic: true, day: 0.5, dusk: 1.2, night: 1.6, base: '#ffd9a0' });
+  }
+  // 베두인 텐트 캠프 (모닥불이 밤에 빛나요)
+  const camps = findSpots(rand, 6, 650, 2200, [...(plan.oases || [])], 900), tentParts = [], fires = [];
+  for (const c of camps) for (let k = 0; k < 4; k++) {
+    const a = (k / 4) * TAU + rand() * 0.5, x = c.x + Math.cos(a) * 110, y = c.y + Math.sin(a) * 110, w = 70 + rand() * 40;
+    const body = paintGeometry(new THREE.BoxGeometry(w, 26, w * 0.7), ['#6b4a2e', '#8a6a44', '#5a3d24'][k % 3]); body.translate(0, 13, 0);
+    const top = paintGeometry(new THREE.CylinderGeometry(w * 0.42, w * 0.42, w, 3), ['#7d5836', '#a07a4c', '#644428'][k % 3]); top.rotateZ(Math.PI / 2); top.translate(0, 34, 0);
+    for (const g of [body, top]) { g.rotateY(a); g.translate(x, 0, y); tentParts.push(g); }
+    if (k === 0) { const f = paintGeometry(new THREE.SphereGeometry(10, 8, 6), '#ff8a2a'); f.translate(c.x, 8, c.y); fires.push(f); }
+  }
+  if (tentParts.length) { const m = new THREE.Mesh(mergeGeometries(tentParts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 1 })); m.castShadow = true; S.add(m); }
+  if (fires.length) { const fm = new THREE.MeshBasicMaterial({ vertexColors: true }); COURSE_FX.emissive.push({ mat: fm, basic: true, day: 0.6, dusk: 1.4, night: 2.2 }); S.add(new THREE.Mesh(mergeGeometries(fires), fm)); }
+  // 바위
+  const rocks = findSpots(rand, 40, 450, 1800, [...(plan.oases || []), ...camps.map((c) => ({ ...c, r: 250 }))], 250).map((q) => { const g = new THREE.DodecahedronGeometry(30 + rand() * 70, 0); g.scale(1.3, 0.7 + rand() * 0.5, 1); g.translate(q.x, 10, q.y); return paintGeometry(g, ['#a8714a', '#946141', '#b98a5e'][Math.floor(rand() * 3)]); });
+  if (rocks.length) { const m = new THREE.Mesh(mergeGeometries(rocks), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 1 })); m.castShadow = true; S.add(m); }
+  // 트랙 위 호텔 아치 — 양쪽 타워 자리에 다른 구간이 없는 곳만
+  const glassF = makeFacade('bronze', 931), glass = emissiveByTime(new THREE.MeshStandardMaterial({ map: glassF.map, emissive: '#ffffff', emissiveMap: glassF.emi, emissiveIntensity: 0.2, roughness: 0.25, metalness: 0.5, color: '#f2e2c4' }), 0, 0.6, 1.3);
+  let arch = null;
+  for (const zone of [DRS_ZONES[1], DRS_ZONES[0]].filter(Boolean)) for (const f of [0.35, 0.5, 0.65, 0.25, 0.75]) {
+    if (arch) break;
+    const i = Math.floor(wrapIndex(zone.full.start + zone.full.length * f, SEGMENTS)), span = Math.max(wallDistance[0][i], wallDistance[1][i]) + 240;
+    const ok = [-1, 1].every((s) => { const x = centerX[i] + normalX[i] * s * (span + 190), y = centerY[i] + normalY[i] * s * (span + 190); return trackDistance(x, y) > span + 20 && !nearStructure(x, y, 420); });
+    if (ok && !(isInZone(i, { start: wrapIndex(-30, SEGMENTS), length: 60 }))) arch = { i, span };
+  }
+  if (arch) {
+    const { i, span } = arch, parts = [];
+    for (const s of [-1, 1]) { const g = new THREE.BoxGeometry(300, 420, 380), uv = g.attributes.uv; for (let k = 0; k < uv.count; k++) uv.setXY(k, uv.getX(k) * 2.5, uv.getY(k) * 1.75); g.translate(0, 210, s * (span + 190)); parts.push(g); }
     const g = new THREE.Group(); g.add(new THREE.Mesh(mergeGeometries(parts), glass));
     const gold = emissiveByTime(new THREE.MeshStandardMaterial({ color: '#d8a640', metalness: 0.85, roughness: 0.25, emissive: '#ffb54a', emissiveIntensity: 0 }), 0, 0.6, 1.8);
     const ribs = [], N = 18, W = span + 340;
     for (let k = 0; k < N; k++) {
-      const a0 = Math.PI * (k / N), a1 = Math.PI * ((k + 1) / N), z0 = -Math.cos(a0) * W, z1 = -Math.cos(a1) * W, y0 = 430 + Math.sin(a0) * 150, y1 = 430 + Math.sin(a1) * 150;
-      const len = Math.hypot(z1 - z0, y1 - y0) + 3;
+      const a0 = Math.PI * (k / N), a1 = Math.PI * ((k + 1) / N), z0 = -Math.cos(a0) * W, z1 = -Math.cos(a1) * W, y0 = 430 + Math.sin(a0) * 150, y1 = 430 + Math.sin(a1) * 150, len = Math.hypot(z1 - z0, y1 - y0) + 3;
       for (const x of [-140, -70, 0, 70, 140]) { const b = new THREE.BoxGeometry(10, 8, len); b.rotateX(-Math.atan2(y1 - y0, z1 - z0)); b.translate(x, (y0 + y1) / 2, (z0 + z1) / 2); ribs.push(b); }
     }
     g.add(new THREE.Mesh(mergeGeometries(ribs), gold));
@@ -10513,14 +10721,38 @@ function buildDesertScenery() {
   }
 }
 
+/* ---------- 코스 계획: 호수 · 마을 · 랜드마크 자리 (지형을 만들기 전에 평지로 남겨 둘 곳) ---------- */
+function planCourse(theme) {
+  const rand = seededRandom(4242), plan = {}, dist = W3.distField;
+  const pick = (dMin, dMax, r, avoid = []) => findSpots(rand, 1, dMin + r, dMax + r, avoid, r + 300, 6000)[0];
+  if (theme === 'city') {
+    plan.lake = pick(ROAD_HALF + 450, 1100, 430); if (plan.lake) plan.lake.r = 430;
+    plan.sphere = pick(700, 1500, 300, plan.lake ? [plan.lake] : []);
+    plan.tower = pick(1600, 3200, 160, [plan.lake, plan.sphere].filter(Boolean));
+  }
+  if (theme === 'mountain') {
+    plan.village = pick(450, 800, 420); if (plan.village) plan.village.r = 420;
+    const w = pick(900, 1400, 300, plan.village ? [plan.village] : []);
+    if (w) { const ni = nearestCenterIndex(w.x, w.y).index; plan.waterfall = { ...w, tx: centerX[ni], ty: centerY[ni] }; }
+  }
+  if (theme === 'desert') plan.oases = W3.courseOases || [];
+  plan.flats = [plan.lake, plan.village, plan.sphere && { ...plan.sphere, r: 400 }, plan.tower && { ...plan.tower, r: 220 }, plan.waterfall && { ...plan.waterfall, r: 600 }, ...(plan.oases || [])].filter(Boolean);
+  return plan;
+}
+
 /* ---------- 트랙 묶음 만들기 · 버리기 ---------- */
 function buildTrackWorld() {
-  const real = W3.scene, group = new THREE.Group();
-  COURSE_FX.updaters = []; COURSE_FX.emissive = [];
+  const real = W3.scene, group = new THREE.Group(), theme = courseTheme();
+  COURSE_FX.updaters = []; COURSE_FX.emissive = []; W3.terrain = null;
+  W3.distField = trackDistanceField(260);
+  W3.coursePlan = planCourse(theme);
+  // 호수 · 마을 자리에 심어진 나무는 치워요
+  for (let k = sceneryObjects.length - 1; k >= 0; k--) { const o = sceneryObjects[k]; if (o.kind === 'tree' && !o.kind2 && W3.coursePlan.flats.some((f) => Math.hypot(f.x - o.x, f.y - o.y) < f.r + 60)) sceneryObjects.splice(k, 1); }
   W3.scene = group;   // 아래 함수들은 W3.scene 에 붙여요 → 이 묶음에 들어가요
   try {
-    buildTrackMeshes(); buildLamps(); buildTrees(); buildStructures();
-    const theme = courseTheme();
+    buildTrackMeshes();
+    buildTerrain({ ...THEME_TERRAIN[theme] || THEME_TERRAIN.classic, flats: W3.coursePlan.flats });   // 7.5: 둘레 지형 (나무가 언덕 위에 앉아요)
+    buildLamps(); buildTrees(); buildStructures();
     if (theme === 'city') buildCityScenery();
     else if (theme === 'mountain') buildMountainScenery();
     else if (theme === 'desert') buildDesertScenery();
@@ -10539,15 +10771,22 @@ function disposeTrackWorld() {
 }
 /** 코스별 지면 · 안개 · 발광 (applyEnvironment3D 끝에서 불러요) */
 function applyCourseEnvironment() {
-  const theme = courseTheme(), M = W3.trackMaterials, T = courseTextures(), span = W3.groundSpan || 40000;
-  if (theme === 'desert') { M.grass.map = T.sand; T.sand.repeat.set(span / 420, span / 420); M.grass.needsUpdate = true; }
-  if (theme === 'city') { M.grass.map = T.urban; T.urban.repeat.set(span / 260, span / 260); M.grass.needsUpdate = true; }
-  const far = { city: timeOfDay === 'NIGHT' ? 21000 : 20000, mountain: 12500, desert: 22000, classic: null }[theme];
-  if (far) W3.fogFar = Math.max(W3.fogFar, far);
-  if (theme === 'city' && timeOfDay === 'NIGHT') W3.scene.fog.color.set('#141b2c');
-  if (theme === 'mountain') W3.scene.fog.color.lerp(new THREE.Color('#6d7680'), 0.4);
+  const theme = courseTheme(), M = W3.trackMaterials, T = courseTextures(), span = W3.groundSpan || 40000, snow = environment === 'SNOW';
+  // 지면: 눈이 오면 눈 바닥 그대로, 아니면 테마 바닥 (사막 모래 · 도시 거리)
+  if (!snow && theme === 'desert') { M.grass.map = T.sand; T.sand.repeat.set(span / 420, span / 420); }
+  if (!snow && theme === 'city') { const G = T.city || (T.city = makeCityGround()); M.grass.map = G.map; M.grass.emissiveMap = G.emi; M.grass.emissive.set('#ffffff'); for (const t of [G.map, G.emi]) t.repeat.set(span / 1100, span / 1100); }
+  else { M.grass.emissiveMap = null; M.grass.emissive.set('#000000'); }
+  M.grass.emissiveIntensity = theme === 'city' && !snow ? { DAY: 0, DUSK: 0.35, NIGHT: 0.9 }[timeOfDay] : 0;
+  M.grass.needsUpdate = true;
+  applyTerrainSnow();
+  const far = { city: 22000, mountain: 15000, desert: 22000, classic: 17000 }[theme] || 17000;
+  W3.fogFar = Math.max(W3.fogFar, ENVIRONMENTS[environment].precipitation ? far * 0.72 : far);   // 7.5: 먼 지형이 보이게 (비 · 눈이면 조금 흐리게)
+  if (theme === 'city' && timeOfDay === 'NIGHT') W3.scene.fog.color.set('#1a2236');
   const key = timeOfDay === 'NIGHT' ? 'night' : timeOfDay === 'DUSK' ? 'dusk' : 'day';
-  for (const e of COURSE_FX.emissive) e.mat.emissiveIntensity = e[key];
+  for (const e of COURSE_FX.emissive) {
+    if (e.basic) { e.base ? e.mat.color.set(e.base).multiplyScalar(e[key]) : e.mat.color.setScalar(e[key]); }
+    else e.mat.emissiveIntensity = e[key];
+  }
 }
 function updateCourseScenery(dt) { for (const f of COURSE_FX.updaters) f(dt); }
 
@@ -10556,7 +10795,7 @@ function useCourse(id, force = false) {
   const course = courseOf(id);
   if (!force && currentCourseId === course.id && W3.trackGroup) return false;
   loadTrackData(course.id);
-  sceneryObjects.length = 0; streetLamps.length = 0; W3.courseOasis = null;
+  sceneryObjects.length = 0; streetLamps.length = 0; W3.courseOases = [];
   for (const car of [...allCars, rivalGhost]) {   // 차마다 기억해 둔 코스 데이터(코너 속도표)를 새 코스로 — 안 그러면 다른 길이의 표를 읽어 NaN
     const tr = car.trait; car._csKey = null; car.cornerSpeedsHi = null;
     car.cornerSpeeds = computeCornerSpeeds(505 * (tr ? tr.cornerSkill : 1), 380 * (tr ? tr.brakeLate : 1), 780);
@@ -12209,10 +12448,21 @@ function drawTrackPreview() {
 /** 코스 한 줄 설명: 길이 · 랩 · 환경(고정이면 그 환경) */
 function courseInfoLine(id) {
   const C = courseOf(id), km = withTrackData(C.id, () => (TRACK_LENGTH_M / 1000).toFixed(2));
-  const env = C.fixedEnv ? '🔒 ' + conditionsLabel(C.fixedEnv.environment, C.fixedEnv.timeOfDay, C.fixedEnv.weatherLevel) : L('날씨 · 시간대 랜덤');
+  const env = C.fixedEnv ? '🔒 ' + conditionsLabel(C.fixedEnv.environment, C.fixedEnv.timeOfDay, C.fixedEnv.weatherLevel) : L('날씨 · 시간대 선택');
   return `${km} km · ${RACE_LAPS} ${L('랩')} · ${env}`;
 }
 const AI_LEVELS = [['easy', '쉬움'], ['normal', '보통'], ['hard', '어려움'], ['pro', '프로']];
+/** 7.5: 날씨 · 시간대 · 강도 버튼 줄 (attr = data 속성 이름, cur = { raceEnv, raceTime, raceWeather }) */
+function envSegRows(attr, cur, compact) {
+  const label = { raceEnv: '환경', raceTime: '시간대', raceWeather: '강도' };
+  return Object.entries(ENV_CHOICES).map(([field, opts]) => `<div class="mopt${compact ? ' sm' : ''}"><span>${L(label[field])}</span><div class="seg sm menv">${opts.map(([v, icon, name, short]) =>
+    `<button class="${String(cur[field] ?? 'random') === v ? 'on' : ''}" data-${attr}="${field}:${v}" title="${L(name)}">${compact && (icon || short) ? (icon || short) : icon ? `${icon}<span class="nm"> ${L(name)}</span>` : L(name)}</button>`).join('')}</div></div>`).join('');
+}
+/** 방 환경 한 줄 요약 (랜덤 포함) */
+function envSummary(env = {}) {
+  const pick = (field) => { const o = ENV_CHOICES[field].find(([v]) => v === String(env[field] ?? 'random')); return o ? (o[1] ? o[1] + ' ' : '') + L(o[2]) : '🎲'; };
+  return `${pick('raceEnv')} · ${pick('raceTime')} · ${L('강도')} ${pick('raceWeather')}`;
+}
 
 /* ---------- 공통 조각 ---------- */
 const mpCarImg = (id, cls = '') => `<img class="carimg ${cls}" src="cars/${id}.png" alt="" onerror="this.style.visibility='hidden'">`;
@@ -12234,6 +12484,7 @@ function openMultiMenu() {
   if (!mpDraft.name) mpDraft.name = settings.playerName || '';
   if (!mpDraft.course) mpDraft.course = courseOf(settings.course).id;
   if (!mpDraft.difficulty) mpDraft.difficulty = settings.difficulty || 'normal';
+  if (!mpDraft.env) mpDraft.env = { raceEnv: settings.raceEnv || 'random', raceTime: settings.raceTime || 'random', raceWeather: String(settings.raceWeather ?? 'random') };
   overlayKind = 'multi';
   renderMultiMenu(); mpLoadRooms();
   clearInterval(mpListTimer); mpListTimer = setInterval(() => { if (overlayOpen && overlayKind === 'multi') mpLoadRooms(); else clearInterval(mpListTimer); }, 4000);
@@ -12265,8 +12516,9 @@ function renderMultiMenu() {
       <div class="mopt"><span>${L('다른 차')}</span><div class="seg sm">${[[false, '⚔ ' + L('충돌')], [true, '👻 ' + L('고스트')]].map(([v, l]) => `<button class="${mpDraft.ghost === v ? 'on' : ''}" data-mpghost="${v}">${l}</button>`).join('')}</div></div>
       <div class="mopt"><span>${L('코스')}</span><div class="seg sm mcourses">${COURSE_ORDER.map((id) => `<button class="${mpDraft.course === id ? 'on' : ''}" data-mpcourse="${id}">${COURSES[id].flag} ${COURSES[id].short}</button>`).join('')}</div></div>
       <small class="mnote">${escapeHtml(courseOf(mpDraft.course).name)} · ${courseInfoLine(mpDraft.course)}</small>
-      ${mpDraft.max === 2 ? '' : `<div class="mopt"><span>AI</span><div class="seg sm">${AI_LEVELS.map(([v, l]) => `<button class="${mpDraft.difficulty === v ? 'on' : ''}" data-mpdiff="${v}">${L(l)}</button>`).join('')}</div></div>`}
+      ${envSegRows('mpenv', mpDraft.env, false)}
       <label class="mchk${mpDraft.max === 2 ? ' off' : ''}"><input type="checkbox" id="mpAiFill" ${mpDraft.aiFill && mpDraft.max !== 2 ? 'checked' : ''} ${mpDraft.max === 2 ? 'disabled' : ''}> 🤖 ${L('빈 자리는 AI 로 채우기')}</label>
+      ${mpDraft.max === 2 || !mpDraft.aiFill ? '' : `<div class="mopt"><span>${L('AI 난이도')}</span><div class="seg sm">${AI_LEVELS.map(([v, l]) => `<button class="${mpDraft.difficulty === v ? 'on' : ''}" data-mpdiff="${v}">${L(l)}</button>`).join('')}</div></div>`}
       <small class="mnote">${mpDraft.max === 2 ? L('1:1 대전 — 사람끼리만 달려요') : mpDraft.ghost ? L('👻 고스트: 다른 사람 차와 부딪히지 않아요') : L('⚔ 충돌: 다른 사람 차와 부딪혀요')}${mpDraft.isPublic ? '' : ' · ' + L('🔒 비공개 방은 코드로만 들어와요')}</small>
       <div class="row mbft"><button class="btn ghost" id="mpModalCancel">${L('취소')}</button><button class="btn go" id="mpCreate" ${busy ? 'disabled' : ''}>${L('방 만들기')}</button></div>
     </div></div>` : '';
@@ -12301,11 +12553,12 @@ function renderMultiMenu() {
   const closeModal = () => { sfx.menuBack(); mpDraft.creating = false; renderMultiMenu(); };
   on('mpModalX', closeModal, false); on('mpModalCancel', closeModal, false);
   const modalEl = byId('mpModal'); if (modalEl) modalEl.onpointerdown = (e) => { if (e.target === modalEl) closeModal(); };
-  on('mpCreate', () => { if (!needName()) return; const ai = byId('mpAiFill'); mpDraft.creating = false; mpHost({ name: mpDraft.roomName.trim(), isPublic: mpDraft.isPublic, aiFill: ai ? ai.checked : mpDraft.aiFill, max: mpDraft.max, ghost: mpDraft.ghost, course: mpDraft.course, aiDifficulty: mpDraft.difficulty }).then(() => mpRefreshUI()); });
+  on('mpCreate', () => { if (!needName()) return; const ai = byId('mpAiFill'); mpDraft.creating = false; mpHost({ name: mpDraft.roomName.trim(), isPublic: mpDraft.isPublic, aiFill: ai ? ai.checked : mpDraft.aiFill, max: mpDraft.max, ghost: mpDraft.ghost, course: mpDraft.course, aiDifficulty: mpDraft.difficulty, env: mpDraft.env }).then(() => mpRefreshUI()); });
   on('mpJoinCode', () => { if (needName()) mpJoin(codeIn.value).then(() => mpRefreshUI()); });
   on('mpRefresh', () => { mpRoomsCache = null; renderMultiMenu(); mpLoadRooms(); });
   on('mpBack', () => { mpMenuBack(); }, false);
-  const ai = byId('mpAiFill'); if (ai) ai.onchange = (e) => { mpDraft.aiFill = e.target.checked; };
+  const ai = byId('mpAiFill'); if (ai) ai.onchange = (e) => { mpDraft.aiFill = e.target.checked; sfx.uiClick(e.target.checked); renderMultiMenu(); };   // 7.5: AI 를 채우면 난이도 줄이 나타나요
+  overlayCard.querySelectorAll('[data-mpenv]').forEach((b) => { b.onclick = () => { sfx.menuMove(); const [f, v] = b.dataset.mpenv.split(':'); mpDraft.env = { ...mpDraft.env, [f]: v }; renderMultiMenu(); }; });
   overlayCard.querySelectorAll('[data-mpmax]').forEach((b) => { b.onclick = () => { sfx.menuMove(); mpDraft.max = +b.dataset.mpmax; renderMultiMenu(); }; });
   overlayCard.querySelectorAll('[data-mpghost]').forEach((b) => { b.onclick = () => { sfx.menuMove(); mpDraft.ghost = b.dataset.mpghost === 'true'; renderMultiMenu(); }; });
   overlayCard.querySelectorAll('[data-mpcourse]').forEach((b) => { b.onclick = () => { sfx.menuMove(); mpDraft.course = b.dataset.mpcourse; renderMultiMenu(); }; });
@@ -12374,7 +12627,7 @@ function renderMultiLobby() {
     ${mp.statusText ? `<p class="sub ok" style="font-weight:800;margin:4px 0">${escapeHtml(mp.statusText)}</p>` : ''}
     <div class="mlmain">
       <div class="mcourse"><img src="${trackPreviewURL(R.course)}" alt=""><div><b>${courseOf(R.course).flag} ${escapeHtml(courseOf(R.course).name)}</b><small>${courseInfoLine(R.course)}</small><small><span class="drsdot"></span> DRS · ⬜ ${L('출발선')}</small></div>
-        ${host ? `<div class="seg sm mcourses">${COURSE_ORDER.map((id) => `<button class="${courseOf(R.course).id === id ? 'on' : ''}" data-mlcourse="${id}">${COURSES[id].short}</button>`).join('')}</div>` : ''}
+        ${host ? `<div class="seg sm mcourses">${COURSE_ORDER.map((id) => `<button class="${courseOf(R.course).id === id ? 'on' : ''}" data-mlcourse="${id}">${COURSES[id].short}</button>`).join('')}</div>${envSegRows('mlenv', R.env || {}, true)}` : `<small>🌤 ${envSummary(R.env)}</small>`}
         <div class="mopts">${MAX === 2 ? `<small>⚔ ${L('1:1 대전 — 사람끼리만 달려요')}</small>` : host ? `<label class="mchk"><input type="checkbox" id="mlAiFill" ${R.aiFill ? 'checked' : ''}> 🤖 ${L('빈 자리 AI 채우기')}</label>` : `<small>${R.aiFill ? '🤖 ' + L('빈 자리는 AI 가 달려요') : L('사람끼리만 달려요')}</small>`}
         ${MAX === 2 ? '' : host && R.aiFill ? `<div class="mdiff"><small>${L('AI 난이도')}</small><div class="seg sm">${AI_LEVELS.map(([v, l]) => `<button class="${(R.aiDifficulty || 'normal') === v ? 'on' : ''}" data-mldiff="${v}">${L(l)}</button>`).join('')}</div></div>` : R.aiFill ? `<small>${L('AI 난이도')}: ${L((AI_LEVELS.find(([v]) => v === (R.aiDifficulty || 'normal')) || AI_LEVELS[1])[1])}</small>` : ''}</div></div>
       <div class="mgridwrap"><div class="mviewtabs"><button class="tab sm${stats ? '' : ' on'}" data-mview="car">🚗 ${L('차량')}</button><button class="tab sm${stats ? ' on' : ''}" data-mview="stats">📊 ${L('성능 비교')}</button>${stats ? `<small>${L('▲ = 내 차보다 좋음')}</small>` : ''}</div>
@@ -12398,6 +12651,7 @@ function renderMultiLobby() {
   const ai = byId('mlAiFill'); if (ai) ai.onchange = (e) => { sfx.uiClick(true); mpSetAiFill(e.target.checked); };
   overlayCard.querySelectorAll('[data-mcar]').forEach((b) => { b.onclick = () => { sfx.menuMove(); mpSetCar(b.dataset.mcar); }; });
   overlayCard.querySelectorAll('[data-mlcourse]').forEach((b) => { b.onclick = () => { sfx.menuConfirm(); mpSetCourse(b.dataset.mlcourse); }; });
+  overlayCard.querySelectorAll('[data-mlenv]').forEach((b) => { b.onclick = () => { sfx.menuMove(); const [f, v] = b.dataset.mlenv.split(':'); mpSetEnv(f, v); }; });
   overlayCard.querySelectorAll('[data-mldiff]').forEach((b) => { b.onclick = () => { sfx.menuMove(); mpSetAiDifficulty(b.dataset.mldiff); }; });
   overlayCard.querySelectorAll('[data-mview]').forEach((b) => { b.onclick = () => { sfx.menuMove(); mpDraft.view = b.dataset.mview; renderMultiLobby(); }; });
 }
