@@ -452,11 +452,11 @@ addStrings({
   'tut.buttonsTouch.title': ["오른쪽 버튼", "Buttons", "右側のボタン", "右侧按钮"],
   'tut.buttonsTouch.points': ["<b>DRIFT</b> 드리프트 · <b>BRAKE</b> 감속 · <b>⚡</b> 부스트", "<b>DRIFT</b> drift · <b>BRAKE</b> slow · <b>⚡</b> boost", "<b>DRIFT</b> ドリフト · <b>BRAKE</b> 減速 · <b>⚡</b> ブースト", "<b>DRIFT</b> 漂移 · <b>BRAKE</b> 减速 · <b>⚡</b> 加速"],
   'tut.drift.title': ["드리프트", "Drift", "ドリフト", "漂移"],
-  'tut.drift.points': ["코너에서 <b>조향 + 드리프트</b>|0.5초 넘게 하고 놓으면 <b>미니 터보</b>|코너 드리프트 = 부스트 게이지 충전", "<b>Steer + drift</b> in corners|Hold 0.5s+ and release = <b>mini turbo</b>|Corner drifts fill the boost gauge", "コーナーで<b>ステア + ドリフト</b>|0.5秒以上で離すと<b>ミニターボ</b>|コーナードリフト = ブーストがたまる", "弯道中<b>转向 + 漂移</b>|保持0.5秒以上松开 = <b>小涡轮</b>|弯道漂移 = 积攒加速槽"],
+  'tut.drift.points': ["코너에서 <b>조향 + 드리프트</b>|드리프트하다 놓으면 <b>미니 터보</b>|코너 드리프트로 부스트 게이지가 차요", "<b>Steer + drift</b> in corners|Release a drift for a <b>mini turbo</b>|Corner drifts fill the boost gauge", "コーナーで<b>ステア + ドリフト</b>|ドリフトして離すと<b>ミニターボ</b>|コーナードリフトでブーストがたまる", "弯道中<b>转向 + 漂移</b>|漂移后松开 = <b>小涡轮</b>|弯道漂移可积攒加速槽"],
   'tut.boost.title': ["부스트", "Boost", "ブースト", "加速"],
-  'tut.boost.points': ["노란 게이지가 차면 ⚡ 1개 (최대 2)|<b>{boost}</b> = 부스트", "Full yellow gauge = ⚡ (max 2)|<b>{boost}</b> = boost", "黄色ゲージ満タン = ⚡ (最大2)|<b>{boost}</b> = ブースト", "黄色槽满 = ⚡ (最多2)|<b>{boost}</b> = 加速"],
+  'tut.boost.points': ["노란 게이지가 차면 ⚡ 부스트를 얻어요|<b>{boost}</b> 를 누르면 부스트!", "Fill the yellow gauge to earn ⚡ boost|Press <b>{boost}</b> to boost!", "黄色ゲージが満タンで ⚡ ブースト獲得|<b>{boost}</b> でブースト!", "黄色槽满即获得 ⚡ 加速|按 <b>{boost}</b> 加速!"],
   'tut.spurt.title': ["임계점 부스트", "LIMIT BREAK", "限界突破", "临界点加速"],
-  'tut.spurt.points': ["링이 <b>노란 LIMIT</b>에서 깜빡일 때 <b>{boost}</b> 한 번 더|너무 일찍 누르면 부스트가 사라져요|슬립스트림 · DRS 를 겹치면 최고 <b>700 km/h</b>", "Press <b>{boost}</b> again when the ring flashes in <b>yellow LIMIT</b>|Too early = boost lost|Add slipstream & DRS for up to <b>700 km/h</b>", "リングが<b>黄色い LIMIT</b>で点滅したらもう一度 <b>{boost}</b>|早すぎるとブースト消失|スリップストリーム · DRS で最高 <b>700 km/h</b>", "圆环在<b>黄色 LIMIT</b>闪烁时再按 <b>{boost}</b>|太早 = 加速消失|叠加尾流 · DRS 最高 <b>700 km/h</b>"],
+  'tut.spurt.points': ["부스트가 끝나갈 때 링이 <b>노란 LIMIT</b>에서 깜빡이면 <b>{boost}</b> 한 번 더|더 빠른 <b>임계점 부스트</b>! 너무 일찍 누르면 부스트가 사라져요", "When the ring flashes in <b>yellow LIMIT</b> near the end, press <b>{boost}</b> again|A faster <b>LIMIT BREAK</b>! Too early and the boost is lost", "終わり際にリングが<b>黄色い LIMIT</b>で点滅したらもう一度 <b>{boost}</b>|さらに速い<b>限界突破</b>! 早すぎるとブースト消失", "加速快结束时圆环在<b>黄色 LIMIT</b>闪烁，再按一次 <b>{boost}</b>|更快的<b>临界点加速</b>! 太早按会失去加速"],
   'tut.hud.title': ["레이스 화면", "Race screen", "レース画面", "比赛画面"],
   'tut.hud.points': ["왼쪽 위: 랩 · 순위|오른쪽 위: 미니맵 (초록 = DRS) · <b>⚙</b> 설정|흰 · 하늘색 연석 = 부스트 추천 구간", "Top left: lap · position|Top right: minimap (green = DRS) · <b>⚙</b> settings|White & sky-blue kerbs = boost zones", "左上: 周回 · 順位|右上: ミニマップ (緑 = DRS) · <b>⚙</b> 設定|白 · 水色の縁石 = ブースト推奨", "左上: 圈数 · 名次|右上: 小地图 (绿 = DRS) · <b>⚙</b> 设置|白蓝路肩 = 推荐加速区"],
 });
@@ -2522,7 +2522,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '8.1.3';
+const GAME_VERSION = '8.1.5';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -4345,6 +4345,10 @@ function endDrift(car) {
   if (car.isDrifting && car.driftTime > 0.45 && car.surface < 2) {
     car.miniTurboTime = 0.6;
     if (car === player) sfx.miniTurbo();
+    if (gameMode === 'race' && Math.hypot(car.x - player.x, car.y - player.y) < 1600) {   // 8.1.5: 놓는 순간 차 뒤로 작은 불티
+      const c = Math.cos(car.heading), sn = Math.sin(car.heading);
+      spawnParticles(car.x - c * 40, car.y - sn * 40, 'driftSpark', 8, '124,208,255');
+    }
   }
   car.isDrifting = false; car.driftTime = 0;
 }
@@ -7740,7 +7744,7 @@ function carMaterials(L, ghost, opts) {
     core: new THREE.MeshStandardMaterial({ color: '#100204', emissive: L.glow, emissiveIntensity: 0 }),
     head: new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#eaf3ff', emissiveIntensity: 0.4 }),
     tail: new THREE.MeshStandardMaterial({ color: '#2a0508', emissive: '#ff1a2e', emissiveIntensity: 0.6 }),
-    flame: add(L.glow), flameCore: add('#ffffff'), mini: add('#ffb050'),
+    flame: add(L.glow), flameCore: add('#ffffff'), mini: add('#5cc8ff'),   /* 8.1.5: 미니터보 불꽃 = 파란색 (계기판 DRIFT 파랑과 같게) */
     rimGlow: new THREE.MeshBasicMaterial({ color: opts.rimGlow || L.glow, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }),
     cone: new THREE.MeshBasicMaterial({ map: W3.textures.headCone, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }),
     under: new THREE.MeshBasicMaterial({ map: W3.textures.dot, color: L.glow, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }),
@@ -8317,7 +8321,7 @@ CAR_BUILDERS.solar = (m, L, M, P, Sh) => {
       f.scale.set(14 * ease * flick, 1.6 + 0.6 * flick, 1.6 + 0.6 * flick);
     });
     tongueMat.opacity = 0.75 * ease * ghostK;
-    const mini = car.miniTurboTime > 0 && tf < 0.2, power = Math.max(ease, mini ? 0.3 : 0), flick = 0.88 + Math.random() * 0.24;
+    const mini = car.miniTurboTime > 0 && tf < 0.2, power = Math.max(ease, mini ? 0.25 + 0.3 * clamp(car.miniTurboTime / 0.6, 0, 1) : 0), flick = 0.88 + Math.random() * 0.24;
     [[64, 7.5, 0.5], [52, 5, 0.75], [30, 2.2, 1]].forEach(([len, r, op], k) => {
       const f = jets[k]; f.visible = power > 0.02; if (!f.visible) return;
       f.scale.set(len * power * flick, r, r); f.material.opacity = op * Math.min(1, power * 1.4) * ghostK;
@@ -8639,11 +8643,13 @@ function updateCarModel(car, dt) {
   m.vapor.visible = vo > 0.02;
   if (m.vapor.visible) { const g = 1 + 0.35 * (1 - vk); m.vapor.scale.set(150 * CAR_SCALE * g, 40 * CAR_SCALE * g, 40 * CAR_SCALE * g); m.vapor.material.uniforms.opacity.value = vo; m.vapor.material.uniforms.time.value = t; }
   for (const f of m.flames) {
-    f.mesh.visible = boosting || (car.miniTurboTime > 0 && f.length > 22);
+    const miniK = !boosting && car.miniTurboTime > 0 ? clamp(car.miniTurboTime / 0.6, 0, 1) : 0;   // 8.1.5: 미니터보 = 차 뒤 작은 파란 불꽃 (놓는 순간 크게 → 0.6초 동안 줄어듦)
+    f.mesh.visible = boosting || miniK > 0;
     if (!f.mesh.visible) continue;
-    const len = f.length * (boosting ? (spr ? 3.4 : 1.6) : 0.55) * (0.85 + Math.random() * 0.35);   // 7.8.4: 일반 부스트 불꽃 짧게 (2.4 → 1.6배)
-    f.mesh.scale.set(len, f.radius * (boosting ? 1 + 0.45 * (fxK - 1) : 1), f.radius * (boosting ? 1 + 0.45 * (fxK - 1) : 1));   // 6.1.1: 더 굵게
-    f.mesh.material = boosting ? f.base : m.mats.mini;
+    const len = f.length * (boosting ? (spr ? 3.4 : 1.6) : 0.7 + 0.6 * miniK) * (0.85 + Math.random() * 0.35);   // 7.8.4: 일반 부스트 불꽃 짧게 (2.4 → 1.6배)
+    const rad = f.radius * (boosting ? 1 + 0.45 * (fxK - 1) : 1.15);   // 6.1.1: 더 굵게
+    f.mesh.scale.set(len, rad, rad);
+    f.mesh.material = boosting ? f.base : f.base === m.mats.flameCore ? f.base : m.mats.mini;
   }
   m.root.updateMatrixWorld(true);
   updateTrails(car, m, car.noTrails ? 0 : tf, fxK);   // 차고(제자리 회전)에서는 궤적이 면처럼 번져서 끔
