@@ -227,7 +227,7 @@ a.ig{color:var(--teal);font-weight:800;text-decoration:none}a.ig:hover{text-deco
 .cond{font-size:11px;color:var(--muted)}.date{font-size:11px;color:var(--muted)}
 .empty{text-align:center;color:#8fa3b3;padding:30px 0}
 /* 6.7.1 명예의 전당 표: 8칸으로 줄여 카드 폭 안에 들어가게 (좌우 스크롤 없음) */
-.hallwrap{overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+.hallwrap.loading{opacity:.45;pointer-events:none}.hallwrap{transition:opacity .15s;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
 .hallwrap::-webkit-scrollbar{height:6px}.hallwrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:3px}.hallwrap::-webkit-scrollbar-track{background:transparent}
 table.hall td{padding:8px 6px;vertical-align:middle}table.hall th{padding:6px}
 table.hall td.nm b{display:block;max-width:150px;overflow:hidden;text-overflow:ellipsis}table.hall td.nm a.ig{font-size:11px}
@@ -2522,7 +2522,7 @@ const I18N_SRC = {
    MINOR: 새 기능·새 연출·UI 개편처럼 눈에 띄는 추가 (예: 4.1.0)
    PATCH: 버그 수정·미세 조정 (예: 4.0.1)
    대전은 DUEL_PROTOCOL(15_multiplayer.js)이 같아야 연결돼요 — MAJOR 를 올릴 때 함께 올려요. */
-const GAME_VERSION = '8.1.5';
+const GAME_VERSION = '8.2.1';
 
 /* 온라인 명예의 전당 주소 (Google Apps Script 웹앱).
    비워두면 각 기기에만 기록이 저장돼요. 설정 방법은 tools/leaderboard-apps-script.gs 참고. */
@@ -4371,7 +4371,7 @@ function activateBoost(car) {
 /** 부스트 중 한 번 더 누르기: 마지막 창 안이면 임계점 부스트, 그 전이면 부스트 소멸 */
 function startSprint(car) {
   car.sprint = true; car.boostTime = car.boostMax = SPRINT_DURATION;
-  car.speed = Math.max(car.speed, 0) + 70; car.sprintsUsed = (car.sprintsUsed || 0) + 1;
+  car.speed = Math.max(car.speed, 0) + 70; car.sprintsUsed = (car.sprintsUsed || 0) + 1; car.sprintStartSpeed = car.speed; car.sprintTop = 0;   // 8.2: 카메라가 '그 차의 최고 속도까지' 점점 멀어지는 기준
   if (gameMode === 'race' && Math.hypot(car.x - player.x, car.y - player.y) < 1600)   // 6.1.1: 소닉붐에 바닥 먼지가 둥글게 터져요
     for (let k = 0; k < 28; k++) { const a = (k / 28) * TAU + Math.random() * 0.2, v = 180 + Math.random() * 140; particles.push({ x: car.x, y: car.y, z: 2, vx: Math.cos(a) * v + Math.cos(car.heading) * car.speed * 0.3, vy: Math.sin(a) * v + Math.sin(car.heading) * car.speed * 0.3, vz: 8, life: 0.7, maxLife: 0.7, type: 'smoke', radius: 12 + Math.random() * 10 }); }
   if (car === player) { showMessage(tr('msg.limitBreak'), '#ff3b2f', 1.2); punchZoom = 1.6; sprintFlash = 1; sfx.sprint(car.designId); }
@@ -4624,7 +4624,8 @@ function updateCarPhysics(car, dt) {
   const topSpeed = (TOP_SPEED * design.top * topSpeedMultiplier() * (trait ? trait.topSpeed * lerp(1, car.skill, 0.6) * (car.isAI && car !== player && !car.coolDown ? (car.pace || 1) : 1) : 1)
     + (car.drsOpen ? DRS_SPEED_BONUS : 0) + draft * 35 * (trait ? trait.draftSkill : 1)
     + (boosting ? BOOST_SPEED_BONUS * design.boost * (car.sprint ? SPRINT_SPEED_MULT : 1) : 0) + (miniTurbo ? 70 : 0)) * SURFACE_TOP_SPEED[surface];
-  const topSpeedCapped = boosting && car.sprint ? Math.min(topSpeed, SPRINT_MAX_KMH / SPEED_TO_KMH) : topSpeed;   // 8.0: 임계점 부스트 최고 700 km/h
+  const topSpeedCapped = boosting && car.sprint ? Math.min(topSpeed, SPRINT_MAX_KMH / SPEED_TO_KMH) : topSpeed;
+  if (boosting && car.sprint) car.sprintTop = topSpeedCapped;   // 8.0: 임계점 부스트 최고 700 km/h
   let accel = 0;
   const speedRatio = Math.max(car.speed, 0) / topSpeed, power = 1 - speedRatio * speedRatio;
   if (car.speed > -2) {
@@ -5711,6 +5712,7 @@ const MUSIC_TRACKS = {
 };
 function wantedMusicTrack() {
   if (!settings.musicOn || isMuted()) return null;
+  if (typeof introOpen !== 'undefined' && introOpen && !introReady()) return null;   // 8.2: 음악은 'Tap to start' 화면부터
   if (gameMode === 'menu') return 'menu';
   if (gameMode === 'race' || gameMode === 'replay') return courseMusicKey();   // 6.0: 리플레이도 레이스 음악 · 7.4: 코스마다 다른 곡
   if (gameMode === 'finish' && finishResult) return finishTimer > 1.6 ? 'finish' : null;
@@ -5730,7 +5732,7 @@ const musicFiles = {};
 /* 7.7: 시작 화면에서 음악 파일을 전부 미리 받아 메모리(Blob)에 둬요 → 레이스가 시작되자마자 끊김 없이 재생.
    예전엔 <audio> 가 재생할 때 조금씩 받아서(스트리밍) 느린 망 · 휴대폰에선 처음 몇 초 · 한 곡 통째로 소리가 안 날 때가 있었어요.
    진행 상황은 시작 화면 로딩 바에 보여요 (musicLoad). 받기에 실패한 곡은 예전처럼 스트리밍 → 그것도 안 되면 합성 음악 */
-const musicBlobs = {};
+const musicBlobs = {}, musicLoadDone = {};
 const musicLoad = { started: false, finished: false, loaded: 0, total: 0, files: 0, filesDone: 0, failed: 0, listeners: [] };
 function preloadAllMusic() {
   if (musicLoad.started) return; musicLoad.started = true;
@@ -5760,6 +5762,7 @@ function preloadAllMusic() {
       sizes[name].got = sizes[name].size = blob.size; sum();
       musicBlobs[name] = URL.createObjectURL(blob);
     } catch (e) { musicLoad.failed++; sizes[name].got = sizes[name].size; sum(); }
+    musicLoadDone[name] = true; if (audio.context) prepareMusicFiles();   // 8.2: 받은 곡부터 바로 준비 (다 받을 때까지 기다리지 않아요)
     finishOne();
   };
   // 메뉴 음악 → 지금 코스 음악 → 나머지 순서로, 동시에 3개씩
@@ -5767,22 +5770,38 @@ function preloadAllMusic() {
   let next = 0; const worker = async () => { while (next < order.length) await one(order[next++]); };
   for (let k = 0; k < 3; k++) worker();
 }
-function prepareMusicFiles() {
-  if (!audio.context || (musicLoad.started && !musicLoad.finished)) return;   // 7.7: 미리 받기가 끝난 뒤에 한 번에 준비
-  const wanted = { ...MUSIC_FILES, ...COURSE_MUSIC_FILES };   // 7.7: 코스 음악도 모두 (이미 메모리에 있어요)
-  for (const [name, url] of Object.entries(wanted)) {
-    if (musicFiles[name]) continue;
-    const el = new Audio(); el.loop = true; el.preload = 'auto'; el.src = musicBlobs[name] || url;
-    const M = musicFiles[name] = { el, gain: null, level: 0, failed: false, blocked: false, nextTry: 0 };
-    if (MUSIC_DIRECT) el.volume = 0;
-    else {
-      M.gain = audio.context.createGain(); M.gain.gain.value = 0;
-      try { audio.context.createMediaElementSource(el).connect(M.gain).connect(audio.buses.music); } catch (e) { M.failed = true; }
-    }
-    el.addEventListener('error', () => { M.failed = true; });     // 파일이 없거나 못 읽으면 합성 음악으로 대체
-    try { el.load(); } catch (e) { /* 무시 */ }   // 첫 입력 전에 미리 받아 둬서, 누르자마자 바로 재생
-    el.addEventListener('playing', () => { M.blocked = false; });
+/* 8.2 음악이 반드시 나오도록: 곡마다 따로 준비 · 고장 나면 다시 만들기(메모리 사본 ↔ 서버 파일 번갈아) · 멈춤(재생 중인데 시간이 안 감) 감지 · 막힌 소리 다시 깨우기.
+   예전 '합성 악기 음악' 대체는 껐어요 (MUSIC_SYNTH = false) */
+const MUSIC_SYNTH = false;
+const ALL_MUSIC_FILES = { ...MUSIC_FILES, ...COURSE_MUSIC_FILES };
+function prepareMusicFile(name, forceUrl = false) {
+  const url = ALL_MUSIC_FILES[name]; if (!url || !audio.context) return null;
+  const old = musicFiles[name];
+  if (old) { try { old.el.pause(); old.el.removeAttribute('src'); old.el.load(); } catch (e) { /* 무시 */ } try { if (old.gain) old.gain.disconnect(); } catch (e) { /* 무시 */ } }
+  const useBlob = !!musicBlobs[name] && !forceUrl;
+  const el = new Audio(); el.loop = true; el.preload = 'auto'; el.src = useBlob ? musicBlobs[name] : url;
+  const M = musicFiles[name] = { el, gain: null, level: old ? old.level : 0, failed: false, blocked: false, nextTry: 0, attempts: old ? old.attempts : 0, rebuildAt: 0, fromUrl: !useBlob, lastTime: -1, stall: 0 };
+  if (MUSIC_DIRECT) el.volume = 0;
+  else {
+    M.gain = audio.context.createGain(); M.gain.gain.value = 0;
+    try { audio.context.createMediaElementSource(el).connect(M.gain).connect(audio.buses.music); } catch (e) { M.failed = true; }
   }
+  el.addEventListener('error', () => { M.failed = true; });
+  el.addEventListener('playing', () => { M.blocked = false; M.attempts = 0; });
+  try { el.load(); } catch (e) { /* 무시 */ }
+  return M;
+}
+function prepareMusicFiles() {
+  if (!audio.context) return;
+  for (const name of Object.keys(ALL_MUSIC_FILES)) if (!musicFiles[name] && (musicBlobs[name] || musicLoadDone[name] || musicLoad.finished || !musicLoad.started)) prepareMusicFile(name);
+}
+/** 고장 난 곡 다시 만들기 — 1초, 2초 … 최대 8초 간격으로 계속 (포기하지 않아요) */
+function repairMusic(name, M, now) {
+  if (now < M.rebuildAt) return M;
+  const attempts = (M.attempts || 0) + 1, forceUrl = musicBlobs[name] ? attempts % 2 === 1 : true;   // 메모리 사본 ↔ 서버 파일 번갈아
+  const N = prepareMusicFile(name, forceUrl); if (!N) return M;
+  N.attempts = attempts; N.rebuildAt = now + Math.min(8000, 1000 * attempts);
+  return N;
 }
 /** 재생 요청 — 브라우저는 재생을 요청해야 파일을 본격적으로 받아요. 자동재생이 막히면 다음 입력 때 다시 시도 */
 function tryPlayMusic(M) {
@@ -5794,17 +5813,30 @@ function tryPlayMusic(M) {
 }
 /** 사용자 입력(키·클릭·터치)마다 호출: 막혀 있던 음악을 바로 시작 */
 function kickMusic() {
+  if (audio.context && audio.context.state !== 'running' && audio.context.state !== 'closed') { try { audio.context.resume(); } catch (e) { /* 무시 */ } }
   const M = musicFiles[musicPlayer.fileTrack];
   if (M && M.el.paused) { M.nextTry = 0; tryPlayMusic(M); }
 }
 function updateMusicFiles(track) {
-  if (track && COURSE_MUSIC_FILES[track] && !musicFiles[track]) prepareMusicFiles();   // 7.4: 코스 음악 (7.7: 미리 받기가 끝났으면 이미 준비돼 있어요)
-  const c = audio.context, t = c.currentTime, M0 = track && musicFiles[track] && !musicFiles[track].failed ? musicFiles[track] : null, file = M0 ? track : null;
+  const c = audio.context, t = c.currentTime, now = performance.now();
+  if (track && !musicFiles[track]) prepareMusicFile(track);   // 8.2: 아직 다 못 받은 곡도 바로 (서버에서 받으면서 재생)
+  let M0 = track ? musicFiles[track] : null;
+  if (M0 && M0.failed) M0 = repairMusic(track, M0, now);
+  const file = M0 ? track : null;
   if (file !== musicPlayer.fileTrack) {
     musicPlayer.fileTrack = file;
-    if (M0) { M0.el.currentTime = 0; M0.nextTry = 0; }
+    if (M0) { try { M0.el.currentTime = 0; } catch (e) { /* 무시 */ } M0.nextTry = 0; }
   }
-  if (M0 && M0.el.paused) tryPlayMusic(M0);
+  if (M0 && !M0.failed && !document.hidden) {
+    // 소리 장치가 잠들었으면(자동재생 제한 · 전화 · 백그라운드 복귀) 1초마다 깨우기
+    if (c.state !== 'running' && c.state !== 'closed' && now > (musicPlayer.resumeAt || 0)) { musicPlayer.resumeAt = now + 1000; try { c.resume().catch(() => {}); } catch (e) { /* 무시 */ } }
+    if (M0.el.paused) tryPlayMusic(M0);
+    else if (c.state === 'running' || MUSIC_DIRECT) {   // 재생 중인데 시간이 4초 넘게 안 가면 다시 만들기
+      const ct = M0.el.currentTime;
+      if (ct === M0.lastTime) { if (!M0.stall) M0.stall = now; else if (now - M0.stall > (M0.el.readyState >= 3 ? 4000 : 10000)) M0.failed = true; } else M0.stall = 0;   // 받는 중(느린 망)이면 더 기다려요
+      M0.lastTime = ct;
+    }
+  }
   for (const [name, M] of Object.entries(musicFiles)) {
     const on = name === file, target = on ? MUSIC_FILE_LEVEL * (isPaused ? 0.5 : 1) : 0;
     if (MUSIC_DIRECT) {   // 요소 볼륨으로 직접 페이드 (전체 볼륨 설정도 반영)
@@ -5826,7 +5858,7 @@ function updateMusic() {
   const c = audio.context, wanted = wantedMusicTrack();
   const fileTrack = updateMusicFiles(wanted);
   // 파일로 재생 중이면 합성 음악은 쉬어요. 결과 화면 파일이 없으면 합성 승리곡/차분한 곡으로 대체
-  const track = fileTrack ? null : wanted === 'finish' ? (isCelebration(finishResult) ? 'victory' : 'calm') : wanted;
+  const track = !MUSIC_SYNTH || fileTrack ? null : wanted === 'finish' ? (isCelebration(finishResult) ? 'victory' : 'calm') : wanted;   // 8.2: 합성 악기 음악은 꺼 둬요
   if (track !== musicPlayer.track) { musicPlayer.track = track; musicPlayer.step = 0; musicPlayer.nextStepTime = c.currentTime + 0.08; }
   if (!track || isPaused) return;
   const definition = MUSIC_TRACKS[track], stepSeconds = 60 / definition.bpm / 4;
@@ -10178,6 +10210,15 @@ const CHASE_CAMERA = { distance: 205, height: 84, lookAhead: 170, lookHeight: 12
    2) 전방 주시 (그 뒤 부스트 동안): 카메라를 높이고 시선을 멀리 앞에 둬서 다가오는 코너가 미리 보여요 */
 /* 전방 주시 값은 '내 차가 화면에서 평소와 비슷한 높이에 남도록' 맞췄어요 (높이·거리를 같이 늘려 계기판 뒤로 숨지 않게) */
 const BOOST_CAMERA = { showIn: 0.2, showHold: 0.85, showOut: 1.4, closeDist: 0.22, closeHeight: 0.22, orbit: 0, zoomFov: 20, zoomCenter: 0.6, aheadLook: 30, aheadHeight: 26, aheadDist: 28, aheadFov: 4 };   // 7.8.4: 부스트 때 카메라가 덜 물러나요 (차가 화면에서 멀어 보인다는 의견)   // 5.1.1: 쇼케이스 = 같은 시점에서 줌인
+const CHASE_SPRINT = { dist: 83, height: 14, fov: 8 };   // 8.2: 임계점 부스트 최고 속도에서 더 물러나는 양 (주행 250 + 부스트 28 + 83 ≈ 360 = 7.8.3 임계점 최대 거리)
+/** 8.2: 임계점 부스트 진행도 0~1 — 임계점을 켠 순간의 속도에서 그 차가 지금 낼 수 있는 최고 속도까지 얼마나 올라왔는지 (차마다 · 슬립스트림 · DRS 반영) */
+function sprintCameraProgress(dt) {
+  const p = player, on = gameMode === 'race' && p.sprint && p.boostTime > 0 && p.sprintTop > 0;
+  const target = on ? clamp((Math.abs(p.speed) - (p.sprintStartSpeed || 0)) / Math.max(40, p.sprintTop * 0.97 - (p.sprintStartSpeed || 0)), 0, 1) : 0;
+  const cur = W3.sprintP || 0;
+  W3.sprintP = cur + (target - cur) * smoothFactor(target > cur ? 6 : 1.6, dt);   // 멀어질 땐 속도를 따라 · 끝나면 천천히 돌아와요
+  return W3.sprintP;
+}
 const smoothStep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 function boostCameraWeights(dt) {
   const p = player, boosting = p.boostTime > 0 && gameMode === 'race';
@@ -10286,6 +10327,7 @@ function updateCamera3D(dt) {
   const cam = W3.camera, p = player, desiredPos = new THREE.Vector3(), lookAt = new THREE.Vector3();
   let fov = 58, lerpRate = 9;
   const BC = BOOST_CAMERA, { show, ahead: aheadK } = boostCameraWeights(dt);
+  sprintCameraProgress(isPaused ? 0 : dt);
   // 6.1.1: 엔진 임계점 부스트 — 화각을 크게 벌리고 카메라를 낮추며 살짝 뒤로 → 일반 부스트보다 확실히 빠른 느낌
   W3.sprintK = lerp(W3.sprintK || 0, gameMode === 'race' && p.sprint && p.boostTime > 0 ? 1 : 0, smoothFactor(p.sprint ? 5 : 2.5, dt)); const sk = W3.sprintK;
   if (gameMode === 'menu') {
@@ -10301,25 +10343,27 @@ function updateCamera3D(dt) {
     camera.lookY = lerp(camera.lookY || 0, Math.sin(travel) * look * dir, smoothFactor(2.4, dt));
     const extra = 160 * aheadK;   // 부스트 전방 주시: 시선을 진행 방향으로 더 멀리
     lookAt.set(p.x + camera.lookX + Math.cos(travel) * extra * dir, 0, p.y + camera.lookY + Math.sin(travel) * extra * dir);
-    const camK = clamp(Math.abs(p.speed) / CAMERA_MAX_SPEED, 0, 1);   // 8.0: 0 ~ 700 km/h 에 비례
-    const dist = (460 + camK * 154 - punchZoom * 30) * (1 - 0.32 * show) + 70 * aheadK;
+    const n = clamp(Math.abs(p.speed) / 720, 0, 1), sP = W3.sprintP;   // 8.2: 주행 → 부스트 → 임계점(그 차의 최고 속도까지 점점) 단계로 멀어져요
+    const dist = (460 + n * 110 - punchZoom * 30) * (1 - 0.32 * show) + 70 * aheadK + 130 * sP;
     desiredPos.set(lookAt.x + dist * 0.6, dist * 0.95, lookAt.z + dist * 0.6);
-    fov = 40 + 9 * camK * camK; lerpRate = 10;
+    fov = 40 + 9 * sP; lerpRate = 10;
   } else {
     const C = CHASE_CAMERA, travel = p.heading + (p.speed >= 0 ? (p.bodySlip || 0) * 0.6 : Math.PI);
     W3.camYaw = W3.snap ? travel : W3.camYaw + angleDiff(travel, W3.camYaw) * smoothFactor(C.yawRate, dt);
     // 출발 그리드: 바로 뒤 차에 가려지지 않게 높고 가까이서 내려다보다가 출발 후 2초간 평소 위치로
     const grid = gameMode === 'lights' ? 1 : gameMode === 'race' ? clamp(1 - raceTime / 2, 0, 1) : 0;
-    const camK = clamp(Math.abs(p.speed) / CAMERA_MAX_SPEED, 0, 1);   // 8.0: 부스트 포함 속도 0 ~ 700 km/h 에 비례해서 카메라가 멀어져요 (700 = 예전 최대 줌 아웃)
-    let dist = lerp(C.distance + camK * 76, 120, grid), height = lerp(C.height + camK * 9, 118, grid) * (1 - 0.18 * camK * camK);
-    dist = dist * (1 - BC.closeDist * show) + BC.aheadDist * aheadK;           // 쇼케이스: 가까이 / 전방 주시: 살짝 뒤로
-    height = height * (1 - BC.closeHeight * show) + BC.aheadHeight * aheadK;   // 쇼케이스: 낮게 / 전방 주시: 높게
+    /* 8.2 카메라 거리 3단계: ① 주행 = 속도에 따라 기본 거리 ② 부스트 = 한 단계 뒤로 ③ 임계점 부스트 = 그 차가 낼 수 있는 최고 속도에
+       가까워질수록 점점 더 뒤로 → 최고 속도에서 예전(7.8.3) 임계점 부스트의 최대 거리(약 360)까지 */
+    const n = clamp(Math.abs(p.speed) / 720, 0, 1), sP = W3.sprintP, SC = CHASE_SPRINT;
+    let dist = lerp(C.distance + n * 45, 120, grid), height = lerp(C.height + n * 6, 118, grid);
+    dist = dist * (1 - BC.closeDist * show) + BC.aheadDist * aheadK + SC.dist * sP;           // 쇼케이스: 가까이 / 부스트: 한 단계 뒤로 / 임계점: 최고 속도까지 점점 뒤로
+    height = height * (1 - BC.closeHeight * show) + BC.aheadHeight * aheadK + SC.height * sP;   // 쇼케이스: 낮게 / 부스트 · 임계점: 조금씩 높게 (차가 가려지지 않게)
     const side = (W3.boostOrbitSide || 1) * BC.orbit * show, yaw = W3.camYaw + side; // 쇼케이스 때 옆으로 살짝 돌아 변신 모습이 보이게
     if (!show) W3.boostOrbitSide = (p.steer || 0) > 0.1 ? -1 : 1;               // 다음 쇼케이스는 코너 바깥쪽에서
     desiredPos.set(p.x - Math.cos(yaw) * dist, height, p.y - Math.sin(yaw) * dist);
     const ahead = lerp(C.lookAhead, 95, grid) * (1 - BC.zoomCenter * show) + BC.aheadLook * aheadK;   // 줌 중심을 살짝 차 쪽으로 → 차가 평소와 같은 높이에 남아요
     lookAt.set(p.x + Math.cos(W3.camYaw) * ahead, C.lookHeight, p.y + Math.sin(W3.camYaw) * ahead);
-    fov = C.fov + camK * 16 + (p.boostTransform || 0) * 5 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show) + 10 * sprintFlash;   // 8.0: 화각도 속도에 비례 (700 km/h 에서 +16도) · 켜는 순간 킥은 그대로
+    fov = C.fov + n * 7 + (p.boostTransform || 0) * 5 * (1 - show) - BC.zoomFov * show + BC.aheadFov * aheadK + punchZoom * 4 * (1 - show) + SC.fov * sP + 10 * sprintFlash;   // 8.2: 임계점 진행에 따라 화각도 조금씩 · 켜는 순간 킥은 그대로
     lerpRate = 12 + 18 * show;   // 부스트 속도에서도 쇼케이스 거리를 유지하도록 더 빨리 따라붙어요
   }
   if (W3.snap) { W3.camPos.copy(desiredPos); W3.camTarget.copy(lookAt); W3.snap = false; }
@@ -12441,34 +12485,52 @@ function conditionCell(r) {
   const title = [env && env.name, tod && tod.name, dots && level.name].filter(Boolean).join(' · ');
   return `<td class="cond" title="${escapeHtml(title)}">${env ? `${ENV_ICON[r.environment]} ${env.name}` : '—'}<div class="sub2">${tod ? `${TIME_ICON[r.timeOfDay]} ${tod.name}` : ''}${dots ? ` · <span class="dots">${dots}</span>` : ''}</div></td>`;
 }
-async function openHallOfFame(mode = hallMode, highlightId, course) {
-  hallMode = mode; hallCourse = courseOf(course || (highlightId ? currentCourseId : !mp.role && gameMode === 'menu' ? settings.course : currentCourseId)).id;   // 7.4: 기본 = 지금 코스 (메뉴에선 내가 고른 코스)
-  const fixedCourse = !!courseOf(hallCourse).fixedEnv; if (fixedCourse) hallEnvironment = 'ALL';
-  highlightId = highlightId || (finishResult && finishResult.recordId);
-  openOverlay('hall', `<div class="hd"><h2>🏆 명예의 전당 · TOP 10</h2><button class="x" data-close>닫기</button></div><div class="bd"><p class="sub">불러오는 중…</p></div>`);
-  const [{ records, source, volatile }, replayIds, onlineReplays] = await Promise.all([fetchHallOfFame(hallMode, hallEnvironment, hallCourse), listReplayIds(), listOnlineReplayIds(hallMode)]);
-  if (!overlayOpen || overlayKind !== 'hall') return;
+/* 8.2.1: 필터(모드 · 코스 · 환경)를 누르면 창을 다시 만들지 않고 아래 표만 바꿔요 (창이 '불러오는 중…' 한 줄로 작아졌다 커지던 문제).
+   필터 줄은 그대로 두고 누른 버튼만 바로 켜지고, 표는 새 기록이 올 때까지 옛 기록을 흐리게 보여 줘요 */
+let hallReq = 0;
+function hallTabsHTML(fixedCourse) {
+  const courseTabs = `<div class="tabs hcourse">${COURSE_ORDER.map((id) => `<button class="tab sm${hallCourse === id ? ' on' : ''}" data-hcourse="${id}">${COURSES[id].flag} ${COURSES[id].short}</button>`).join('')}</div>`;
   const tabs = [['solo', '🏁 솔로'], ['duel', '⚔ 1:1 대전'], ['multi', '👥 멀티']].map(([key, label]) => `<button class="tab${hallMode === key ? ' on' : ''}" data-mode="${key}">${label}</button>`).join('')
     + '<span class="tabgap"></span>'
     + (fixedCourse ? '' : [['ALL', '전체'], ...ENVIRONMENT_KEYS.map((k) => [k, `${ENV_ICON[k]} ${ENVIRONMENTS[k].name}`])].map(([key, label]) => `<button class="tab sm${hallEnvironment === key ? ' on' : ''}" data-env="${key}">${label}</button>`).join(''));
-  const courseTabs = `<div class="tabs hcourse">${COURSE_ORDER.map((id) => `<button class="tab sm${hallCourse === id ? ' on' : ''}" data-hcourse="${id}">${COURSES[id].flag} ${COURSES[id].short}</button>`).join('')}</div>`;
+  return `${courseTabs}<div class="tabs">${tabs}</div>`;
+}
+function bindHallTabs() {
+  const box = overlayCard.querySelector('.hallfilters'); if (!box) return;
+  box.querySelectorAll('[data-mode]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); openHallOfFame(b.dataset.mode, null, hallCourse, true); }; });
+  box.querySelectorAll('[data-hcourse]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); openHallOfFame(hallMode, null, b.dataset.hcourse, true); }; });
+  box.querySelectorAll('[data-env]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); hallEnvironment = b.dataset.env; openHallOfFame(hallMode, null, hallCourse, true); }; });
+}
+async function openHallOfFame(mode = hallMode, highlightId, course, refresh = false) {
+  hallMode = mode; hallCourse = courseOf(course || (highlightId ? currentCourseId : !mp.role && gameMode === 'menu' ? settings.course : currentCourseId)).id;   // 7.4: 기본 = 지금 코스 (메뉴에선 내가 고른 코스)
+  const fixedCourse = !!courseOf(hallCourse).fixedEnv; if (fixedCourse) hallEnvironment = 'ALL';
+  highlightId = highlightId || (finishResult && finishResult.recordId);
+  const req = ++hallReq, inPlace = refresh && overlayOpen && overlayKind === 'hall' && overlayCard.querySelector('.hallfilters');
+  if (inPlace) {   // 필터 줄만 바로 바꾸고 표는 흐리게 (크기 그대로)
+    const f = overlayCard.querySelector('.hallfilters'); f.innerHTML = hallTabsHTML(fixedCourse); translateDom(f); bindHallTabs();
+    overlayCard.querySelector('.hallwrap').classList.add('loading');
+  } else {
+    openOverlay('hall', `<div class="hd"><h2>🏆 명예의 전당 · TOP 10</h2><button class="x" data-close>닫기</button></div><div class="bd"><p class="sub">역대 우승 기록 상위 10개 · 총 레이스 시간 순 (${RACE_LAPS}랩)</p>
+      <div class="hallfilters">${hallTabsHTML(fixedCourse)}</div>
+      <div class="hallwrap loading"><table class="hall"><thead><tr><th>#</th><th>이름</th><th>총 기록</th><th>베스트 랩</th><th>차량</th><th>조건</th><th>날짜</th><th></th></tr></thead><tbody><tr><td colspan="8" class="empty">불러오는 중…</td></tr></tbody></table></div>
+      <div class="src">&nbsp;</div><div class="row"><button class="btn ghost" data-close>닫기</button></div></div>`);
+    bindHallTabs();
+  }
+  const [{ records, source, volatile }, replayIds, onlineReplays] = await Promise.all([fetchHallOfFame(hallMode, hallEnvironment, hallCourse), listReplayIds(), listOnlineReplayIds(hallMode)]);
+  if (!overlayOpen || overlayKind !== 'hall' || req !== hallReq) return;   // 그 사이 다른 필터를 눌렀으면 옛 응답은 버려요
   const rows = records.length
     ? records.map((r, i) => `<tr class="${r.id === highlightId ? 'me' : ''}"><td class="rk ${i < 3 ? 'g' + (i + 1) : ''}">${i + 1}</td><td class="nm" data-raw><b>${escapeHtml(r.name)}</b>${r.mode === 'duel' && r.opponent ? `<div class="date">vs ${escapeHtml(r.opponent)}</div>` : r.mode === 'multi' && r.opponent ? `<div class="date">👥 ${escapeHtml(r.opponent.split('/')[0])}P</div>` : ''}
       ${r.instagram ? `<div><a class="ig" href="https://www.instagram.com/${encodeURIComponent(r.instagram)}/" target="_blank" rel="noopener noreferrer">@${escapeHtml(r.instagram)}</a></div>` : ''}</td>
       <td class="tm">${formatTime(r.totalTime, true)}</td><td class="bl">${formatTime(r.bestLap)}</td><td class="cond">${escapeHtml(CAR_DESIGNS[r.car] ? CAR_DESIGNS[r.car].name : '—')}</td>${conditionCell(r)}<td class="date">${escapeHtml((r.date || '').replace(/^\d{4}-/, ''))}</td><td>${replayIds.has(r.id) || onlineReplays.has(r.id) ? `<button class="tab sm on" data-replay="${escapeHtml(r.id)}" title="TV 시점 리플레이">▶ 리플레이</button>` : '<span class="date">—</span>'}</td></tr>`).join('')
     : `<tr><td colspan="8" class="empty">${hallEnvironment === 'ALL' ? '' : `${ENVIRONMENTS[hallEnvironment].name} 환경 기록이 아직 없어요. `}아직 기록이 없어요. ${hallMode === 'duel' ? '1:1 대전에서 이기면' : hallMode === 'multi' ? '2명 이상 멀티플레이에서 1위를 하면' : '1위로 완주하면'} 첫 기록의 주인공이 돼요!</td></tr>`;
   const sourceText = volatile ? '⚠️ 이 브라우저가 저장을 막고 있어요. 이번 접속 동안만 기록이 보여요 (시크릿 모드나 앱 내장 브라우저라면 일반 브라우저로 열어 주세요)' : source === 'online' ? '🌐 온라인 기록 (모든 플레이어 공유 · 서버 검증)' : source === 'offline' ? '⚠️ 온라인 서버에 연결하지 못해 이 기기 기록만 표시해요' : '📱 이 기기에 저장된 기록이에요';
-  overlayCard.querySelector('.bd').innerHTML = `<p class="sub">역대 우승 기록 상위 10개 · 총 레이스 시간 순 (${RACE_LAPS}랩)</p>${courseTabs}<div class="tabs">${tabs}</div>
-    <div class="hallwrap"><table class="hall"><thead><tr><th>#</th><th>이름</th><th>총 기록</th><th>베스트 랩</th><th>차량</th><th>조건</th><th>날짜</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
-    <div class="src">${sourceText}</div><div class="row"><button class="btn ghost" data-close>닫기</button></div>`;
-  translateDom(overlayCard.querySelector('.bd'));   // 6.3: 나중에 채워지는 표도 번역 (이름 칸은 그대로)
-  overlayCard.querySelectorAll('[data-mode]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); openHallOfFame(b.dataset.mode, null, hallCourse); }; });
-  overlayCard.querySelectorAll('[data-hcourse]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); openHallOfFame(hallMode, null, b.dataset.hcourse); }; });
-  overlayCard.querySelectorAll('[data-env]').forEach((b) => { b.onclick = () => { sfx.uiClick(true); hallEnvironment = b.dataset.env; openHallOfFame(hallMode, null, hallCourse); }; });
-  overlayCard.querySelectorAll('[data-close]').forEach((b) => { b.onclick = () => { sfx.uiClick(false); closeOverlay(); }; });
-  overlayCard.querySelectorAll('[data-replay]').forEach((b) => { b.onclick = () => { sfx.menuConfirm(); initAudio(); playReplay(b.dataset.replay, hallMode); }; });
-  const mine = overlayCard.querySelector('tr.me');
-  if (mine) mine.scrollIntoView({ block: 'center' });
+  const wrap = overlayCard.querySelector('.hallwrap'), body = wrap.querySelector('tbody'), src = overlayCard.querySelector('.src');
+  wrap.style.minHeight = Math.max(parseFloat(wrap.style.minHeight) || 0, wrap.offsetHeight) + 'px';   // 기록이 적은 필터로 바꿔도 표 칸이 줄어들지 않게 (창 크기 유지)
+  body.innerHTML = rows; src.textContent = sourceText; wrap.classList.remove('loading');
+  translateDom(body); translateDom(src);   // 6.3: 나중에 채워지는 표도 번역 (이름 칸은 그대로)
+  body.querySelectorAll('[data-replay]').forEach((b) => { b.onclick = () => { sfx.menuConfirm(); initAudio(); playReplay(b.dataset.replay, hallMode); }; });
+  const mine = body.querySelector('tr.me');
+  if (mine && !inPlace) mine.scrollIntoView({ block: 'center' });
 }
 
 /* ---------- 조작법 안내 ---------- */
@@ -13407,7 +13469,7 @@ async function bootGame() {
   showIntro();   // 6.0: 검은 화면 · 이어폰 안내 → 누르면 소리 시작
   // 5.2: 켜자마자 소리를 시도해요. 브라우저가 막으면(사용자 입력 전) 첫 키·클릭·터치에 바로 시작
   try { initAudio(); } catch (e) { /* 소리 없이 계속 */ }
-  for (const type of ['pointerdown', 'keydown', 'touchstart']) addEventListener(type, () => { try { initAudio(); kickMusic(); } catch (e) { /* 무시 */ } }, { capture: true, passive: true });
+  for (const type of ['pointerdown', 'pointerup', 'mousedown', 'touchstart', 'touchend', 'click', 'keydown']) addEventListener(type, () => { try { initAudio(); kickMusic(); } catch (e) { /* 무시 */ } }, { capture: true, passive: true });   // 8.2: 브라우저마다 소리를 허락하는 입력이 달라서(아이폰 = 손 뗄 때) 모두 들어요
   lastFrameTime = performance.now();
   requestAnimationFrame(frame);
 }
@@ -13533,7 +13595,13 @@ function showIntro() {
   const el = document.createElement('div'); el.id = 'intro'; document.body.appendChild(el); introOpen = true;
   renderIntro(el);
   const slot = () => el.querySelector('.iload-slot');
-  const refresh = () => { if (introOpen && slot()) slot().innerHTML = introLoadHTML(); el.classList.toggle('loading', !introReady()); };
+  let readyKicked = false;
+  const refresh = () => {
+    if (introOpen && slot()) slot().innerHTML = introLoadHTML(); el.classList.toggle('loading', !introReady());
+    // 8.2: 로딩이 끝나면 바로 음악 시작 시도 — 브라우저가 허락하면(전에 화면을 누른 적이 있거나 앱으로 설치) 'Tap to start' 화면부터 음악.
+    //      아직 한 번도 누르지 않았으면 브라우저가 막아서, 처음 누르는 순간(로딩 중에 누른 것 포함) 바로 나와요
+    if (introOpen && introReady() && !readyKicked) { readyKicked = true; try { initAudio(); kickMusic(); } catch (e) { /* 무시 */ } }
+  };
   musicLoad.listeners.push(refresh); refresh();
   introPrepareCourses(refresh);
   const funTimer = setInterval(() => { if (!introOpen) { clearInterval(funTimer); return; } introFunIndex++; refresh(); }, 1300);   // 재미있는 문구 바꾸기
