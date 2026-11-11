@@ -1,0 +1,71 @@
+{
+ "version": 1,
+ "note": "Blender -> GLB (tools/blender/glb_export.py). scale: glTF metres -> car model units. offset: model units.",
+ "cars": {
+  "aero": {
+   "file": "aero.glb",
+   "source": "AERO-X_v4p_smooth",
+   "scale": 20.01195,
+   "offset": [
+    0.0,
+    0,
+    0
+   ],
+   "length": 110.0,
+   "tris": 63870,
+   "kb": 2388
+  },
+  "vortex": {
+   "file": "vortex.glb",
+   "source": "VORTEX_v4d_iris",
+   "scale": 22.72673,
+   "offset": [
+    -1.5,
+    0,
+    0
+   ],
+   "length": 128.9,
+   "tris": 49437,
+   "kb": 2144
+  },
+  "apex": {
+   "file": "apex.glb",
+   "source": "APEX-F1_v7_decals",
+   "scale": 18.28571,
+   "offset": [
+    0.0,
+    0,
+    0
+   ],
+   "length": 106.3,
+   "tris": 40436,
+   "kb": 1534
+  },
+  "solar": {
+   "file": "solar.glb",
+   "source": "SOLAR-WING_v18b_decal_fix",
+   "scale": 19.35688,
+   "offset": [
+    -2.0,
+    0,
+    0
+   ],
+   "length": 119.5,
+   "tris": 69569,
+   "kb": 2135
+  },
+  "glacier": {
+   "file": "glacier.glb",
+   "source": "GLACIER_v6_volume",
+   "scale": 18.86948,
+   "offset": [
+    -2.0,
+    0,
+    0
+   ],
+   "length": 117.3,
+   "tris": 100287,
+   "kb": 2821
+  }
+ }
+}
