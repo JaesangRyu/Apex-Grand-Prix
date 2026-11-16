@@ -1,5 +1,26 @@
 {
   "leaderboardUrl": "",
   "firebaseDatabaseURL": "https://apex-grand-prix-403dd-default-rtdb.firebaseio.com",
-  "iceServers": []
+  "iceServers": [
+    {
+      "urls": "turn:global.relay.metered.ca:80",
+      "username": "107d0afe9a137659db7713a0",
+      "credential": "+o/V8tgtQxNg4qYi"
+    },
+    {
+      "urls": "turn:global.relay.metered.ca:80?transport=tcp",
+      "username": "107d0afe9a137659db7713a0",
+      "credential": "+o/V8tgtQxNg4qYi"
+    },
+    {
+      "urls": "turn:global.relay.metered.ca:443",
+      "username": "107d0afe9a137659db7713a0",
+      "credential": "+o/V8tgtQxNg4qYi"
+    },
+    {
+      "urls": "turns:global.relay.metered.ca:443?transport=tcp",
+      "username": "107d0afe9a137659db7713a0",
+      "credential": "+o/V8tgtQxNg4qYi"
+    }
+  ]
 }
