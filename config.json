@@ -22,5 +22,8 @@
       "username": "107d0afe9a137659db7713a0",
       "credential": "+o/V8tgtQxNg4qYi"
     }
-  ]
+  ],
+  "payments": {
+    "enabled": false
+  }
 }
