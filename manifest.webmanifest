@@ -1,7 +1,7 @@
 {
   "name": "APEX GRAND PRIX",
   "short_name": "APEX GP",
-  "description": "아이소메트릭 F1 레이싱 · 1:1 대전",
+  "description": "그랑프리 레이싱 · 최대 8인 대전",
   "lang": "ko",
   "start_url": "./",
   "scope": "./",

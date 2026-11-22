@@ -1,5 +1,7 @@
 {
   "leaderboardUrl": "",
+  "clarityProjectId": "zh7z4eiqp0",
+  "economy": "live",
   "firebaseDatabaseURL": "https://apex-grand-prix-403dd-default-rtdb.firebaseio.com",
   "iceServers": [
     {
@@ -25,5 +27,15 @@
   ],
   "payments": {
     "enabled": false
+  },
+  "legal": {
+    "privacyUrl": "privacy.html",
+    "termsUrl": "terms.html",
+    "feedbackUrl": ""
+  },
+  "switches": {
+    "ranked": true,
+    "gpRewards": true,
+    "reports": true
   }
 }
